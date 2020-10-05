@@ -1,0 +1,58 @@
+@startuml
+class Tracker{
+String name
+long duration
+getDuration()
+getTracker()
+}
+
+class TaskManager{
+list<Tracker> listTracker
+createTracker()
+}
+
+class Task{
+TaskManager project
+List <Interval> listIntervals
++createInterval()
++endTask()
+}
+
+class Interval{
+-Task parentTask
+-LocalDateTime startTime
+-LocalDateTime endTime
++getDuration()
+-calculateDuration()
++getStartTime()
++getEndTime()
+-updateDuration()
++propertyChange(PropertyChangeEvent evt)
++startInterval()
++endInterval()
+}
+
+Interface PropertyChangeListener
+
+Class PropertyChangeSupport
+
+class Clock{
+getDate()
+setDate()
+date: Date
+timer: Timer
+}
+
+class DataStorage
+
+class Thread
+
+TaskManager"0.." -- "1.." Task
+Tracker<|--(TaskManager, Task)
+Task"1"*--"0..*"Interval
+Interval--|>PropertyChangeListener
+TaskManager o--Tracker
+Clock*--PropertyChangeSupport
+Thread <|-- Interval
+
+@enduml
