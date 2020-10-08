@@ -1,5 +1,5 @@
 @startuml
-abstract class Tracker{
+class Tracker{
 String name
 long duration
 getDuration()
@@ -43,17 +43,16 @@ date: Date
 timer: Timer
 }
 
-
-class Thread
 class DataStorage
 
+class Thread
 
+TaskManager"0.." -- "1.." Task
 Tracker<|--(TaskManager, Task)
 Task"1"*--"0..*"Interval
 Interval--|>PropertyChangeListener
 TaskManager o--Tracker
 Clock*--PropertyChangeSupport
 Thread <|-- Interval
-
 
 @enduml

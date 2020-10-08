@@ -1,6 +1,8 @@
 public abstract class Tracker {
+  protected String name;
+  protected long duration;
+  public abstract long getDuration();
 
-  abstract void getTime();
-  abstract void getTask();
+  public abstract Tracker getTracker();
 
 }
