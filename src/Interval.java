@@ -7,14 +7,14 @@ public class Interval extends Thread implements PropertyChangeListener {
   private Task parentTask;
   private LocalDateTime startTime;
   private LocalDateTime endTime;
-  private long duration;
+  private Duration duration;
   private boolean status;
   public Interval(LocalDateTime startTime){
     this.startTime=startTime;
     this.status=false;
   }
 
-  public long getDuration(){
+  public Duration getDuration(){
     return duration;
   }
   public LocalDateTime getEndTime(){
@@ -33,6 +33,12 @@ public class Interval extends Thread implements PropertyChangeListener {
     this.status=true;
   }
 
+
+
+  public void stopInterval(){
+    currentThread().interrupt();
+    parentTask.endInterval(this);
+  }
 
 
   @Override
@@ -59,9 +65,6 @@ public class Interval extends Thread implements PropertyChangeListener {
     this.setEndTime((LocalDateTime) evt.getNewValue());
   }
 
-  public void startInterval(){
-
-  }
 
   public static void main(String[] args) {
     Clock clock = new Clock();

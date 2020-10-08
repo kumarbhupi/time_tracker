@@ -1,6 +1,10 @@
 public class TaskManager extends Tracker{
 
 
+  public TaskManager(String name) {
+    super(name);
+  }
+
   @Override
   public long getDuration() {
     return 0;

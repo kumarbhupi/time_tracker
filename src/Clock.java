@@ -1,6 +1,8 @@
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.time.Duration;
 import java.time.LocalDateTime;
+import java.time.Period;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -41,9 +43,24 @@ public class Clock {
     clock.cancel();
   }
 
-  public static void main(String[] args) {
+  public static void main(String[] args) throws InterruptedException {
     Clock clock = new Clock();
     clock.startTick();
+
+    LocalDateTime firstTime = LocalDateTime.now();
+
+    Thread.sleep(1000);
+
+
+    LocalDateTime secondTime = LocalDateTime.now();
+
+    Duration pta = Duration.between(firstTime, secondTime);
+
+
+
+
+
+
   }
 
 

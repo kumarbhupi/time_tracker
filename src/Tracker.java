@@ -1,8 +1,15 @@
+import java.time.Duration;
+
 public abstract class Tracker {
   protected String name;
-  protected long duration;
-  public abstract long getDuration();
+  protected Duration duration;
 
+  public Tracker(String name){
+    this.name = name;
+    this.duration = Duration.ZERO;
+  }
+
+  public abstract long getDuration();
   public abstract Tracker getTracker();
 
 }

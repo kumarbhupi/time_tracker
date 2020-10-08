@@ -8,6 +8,10 @@ public class Task extends Tracker {
   private TaskManager project;
   private List<Interval> listIntervals;
 
+  public Task(String name) {
+    super(name);
+  }
+
   public void endTask(){
 
   }
@@ -20,5 +24,17 @@ public class Task extends Tracker {
   @Override
   public Tracker getTracker() {
     return null;
+  }
+
+
+  public Interval createInterval() {
+    Interval interval = new Interval(LocalDateTime.now());
+    listIntervals.add(interval);
+    return interval;
+  }
+
+
+  public void endInterval(Interval interval){
+    duration = duration.plus(interval.getDuration());
   }
 }
