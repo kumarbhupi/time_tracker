@@ -28,6 +28,7 @@ public class Interval extends Thread implements PropertyChangeListener {
   public void setStartTime(LocalDateTime startTime) {
     this.startTime = startTime;
   }
+
   public void setEndTime(LocalDateTime endTime){
     this.endTime=endTime;
     this.status=true;
@@ -50,6 +51,7 @@ public class Interval extends Thread implements PropertyChangeListener {
       if(status) {
         System.out.println("bernat us informa de l'hora: " + endTime.toString());
         System.out.println("Duració de la tasca: " + updateDuration().toSeconds());
+        duration = updateDuration();
       }
       try {
         sleep(1000);

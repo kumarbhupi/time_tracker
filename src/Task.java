@@ -1,3 +1,4 @@
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
@@ -17,8 +18,8 @@ public class Task extends Tracker {
   }
 
   @Override
-  public long getDuration() {
-    return 0;
+  public Duration getDuration() {
+    return duration;
   }
 
   @Override

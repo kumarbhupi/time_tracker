@@ -1,16 +1,18 @@
+import java.beans.PropertyChangeListener;
+
 public class ClockNotifier {
-  private Clock clockObservable;
+  private final Clock clockObservable;
 
   public ClockNotifier(Clock clock){
     this.clockObservable = clock;
   }
 
 
-  public void addListener(Interval interval){
+  public void addListener(PropertyChangeListener interval){
     clockObservable.addPropertyChangeListener(interval);
   }
 
-  public void removeListener(Interval interval){
+  public void removeListener(PropertyChangeListener interval){
     clockObservable.removePropertyChangeListener(interval);
   }
 }

@@ -1,3 +1,5 @@
+import java.time.Duration;
+
 public class TaskManager extends Tracker{
 
 
@@ -6,8 +8,8 @@ public class TaskManager extends Tracker{
   }
 
   @Override
-  public long getDuration() {
-    return 0;
+  public Duration getDuration() {
+    return Duration.ZERO;
   }
 
   @Override

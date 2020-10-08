@@ -9,7 +9,7 @@ public abstract class Tracker {
     this.duration = Duration.ZERO;
   }
 
-  public abstract long getDuration();
+  public abstract Duration getDuration();
   public abstract Tracker getTracker();
 
 }
