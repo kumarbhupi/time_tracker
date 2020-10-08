@@ -13,8 +13,7 @@ public class ConversorTime {
   public LocalDateTime getEndTime(){
     return endTime;
   }
-  private long calculateDuration(LocalDateTime start,LocalDateTime end)
-  {
+  private long calculateDuration(LocalDateTime start,LocalDateTime end) {
     this.startTime=start;
     this.endTime=end;
     tempDateTime = LocalDateTime.from( startTime );
@@ -26,8 +25,12 @@ public class ConversorTime {
     long hours = tempDateTime.until( endTime, ChronoUnit.HOURS );
     long minutes = tempDateTime.until( endTime, ChronoUnit.MINUTES );
     long seconds = tempDateTime.until( endTime, ChronoUnit.SECONDS );
+    
+
+    return 0;
 
 
 
   }
+
 }

@@ -14,7 +14,7 @@ public class Clock {
     clock = new Timer();
   }
 
-  private void startTick() {
+  public void startTick() {
     clock.schedule(new TimerTask() {
       @Override
       public void run() {
@@ -32,7 +32,7 @@ public class Clock {
   }
 
   private void setTime(LocalDateTime time) {
-    System.out.println("me enviaron esto wey! --> " + time.toString());
+    //System.out.println("me enviaron esto wey! --> " + time.toString());
     support.firePropertyChange("now", this.time, time);
     this.time = time;
   }

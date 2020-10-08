@@ -1,12 +1,13 @@
 public class TaskManager extends Tracker{
 
-  @Override
-  void getTime() {
 
+  @Override
+  public long getDuration() {
+    return 0;
   }
 
   @Override
-  void getTask() {
-
+  public Tracker getTracker() {
+    return null;
   }
 }
