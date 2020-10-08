@@ -2,7 +2,6 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.time.Period;
 import java.util.Timer;
 import java.util.TimerTask;
 
