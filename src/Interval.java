@@ -1,5 +1,6 @@
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.time.Duration;
 import java.time.LocalDateTime;
 
 public class Interval extends Thread implements PropertyChangeListener {
@@ -7,23 +8,43 @@ public class Interval extends Thread implements PropertyChangeListener {
   private LocalDateTime startTime;
   private LocalDateTime endTime;
   private long duration;
-
+  private boolean status;
+  public Interval(LocalDateTime startTime){
+    this.startTime=startTime;
+    this.status=false;
+  }
 
   public long getDuration(){
     return duration;
   }
+  public LocalDateTime getEndTime(){
+    return endTime;
+  }
 
+  private Duration updateDuration() {
+    return Duration.between(startTime, endTime);
+  }
 
   public void setStartTime(LocalDateTime startTime) {
     this.startTime = startTime;
   }
+  public void setEndTime(LocalDateTime endTime){
+    this.endTime=endTime;
+    this.status=true;
+  }
+
+
 
   @Override
   public void run() {
     super.run();
+    System.out.println("bernat us informa de l'hora d'inici: "+startTime.toString());
+
     while (true){
-      if(startTime!= null)
-        System.out.println("bernat us informa de l'hora: "+startTime.toString());
+      if(status) {
+        System.out.println("bernat us informa de l'hora: " + endTime.toString());
+        System.out.println("Duració de la tasca: " + updateDuration().toSeconds());
+      }
       try {
         sleep(1000);
       } catch (InterruptedException e) {
@@ -35,7 +56,7 @@ public class Interval extends Thread implements PropertyChangeListener {
 
   @Override
   public void propertyChange(PropertyChangeEvent evt) {
-    this.setStartTime((LocalDateTime) evt.getNewValue());
+    this.setEndTime((LocalDateTime) evt.getNewValue());
   }
 
   public void startInterval(){
@@ -45,7 +66,7 @@ public class Interval extends Thread implements PropertyChangeListener {
   public static void main(String[] args) {
     Clock clock = new Clock();
     clock.startTick();
-    Interval interval=new Interval();
+    Interval interval=new Interval(LocalDateTime.now());
     clock.addPropertyChangeListener(interval);
     interval.run();
   }
