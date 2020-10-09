@@ -1,6 +1,9 @@
 import java.time.Duration;
+import java.util.List;
 
 public class TaskManager extends Tracker{
+
+  List<Tracker> trackers;
 
 
   public TaskManager(String name) {
@@ -9,11 +12,15 @@ public class TaskManager extends Tracker{
 
   @Override
   public Duration getDuration() {
-    return Duration.ZERO;
+    return duration;
   }
 
   @Override
   public Tracker getTracker() {
     return null;
+  }
+
+  public void createTrackers(){
+
   }
 }
