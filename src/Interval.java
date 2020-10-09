@@ -28,19 +28,15 @@ public class Interval extends Thread implements PropertyChangeListener {
   public void setStartTime(LocalDateTime startTime) {
     this.startTime = startTime;
   }
-
   public void setEndTime(LocalDateTime endTime){
     this.endTime=endTime;
     this.status=true;
   }
 
-
-
   public void stopInterval(){
     currentThread().interrupt();
     parentTask.endInterval(this);
   }
-
 
   @Override
   public void run() {
@@ -61,12 +57,10 @@ public class Interval extends Thread implements PropertyChangeListener {
     }
   }
 
-
   @Override
   public void propertyChange(PropertyChangeEvent evt) {
     this.setEndTime((LocalDateTime) evt.getNewValue());
   }
-
 
   public static void main(String[] args) {
     Clock clock = new Clock();
