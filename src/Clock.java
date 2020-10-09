@@ -1,17 +1,19 @@
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class Clock {
-  PropertyChangeSupport support;
+//TODO:Arreglar y mirar que todo este correcto /Alberto
+
+public class Clock extends Observable {
+  Observable observable;
   Timer clock;
   LocalDateTime time;
 
   public Clock() {
-    support = new PropertyChangeSupport(this);
+    observable = new Observable();
     clock = new Timer();
   }
 
@@ -24,18 +26,19 @@ public class Clock {
     }, 0, 1000);
   }
 
-  public void addPropertyChangeListener(PropertyChangeListener listener) {
-    support.addPropertyChangeListener(listener);
+  public void addObserver(Observer obs) {
+    observable.addObserver(obs);
   }
 
-  public void removePropertyChangeListener(PropertyChangeListener listener) {
-    support.removePropertyChangeListener(listener);
+  public void deleteObserver(Observer obs) {
+    observable.deleteObserver(obs);
   }
 
   private void setTime(LocalDateTime time) {
     //System.out.println("me enviaron esto wey! --> " + time.toString());
-    support.firePropertyChange("now", this.time, time);
     this.time = time;
+    setChanged();
+    notifyObservers();
   }
 
   public void stopClock() {

@@ -2,16 +2,19 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.Observer;
 
+
+//TODO: Cambiar de listener a observer y ver que funcione/ Alberto
 public class Interval extends Thread implements PropertyChangeListener {
   private Task parentTask;
   private LocalDateTime startTime;
   private LocalDateTime endTime;
   private Duration duration;
-  private boolean status;
+  private boolean inProgress;
   public Interval(LocalDateTime startTime){
     this.startTime=startTime;
-    this.status=false;
+    this.inProgress=false;
   }
 
   public Duration getDuration(){
@@ -35,6 +38,7 @@ public class Interval extends Thread implements PropertyChangeListener {
 
 
   public void stopInterval(){
+    inProgress = false;
     currentThread().interrupt();
     parentTask.endInterval(this);
   }
@@ -46,7 +50,7 @@ public class Interval extends Thread implements PropertyChangeListener {
     System.out.println("bernat us informa de l'hora d'inici: "+startTime.toString());
 
     while (true){
-      if(status) {
+      if(inProgress) {
         System.out.println("bernat us informa de l'hora: " + endTime.toString());
         System.out.println("Duració de la tasca: " + updateDuration().toSeconds());
         duration = updateDuration();
@@ -63,14 +67,15 @@ public class Interval extends Thread implements PropertyChangeListener {
   @Override
   public void propertyChange(PropertyChangeEvent evt) {
     this.setEndTime((LocalDateTime) evt.getNewValue());
-  }
+  } //Canviar a update
 
 
-  public static void main(String[] args) {
+  /*public static void main(String[] args) {
     Clock clock = new Clock();
     clock.startTick();
     Interval interval=new Interval(LocalDateTime.now());
-    clock.addPropertyChangeListener(interval);
+    Observer ov = null;
+    clock.addObserver(ov); //Canviar a addObserver
     interval.run();
-  }
+  }*/
 }
