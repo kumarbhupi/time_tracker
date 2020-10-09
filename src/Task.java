@@ -12,12 +12,15 @@ public class Task extends Tracker {
 
   public Task(String name) {
     super(name);
+    status = true;
   }
 
   public void endTask(){
     status = false;
     for (Interval interval : listIntervals){
-      interval.stopInterval();
+      if (interval.isInProgress()){
+        interval.stopInterval();
+      }
     }
   }
 
