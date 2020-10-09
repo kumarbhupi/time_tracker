@@ -7,6 +7,7 @@ public class ConversorTime {
   private LocalDateTime endTime;
   private LocalDateTime tempDateTime;
   private Duration duration;
+  private long duracion;
   public LocalDateTime getStartTime(){
     return startTime;
   }
@@ -16,7 +17,8 @@ public class ConversorTime {
   private long calculateDuration(LocalDateTime start,LocalDateTime end) {
     this.startTime=start;
     this.endTime=end;
-    tempDateTime = LocalDateTime.from( startTime );
+    return Duration.between(start,end).getSeconds();
+    /*tempDateTime = LocalDateTime.from( startTime );
     //extreiem anys,mesos,dias,horas,minuts,segons del tempDateTime
     //TODO: Acabar esto YA
     long years= tempDateTime.until( endTime, ChronoUnit.YEARS );
@@ -24,12 +26,7 @@ public class ConversorTime {
     long days= tempDateTime.until( endTime, ChronoUnit.DAYS );
     long hours = tempDateTime.until( endTime, ChronoUnit.HOURS );
     long minutes = tempDateTime.until( endTime, ChronoUnit.MINUTES );
-    long seconds = tempDateTime.until( endTime, ChronoUnit.SECONDS );
-    
-
-    return 0;
-
-
+    long seconds = tempDateTime.until( endTime, ChronoUnit.SECONDS );*/
 
   }
 
