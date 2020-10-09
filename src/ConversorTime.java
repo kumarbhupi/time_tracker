@@ -7,7 +7,6 @@ public class ConversorTime {
   private LocalDateTime endTime;
   private LocalDateTime tempDateTime;
   private Duration duration;
-  private long duracion;
   public LocalDateTime getStartTime(){
     return startTime;
   }
