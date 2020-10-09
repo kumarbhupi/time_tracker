@@ -2,7 +2,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.time.Duration;
 import java.time.LocalDateTime;
-
+//TODO NO UTILIZAR PropertyChangeListener
 public class Interval extends Thread implements PropertyChangeListener {
   private Task parentTask;
   private LocalDateTime startTime;
@@ -14,7 +14,7 @@ public class Interval extends Thread implements PropertyChangeListener {
     this.startTime=startTime;
     this.inProgress=false;
   }
-
+//TODO Cridar al pare per que actualitzi
   public boolean isInProgress() {
     return inProgress;
   }
@@ -66,7 +66,7 @@ public class Interval extends Thread implements PropertyChangeListener {
   public void propertyChange(PropertyChangeEvent evt) {
     this.setEndTime((LocalDateTime) evt.getNewValue());
   }
-
+  //TODO : USANDO observable , el updateduration() ira aqui
   public static void main(String[] args) {
     Clock clock = new Clock();
     clock.startTick();
