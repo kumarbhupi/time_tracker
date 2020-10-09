@@ -48,21 +48,12 @@ public class Clock extends Observable {
   public static void main(String[] args) throws InterruptedException {
     Clock clock = new Clock();
     clock.startTick();
-
     LocalDateTime firstTime = LocalDateTime.now();
 
     Thread.sleep(1000);
 
-
     LocalDateTime secondTime = LocalDateTime.now();
-
     Duration pta = Duration.between(firstTime, secondTime);
-
-
-
-
-
-
   }
 
 
