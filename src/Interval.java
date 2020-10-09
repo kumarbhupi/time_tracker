@@ -30,7 +30,6 @@ public class Interval extends Thread implements PropertyChangeListener {
   }
   public void setEndTime(LocalDateTime endTime){
     this.endTime=endTime;
-    this.status=true;
   }
 
   public void stopInterval(){

@@ -16,19 +16,17 @@ public class ConversorTime {
   private long calculateDuration(LocalDateTime start,LocalDateTime end) {
     this.startTime=start;
     this.endTime=end;
-    tempDateTime = LocalDateTime.from( startTime );
+    return Duration.between(start,end).getSeconds();
+    /*tempDateTime = LocalDateTime.from( startTime );
     //extreiem anys,mesos,dias,horas,minuts,segons del tempDateTime
-    //TODO: Acabar esto
+    //TODO: Acabar esto YA
     long years= tempDateTime.until( endTime, ChronoUnit.YEARS );
     long months = tempDateTime.until( endTime, ChronoUnit.MONTHS );
     long days= tempDateTime.until( endTime, ChronoUnit.DAYS );
     long hours = tempDateTime.until( endTime, ChronoUnit.HOURS );
     long minutes = tempDateTime.until( endTime, ChronoUnit.MINUTES );
     long seconds = tempDateTime.until( endTime, ChronoUnit.SECONDS );
-
-
-
-
+    
 
     return 0;
 

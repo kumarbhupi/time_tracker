@@ -8,13 +8,17 @@ public class Task extends Tracker {
 
   private TaskManager project;
   private List<Interval> listIntervals;
+  private boolean status;
 
   public Task(String name) {
     super(name);
   }
 
   public void endTask(){
-
+    status = false;
+    for (Interval interval : listIntervals){
+      interval.stopInterval();
+    }
   }
 
   @Override
@@ -24,7 +28,7 @@ public class Task extends Tracker {
 
   @Override
   public Tracker getTracker() {
-    return null;
+    return project;
   }
 
 
