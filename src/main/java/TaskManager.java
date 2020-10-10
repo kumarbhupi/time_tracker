@@ -11,6 +11,11 @@ public class TaskManager extends Tracker{
   List<Tracker> trackers;
   private TaskManager parentProject;
 
+  //TODO LListat de TaskManagers+Tasks
+  //TODO Variable per diferenciar TaskManager de Task
+  //TODO Recuperar la duració TOTAL del conjunt de Tasks+TaskManagers
+
+
   public TaskManager(String name) {
     super(name);
     trackers = new ArrayList<Tracker>();

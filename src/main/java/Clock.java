@@ -5,6 +5,7 @@ import java.util.Observer;
 import java.util.Timer;
 import java.util.TimerTask;
 
+//TODO:Arreglar y mirar que todo este correcto /Alberto
 
 public class Clock extends Observable {
   Observable observable;
@@ -47,5 +48,6 @@ public class Clock extends Observable {
     LocalDateTime secondTime = LocalDateTime.now();
     Duration pta = Duration.between(firstTime, secondTime);
   }
+
 
 }
