@@ -1,18 +1,19 @@
 import java.time.Duration;
+import java.util.ArrayList;
 import java.util.List;
 
 enum TrackerType {
   TASK,
-  PROJECT,
+  PROJECT
 }
 public class TaskManager extends Tracker{
 
   List<Tracker> trackers;
   private TaskManager parentProject;
 
-
   public TaskManager(String name) {
     super(name);
+    trackers = new ArrayList<Tracker>();
   }
 
   @Override
@@ -37,7 +38,7 @@ public class TaskManager extends Tracker{
   public Tracker createTrackers(String name, TrackerType type){
     switch (type){
       case TASK:
-        Tracker task = new Task(name);
+        Tracker task = new Task(this, name);
         trackers.add(task);
         return task;
       case PROJECT:

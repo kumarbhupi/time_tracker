@@ -5,7 +5,6 @@ import java.util.Observer;
 import java.util.Timer;
 import java.util.TimerTask;
 
-//TODO:Arreglar y mirar que todo este correcto /Alberto
 
 public class Clock extends Observable {
   Observable observable;
@@ -18,26 +17,17 @@ public class Clock extends Observable {
   }
 
   public void startTick() {
-    System.out.println("Starting to tick hehe");
+    System.out.println("Clock is ticking");
     clock.schedule(new TimerTask() {
       @Override
       public void run() {
-        System.out.println("Tik");
         setTime(LocalDateTime.now());
       }
     }, 0, 1000);
   }
 
- /* public void addObserver(Observer obs) {
-    observable.addObserver(obs);
-  }
-
-  public void deleteObserver(Observer obs) {
-    observable.deleteObserver(obs);
-  }*/
-
   private void setTime(LocalDateTime time) {
-    //System.out.println("me enviaron esto wey! --> " + time.toString());
+    //System.out.println("Se ha enviado esto --> " + time.toString());
     this.time = time;
     setChanged();
     notifyObservers(time);
@@ -57,6 +47,5 @@ public class Clock extends Observable {
     LocalDateTime secondTime = LocalDateTime.now();
     Duration pta = Duration.between(firstTime, secondTime);
   }
-
 
 }

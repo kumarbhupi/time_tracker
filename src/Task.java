@@ -1,17 +1,19 @@
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Task extends Tracker {
-
 
   private TaskManager parentProject;
   private List<Interval> listIntervals;
   private boolean status;
 
-  public Task(String name) {
+  public Task(TaskManager parent, String name) {
     super(name);
+    parentProject=parent;
+    listIntervals = new ArrayList<Interval>();
     status = true;
   }
 
@@ -40,7 +42,8 @@ public class Task extends Tracker {
   }
 
   public Interval createInterval() {
-    Interval interval = new Interval(LocalDateTime.now());
+
+    Interval interval = new Interval(this, LocalDateTime.now());
     listIntervals.add(interval);
     return interval;
   }
@@ -50,3 +53,4 @@ public class Task extends Tracker {
     updateDuration(duration);
   }
 }
+

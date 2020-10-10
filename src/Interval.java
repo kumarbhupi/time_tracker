@@ -7,7 +7,6 @@ import java.util.Observer;
 
 import static java.lang.Thread.sleep;
 
-//TODO NO UTILIZAR PropertyChangeListener
 public class Interval implements Observer {
   private Task parentTask;
   private LocalDateTime startTime;
@@ -15,12 +14,13 @@ public class Interval implements Observer {
   private Duration duration;
   private boolean inProgress;
 
-  public Interval(LocalDateTime startTime){
+  public Interval(Task task, LocalDateTime startTime){
+    this.parentTask=task;
     this.startTime=startTime;
     this.inProgress=true;
     this.duration = Duration.ZERO;
   }
-//TODO Cridar al pare per que actualitzi
+
   public boolean isInProgress() {
     return inProgress;
   }
@@ -33,7 +33,6 @@ public class Interval implements Observer {
   }
 
   private Duration updateDuration() {
-    //System.out.println("Yoo he actualizado xd");
     return Duration.between(startTime, endTime);
   }
 
@@ -49,36 +48,21 @@ public class Interval implements Observer {
     parentTask.endInterval(this);
   }
 
-
   @Override
   public void update(Observable observable, Object time) {
-    System.out.println("Funciona?");
     setEndTime((LocalDateTime) time);
     duration = updateDuration();
-
   }
 
   @Override
   public String toString() {
     return "Interval{" +
-        "parentTask=" + parentTask +
+        "parentTask=" + parentTask.getName() +
         ", startTime=" + startTime +
         ", endTime=" + endTime +
-        ", duration=" + duration +
+        ", duration=" + duration.getSeconds() +
         ", inProgress=" + inProgress +
         '}';
   }
-
-  //TODO : USANDO observable , el updateduration() ira aqui
-  public static void main(String[] args) throws InterruptedException {
-    Clock clock = new Clock();
-    clock.startTick();
-
-    Interval interval=new Interval(LocalDateTime.now());
-    clock.addObserver(interval);
-    System.out.println("Clock count observers -->"+clock.countObservers());
-
-  }
-
 
 }

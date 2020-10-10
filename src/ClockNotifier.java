@@ -9,7 +9,6 @@ public class ClockNotifier {
     this.clockObservable = clock;
   }
 
-
   public void addListener(Observer interval){
     clockObservable.addObserver(interval);
   }

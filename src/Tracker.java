@@ -13,4 +13,7 @@ public abstract class Tracker {
   public abstract Tracker getTracker();
   protected abstract void updateDuration(Duration durationToAdd);
 
+  public String getName() {
+    return this.name;
+  }
 }
