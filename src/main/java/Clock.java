@@ -28,13 +28,6 @@ public class Clock extends Observable {
     }, 0, 1000);
   }
 
- /* public void addObserver(Observer obs) {
-    observable.addObserver(obs);
-  }
-
-  public void deleteObserver(Observer obs) {
-    observable.deleteObserver(obs);
-  }*/
 
   private void setTime(LocalDateTime time) {
     //System.out.println("me enviaron esto wey! --> " + time.toString());
@@ -42,10 +35,10 @@ public class Clock extends Observable {
     setChanged();
     notifyObservers(time);
   }
-
+  /*
   public void stopClock() {
     clock.cancel();
-  }
+  }*/
 
   public static void main(String[] args) throws InterruptedException {
     Clock clock = new Clock();
