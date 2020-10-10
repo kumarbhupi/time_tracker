@@ -18,27 +18,29 @@ public class Clock extends Observable {
   }
 
   public void startTick() {
+    System.out.println("Starting to tick hehe");
     clock.schedule(new TimerTask() {
       @Override
       public void run() {
+        System.out.println("Tik");
         setTime(LocalDateTime.now());
       }
     }, 0, 1000);
   }
 
-  public void addObserver(Observer obs) {
+ /* public void addObserver(Observer obs) {
     observable.addObserver(obs);
   }
 
   public void deleteObserver(Observer obs) {
     observable.deleteObserver(obs);
-  }
+  }*/
 
   private void setTime(LocalDateTime time) {
     //System.out.println("me enviaron esto wey! --> " + time.toString());
     this.time = time;
     setChanged();
-    notifyObservers();
+    notifyObservers(time);
   }
 
   public void stopClock() {
@@ -55,7 +57,6 @@ public class Clock extends Observable {
     LocalDateTime secondTime = LocalDateTime.now();
     Duration pta = Duration.between(firstTime, secondTime);
   }
-
 
 
 }

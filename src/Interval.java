@@ -2,8 +2,13 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.Observable;
+import java.util.Observer;
+
+import static java.lang.Thread.sleep;
+
 //TODO NO UTILIZAR PropertyChangeListener
-public class Interval extends Thread implements PropertyChangeListener {
+public class Interval implements Observer {
   private Task parentTask;
   private LocalDateTime startTime;
   private LocalDateTime endTime;
@@ -27,6 +32,7 @@ public class Interval extends Thread implements PropertyChangeListener {
   }
 
   private Duration updateDuration() {
+    //System.out.println("Yoo he actualizado xd");
     return Duration.between(startTime, endTime);
   }
 
@@ -39,39 +45,39 @@ public class Interval extends Thread implements PropertyChangeListener {
 
   public void stopInterval(){
     inProgress = false;
-    currentThread().interrupt();
     parentTask.endInterval(this);
   }
 
-  @Override
-  public void run() {
-    super.run();
-    System.out.println("bernat us informa de l'hora d'inici: "+startTime.toString());
 
-    while (true){
-      if(inProgress) {
-        System.out.println("bernat us informa de l'hora: " + endTime.toString());
-        System.out.println("Duració de la tasca: " + updateDuration().toSeconds());
-        duration = updateDuration();
-      }
-      try {
-        sleep(1000);
-      } catch (InterruptedException e) {
-        e.printStackTrace();
-      }
-    }
+  @Override
+  public void update(Observable observable, Object time) {
+    System.out.println("Funciona?");
+    setEndTime((LocalDateTime) time);
+    duration = updateDuration();
+
   }
 
   @Override
-  public void propertyChange(PropertyChangeEvent evt) {
-    this.setEndTime((LocalDateTime) evt.getNewValue());
+  public String toString() {
+    return "Interval{" +
+        "parentTask=" + parentTask +
+        ", startTime=" + startTime +
+        ", endTime=" + endTime +
+        ", duration=" + duration +
+        ", inProgress=" + inProgress +
+        '}';
   }
+
   //TODO : USANDO observable , el updateduration() ira aqui
-  public static void main(String[] args) {
+  public static void main(String[] args) throws InterruptedException {
     Clock clock = new Clock();
     clock.startTick();
+
     Interval interval=new Interval(LocalDateTime.now());
-    clock.addPropertyChangeListener(interval);
-    interval.run();
+    clock.addObserver(interval);
+    System.out.println("Clock count observers -->"+clock.countObservers());
+
   }
+
+
 }
