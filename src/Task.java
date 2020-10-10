@@ -6,7 +6,7 @@ import java.util.List;
 public class Task extends Tracker {
 
 
-  private TaskManager project;
+  private TaskManager parentProject;
   private List<Interval> listIntervals;
   private boolean status;
 
@@ -31,9 +31,13 @@ public class Task extends Tracker {
 
   @Override
   public Tracker getTracker() {
-    return project;
+    return parentProject;
   }
 
+  @Override
+  protected void updateDuration(Duration durationToAdd) {
+    parentProject.updateDuration(durationToAdd);
+  }
 
   public Interval createInterval() {
     Interval interval = new Interval(LocalDateTime.now());
@@ -41,8 +45,8 @@ public class Task extends Tracker {
     return interval;
   }
 
-
   public void endInterval(Interval interval){
     duration = duration.plus(interval.getDuration());
+    updateDuration(duration);
   }
 }

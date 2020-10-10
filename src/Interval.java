@@ -17,7 +17,8 @@ public class Interval implements Observer {
 
   public Interval(LocalDateTime startTime){
     this.startTime=startTime;
-    this.inProgress=false;
+    this.inProgress=true;
+    this.duration = Duration.ZERO;
   }
 //TODO Cridar al pare per que actualitzi
   public boolean isInProgress() {

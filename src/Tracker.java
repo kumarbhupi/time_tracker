@@ -11,5 +11,6 @@ public abstract class Tracker {
 
   public abstract Duration getDuration();
   public abstract Tracker getTracker();
+  protected abstract void updateDuration(Duration durationToAdd);
 
 }
