@@ -35,5 +35,8 @@ public class Main {
     clock.stopClock();
     System.out.println(root.getDuration().getSeconds());
 
+
+
+
   }
 }

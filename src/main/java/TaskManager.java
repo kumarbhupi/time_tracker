@@ -1,3 +1,6 @@
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
@@ -7,9 +10,9 @@ enum TrackerType {
   PROJECT
 }
 public class TaskManager extends Tracker{
-
-  List<Tracker> trackers;
   private TaskManager parentProject;
+  private List<Tracker> trackers;
+
 
   //TODO LListat de TaskManagers+Tasks
   //TODO Variable per diferenciar TaskManager de Task
@@ -19,6 +22,11 @@ public class TaskManager extends Tracker{
   public TaskManager(String name) {
     super(name);
     trackers = new ArrayList<Tracker>();
+  }
+  public TaskManager(TaskManager parentProject,String name) {
+    super(name);
+    trackers = new ArrayList<Tracker>();
+    this.parentProject =parentProject;
   }
 
   @Override
@@ -54,5 +62,18 @@ public class TaskManager extends Tracker{
         break;
     }
     return null;
+  }
+
+  public JSONObject getJSON(){
+    JSONObject object = new JSONObject();
+    object.put("name", name);
+    object.put("duration", duration.getSeconds());
+    if (parentProject != null){
+      object.put("parentProject", parentProject.getName());
+    }
+    JSONArray trackersArray = new JSONArray();
+    trackersArray.put(trackers);
+    object.put("trackers", trackersArray);
+    return object;
   }
 }

@@ -1,14 +1,12 @@
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
+import org.json.JSONObject;
+
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.Observable;
 import java.util.Observer;
 
-import static java.lang.Thread.sleep;
-
 public class Interval implements Observer {
-  private Task parentTask;
+  private final Task parentTask;
   private LocalDateTime startTime;
   private LocalDateTime endTime;
   private Duration duration;
@@ -56,13 +54,23 @@ public class Interval implements Observer {
 
   @Override
   public String toString() {
-    return "Interval{" +
-        "parentTask=" + parentTask.getName() +
-        ", startTime=" + startTime +
-        ", endTime=" + endTime +
-        ", duration=" + duration.getSeconds() +
-        ", inProgress=" + inProgress +
+    return "{" +
+        "parentTask :" + parentTask.getName() +
+        ", startTime :" + startTime +
+        ", endTime :" + endTime +
+        ", duration :" + duration.getSeconds() +
+        ", inProgress :" + inProgress +
         '}';
+  }
+
+  public JSONObject getJSON(){
+    JSONObject object = new JSONObject();
+    object.put("parentTask", parentTask.getName());
+    object.put("startTime", startTime.toString());
+    object.put("endTime", endTime.toString());
+    object.put("duration", duration.getSeconds());
+    object.put("inProgress", inProgress);
+    return object;
   }
 
 }
