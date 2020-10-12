@@ -23,6 +23,7 @@ public class TaskManager extends Tracker{
     super(name);
     trackers = new ArrayList<Tracker>();
   }
+
   public TaskManager(TaskManager parentProject,String name) {
     super(name);
     trackers = new ArrayList<Tracker>();
@@ -55,7 +56,7 @@ public class TaskManager extends Tracker{
         trackers.add(task);
         return task;
       case PROJECT:
-        Tracker project = new TaskManager(name);
+        Tracker project = new TaskManager(this, name);
         trackers.add(project);
         return project;
       default:
@@ -64,6 +65,7 @@ public class TaskManager extends Tracker{
     return null;
   }
 
+  @Override
   public JSONObject getJSON(){
     JSONObject object = new JSONObject();
     object.put("name", name);
@@ -72,7 +74,9 @@ public class TaskManager extends Tracker{
       object.put("parentProject", parentProject.getName());
     }
     JSONArray trackersArray = new JSONArray();
-    trackersArray.put(trackers);
+    for (Tracker tracker: trackers) {
+      trackersArray.put(tracker.getJSON());
+    }
     object.put("trackers", trackersArray);
     return object;
   }

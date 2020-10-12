@@ -65,15 +65,18 @@ public class Task extends Tracker {
         ", duration=" + duration +
         '}';
   }
-
+  @Override
   public JSONObject getJSON(){
     JSONObject object = new JSONObject();
     object.put("name", name);
     object.put("duration", duration.getSeconds());
     object.put("parentProject", parentProject.getName());
     object.put("status", status);
+
     JSONArray intervals = new JSONArray();
-    intervals.put(listIntervals);
+    for (Interval inter : listIntervals) {
+      intervals.put(inter.getJSON());
+    }
     object.put("listIntervals", intervals);
     return object;
   }

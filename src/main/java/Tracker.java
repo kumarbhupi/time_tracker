@@ -1,3 +1,5 @@
+import org.json.JSONObject;
+
 import java.time.Duration;
 
 public abstract class Tracker {
@@ -12,7 +14,7 @@ public abstract class Tracker {
   public abstract Duration getDuration();
   public abstract Tracker getTracker();
   protected abstract void updateDuration(Duration durationToAdd);
-
+  public abstract JSONObject getJSON();
   public String getName() {
     return this.name;
   }
