@@ -80,4 +80,15 @@ public class TaskManager extends Tracker{
     object.put("trackers", trackersArray);
     return object;
   }
+
+  @Override
+  public void fromJSON(JSONObject jsonObject) {
+    this.name = jsonObject.getString("name");
+    this.duration = Duration.ofSeconds(jsonObject.getLong("duration"));
+    JSONArray jsonArray = jsonObject.getJSONArray("trackers");
+    for (int i = 0; i < jsonArray.length(); i++) {
+      JSONObject eachTrack = jsonArray.getJSONObject(i);
+
+    }
+  }
 }

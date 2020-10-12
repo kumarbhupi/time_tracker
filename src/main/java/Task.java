@@ -80,5 +80,11 @@ public class Task extends Tracker {
     object.put("listIntervals", intervals);
     return object;
   }
+
+  @Override
+  public void fromJSON(JSONObject jsonObject) {
+
+  }
+
 }
 
