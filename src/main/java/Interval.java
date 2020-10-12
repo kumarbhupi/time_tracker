@@ -60,7 +60,9 @@ public class Interval implements Observer {
   @Override
   public void update(Observable observable, Object time) {
     setEndTime((LocalDateTime) time);
-    duration = updateDuration();
+    if (inProgress){
+      duration = updateDuration();
+    }
   }
 
   @Override

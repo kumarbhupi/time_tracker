@@ -9,7 +9,7 @@ import java.util.List;
 
 public class Task extends Tracker {
 
-  private TaskManager parentProject;
+  private final TaskManager parentProject;
   private List<Interval> listIntervals;
   private boolean status;
 
