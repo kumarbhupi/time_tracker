@@ -6,12 +6,23 @@ import java.util.Observable;
 import java.util.Observer;
 
 public class Interval implements Observer {
-  private final Task parentTask;
+  private Task parentTask;
   private LocalDateTime startTime;
   private LocalDateTime endTime;
   private Duration duration;
   private boolean inProgress;
 
+  public void setDuration(Duration duration) {
+    this.duration = duration;
+  }
+  public void setParentTask(Task parentTask){
+    this.parentTask=parentTask;
+  }
+
+  public void setInProgress(boolean inProgress) {
+    this.inProgress = inProgress;
+  }
+  public Interval() {}
   public Interval(Task task, LocalDateTime startTime){
     this.parentTask=task;
     this.startTime=startTime;

@@ -3,12 +3,13 @@ import org.json.JSONObject;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Task extends Tracker {
 
-  private final TaskManager parentProject;
+  private TaskManager parentProject;
   private List<Interval> listIntervals;
   private boolean status;
 
@@ -79,6 +80,26 @@ public class Task extends Tracker {
     }
     object.put("listIntervals", intervals);
     return object;
+  }
+
+  public void fromJSON(JSONObject jsonObject) {
+    DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE_TIME;
+    LocalDateTime optionalDateTime;
+    this.duration=Duration.ofSeconds(jsonObject.getInt("duration"));
+    this.parentProject = (TaskManager) jsonObject.get("parentProject");
+    JSONArray jsonArray =new JSONArray(jsonObject.getJSONArray("listIntervals"));
+    for (int i = 0;i < jsonArray.length(); i++) {
+      Interval currentInterval=new Interval();
+      JSONObject interval=jsonArray.getJSONObject(i);
+      currentInterval.setDuration(Duration.ofSeconds(interval.getLong("duration")));
+      currentInterval.setInProgress(interval.getBoolean("inProgress"));
+      currentInterval.setParentTask(this);
+      currentInterval.setStartTime(interval.getString("startTime"));
+      interval.getString((Format) jsonObject.getString("startTime"));
+
+      this.listIntervals.add(interval);
+    }
+    this.listIntervals(interval);
   }
 }
 
