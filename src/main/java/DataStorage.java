@@ -24,7 +24,7 @@ public class DataStorage {
 
 
   public static void main(String[] args) throws InterruptedException {
-    Clock clock = new Clock();
+    Clock clock = Clock.getInstance();
     clock.startTick();
     ClockNotifier clockNotifier = new ClockNotifier(clock);
 

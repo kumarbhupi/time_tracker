@@ -4,7 +4,7 @@ public class Main {
 
   public static void main(String[] args) throws InterruptedException {
     //TODO: Al eliminar/terminar un intervalo hay que quitarlo de escuchador==OBSERVER del clock
-    Clock clock = new Clock();
+    Clock clock = Clock.getInstance();
     clock.startTick();
     ClockNotifier notify = new ClockNotifier(clock);
 

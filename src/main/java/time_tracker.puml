@@ -68,8 +68,6 @@ class DataStorage{
 +readData()
 }
 
-class Thread
-
 class ClockNotifier{
 -clock clockObservable
 +addListener()
@@ -81,7 +79,9 @@ Tracker<|--(TaskManager, Task)
 Task"1"*--"0..*"Interval
 Interval--|>Observer
 TaskManager o--Tracker
-Clock*--Observable
-Thread <|-- Interval
+Observable <|-- Clock
+Clock --* TimerTask
+
+
 
 @enduml

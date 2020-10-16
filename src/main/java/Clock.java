@@ -1,20 +1,27 @@
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.Observable;
-import java.util.Observer;
 import java.util.Timer;
 import java.util.TimerTask;
 
 //TODO:Arreglar y mirar que todo este correcto /Alberto
 
 public class Clock extends Observable {
-  Observable observable;
-  Timer clock;
-  LocalDateTime time;
+  private Observable observable;
+  private Timer clock;
+  private LocalDateTime time;
+  private static Clock uniqueInstance;
 
-  public Clock() {
+  private Clock() {
     observable = new Observable();
     clock = new Timer();
+  }
+
+  public static Clock getInstance(){
+    if (uniqueInstance == null){
+      uniqueInstance = new Clock();
+    }
+    return uniqueInstance;
   }
 
   public void startTick() {
