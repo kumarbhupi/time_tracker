@@ -52,7 +52,9 @@ public class TaskManager extends Tracker{
     }
   }
 
-
+  public void addChild(Tracker child){
+    trackers.add(child);
+  }
 
   public Tracker createTrackers(String name, TrackerType type){
     switch (type){

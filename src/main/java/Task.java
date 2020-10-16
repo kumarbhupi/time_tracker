@@ -12,7 +12,6 @@ public class Task extends Tracker {
   private List<Interval> listIntervals;
   private boolean status;
 
-
   public Task(TaskManager parent, String name) {
     super(name);
     parentProject=parent;
@@ -45,15 +44,18 @@ public class Task extends Tracker {
   }
 
   public Interval createInterval() {
-
+    Clock clock = Clock.getInstance();
     Interval interval = new Interval(this, LocalDateTime.now());
     listIntervals.add(interval);
+    clock.addObserver(interval);
     return interval;
   }
 
   public void endInterval(Interval interval){
+    Clock clock = Clock.getInstance();
     duration = duration.plus(interval.getDuration());
     updateDuration(interval.getDuration());
+    clock.deleteObserver(interval);
   }
 
   @Override

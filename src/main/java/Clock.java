@@ -1,4 +1,3 @@
-import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.Observable;
 import java.util.Timer;
@@ -8,23 +7,23 @@ import java.util.TimerTask;
 
 public class Clock extends Observable {
   private Observable observable;
-  private Timer clock;
-  private LocalDateTime time;
+  private final Timer clock;
   private static Clock uniqueInstance;
 
   private Clock() {
     observable = new Observable();
     clock = new Timer();
+    startTick();
   }
 
-  public static Clock getInstance(){
-    if (uniqueInstance == null){
+  public static Clock getInstance() {
+    if (uniqueInstance == null) {
       uniqueInstance = new Clock();
     }
     return uniqueInstance;
   }
 
-  public void startTick() {
+  private void startTick() {
     System.out.println("Clock is ticking");
     clock.schedule(new TimerTask() {
       @Override
@@ -36,7 +35,6 @@ public class Clock extends Observable {
 
   private void setTime(LocalDateTime time) {
     //System.out.println("Se ha enviado esto --> " + time.toString());
-    this.time = time;
     setChanged();
     notifyObservers(time);
   }
@@ -44,17 +42,4 @@ public class Clock extends Observable {
   public void stopClock() {
     clock.cancel();
   }
-
-  public static void main(String[] args) throws InterruptedException {
-    Clock clock = new Clock();
-    clock.startTick();
-    LocalDateTime firstTime = LocalDateTime.now();
-
-    Thread.sleep(1000);
-
-    LocalDateTime secondTime = LocalDateTime.now();
-    Duration pta = Duration.between(firstTime, secondTime);
-  }
-
-
 }

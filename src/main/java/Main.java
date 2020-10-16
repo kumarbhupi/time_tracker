@@ -5,8 +5,8 @@ public class Main {
   public static void main(String[] args) throws InterruptedException {
     //TODO: Al eliminar/terminar un intervalo hay que quitarlo de escuchador==OBSERVER del clock
     Clock clock = Clock.getInstance();
-    clock.startTick();
-    ClockNotifier notify = new ClockNotifier(clock);
+    //clock.startTick();
+    //ClockNotifier notify = new ClockNotifier(clock);
 
     TaskManager root= new TaskManager("main");
 
@@ -17,14 +17,14 @@ public class Main {
     sleep(5000);
     Interval interval01 = ((Task) task0).createInterval();
 
-    notify.addListener(interval0);
-    notify.addListener(interval01);
+    //notify.addListener(interval0);
+    //notify.addListener(interval01);
 
 
     //Segon Task1
     Tracker task1 = root.createTrackers("second task", TrackerType.TASK);
     Interval interval1 = ((Task) task1).createInterval();
-    notify.addListener(interval1);
+    //notify.addListener(interval1);
 
     sleep(5000);
     interval0.stopInterval();
@@ -42,11 +42,12 @@ public class Main {
 
 
     //TODO notify.removeListener
-    notify.removeListener(interval0);
-    notify.removeListener(interval01);
-    notify.removeListener(interval1);
+    //notify.removeListener(interval0);
+    //notify.removeListener(interval01);
+    //notify.removeListener(interval1);
 
     clock.stopClock();
+
     System.out.println(root.name+"-->"+root.getDuration().getSeconds());
 
   }
