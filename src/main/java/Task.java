@@ -11,12 +11,14 @@ public class Task extends Tracker {
   private final TaskManager parentProject;
   private List<Interval> listIntervals;
   private boolean status;
+  private Duration taskDuration;
 
   public Task(TaskManager parent, String name) {
     super(name);
     parentProject=parent;
     listIntervals = new ArrayList<Interval>();
     status = true;
+    taskDuration = Duration.ZERO;
   }
 
   public void endTask(){
@@ -30,7 +32,7 @@ public class Task extends Tracker {
 
   @Override
   public Duration getDuration() {
-    return duration;
+    return taskDuration;
   }
 
   @Override
@@ -51,8 +53,8 @@ public class Task extends Tracker {
   }
 
   public void endInterval(Interval interval){
-    duration = duration.plus(interval.getDuration());
-    updateDuration(duration);
+    taskDuration = taskDuration.plus(interval.getDuration());
+    updateDuration(taskDuration);
   }
 
   @Override
