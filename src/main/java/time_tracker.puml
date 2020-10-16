@@ -1,58 +1,87 @@
 @startuml
 class Tracker{
-String name
-long duration
-getDuration()
-getTracker()
+#String name
+#Duration duration
++getDuration()
++getTracker()
++getName()
 }
 
 class TaskManager{
-list<Tracker> listTracker
-createTracker()
+-TaskManager parentTask
+-list<Tracker> listTracker
++getDuration()
++getTracker()
++createTracker()
+#updateDuration()
++getJSON()
++fromJSON()
 }
 
 class Task{
-TaskManager project
-List <Interval> listIntervals
-+createInterval()
+-TaskManager parentProject
+-List <Interval> listIntervals
+-boolean status
 +endTask()
++getDuration()
++getTracker()
++createTracker()
++endInterval()
++toString()
++getJSON()
 }
 
 class Interval{
 -Task parentTask
 -LocalDateTime startTime
 -LocalDateTime endTime
+-Duration duration
+-boolean inProgress
++isInProgress()
 +getDuration()
--calculateDuration()
-+getStartTime()
 +getEndTime()
 -updateDuration()
-+propertyChange(PropertyChangeEvent evt)
-+startInterval()
-+endInterval()
++setTime()
++setEndTime()
++stopInterval()
++update()
++ToString()
++getJSON()
 }
 
-Interface PropertyChangeListener
+Interface Observer
 
-Class PropertyChangeSupport
+Class Observable
 
 class Clock{
-getDate()
-setDate()
-date: Date
-timer: Timer
++startTime()
+-setTime()
++stopTime()
+Timer clock
+Observable observable
+LocalDateTime time
 }
 
-class DataStorage
+class DataStorage{
++string JSON_SAVE_FILE_NAME
++saveData()
++readData()
+}
 
 class Thread
+
+class ClockNotifier{
+-clock clockObservable
++addListener()
++removeListener()
+}
 
 TaskManager"0.." -- "1.." Task
 Tracker<|--(TaskManager, Task)
 Task"1"*--"0..*"Interval
-Interval--|>PropertyChangeListener
+Interval--|>Observer
 TaskManager o--Tracker
-Clock*--PropertyChangeSupport
+Clock*--Observable
 Thread <|-- Interval
 
 @enduml
