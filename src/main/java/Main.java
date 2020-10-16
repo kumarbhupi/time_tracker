@@ -14,7 +14,7 @@ public class Main {
     Tracker task0 = root.createTrackers("first task", TrackerType.TASK);
     //TODO assegurar que al castejar no afecta res
     Interval interval0 = ((Task) task0).createInterval();
-    sleep(1000);
+    sleep(5000);
     Interval interval01 = ((Task) task0).createInterval();
 
     notify.addListener(interval0);
@@ -28,14 +28,17 @@ public class Main {
 
     sleep(5000);
     interval0.stopInterval();
-    interval01.stopInterval();
-    interval1.stopInterval();
     System.out.println("interval0 "+interval0.getDuration().getSeconds());
+    System.out.println(task0.name+" "+task0.getDuration().getSeconds());
+    System.out.println(root.name+"-->"+root.getDuration().getSeconds());
+    interval01.stopInterval();
     System.out.println("interval01 "+interval01.getDuration().getSeconds());
     System.out.println(task0.name+" "+task0.getDuration().getSeconds());
-    //System.out.println("interval1 "+interval1.getDuration().getSeconds());
+    System.out.println(root.name+"-->"+root.getDuration().getSeconds());
+    interval1.stopInterval();
+    System.out.println("interval1 "+interval1.getDuration().getSeconds());
     System.out.println(task1.name+" "+task1.getDuration().getSeconds());
-
+    System.out.println(root.name+"-->"+root.getDuration().getSeconds());
 
 
     //TODO notify.removeListener
