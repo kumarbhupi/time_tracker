@@ -19,6 +19,14 @@ public class Interval implements Observer{
     this.duration = Duration.ZERO;
   }
 
+  public void setDuration(Duration duration) {
+    this.duration = duration;
+  }
+
+  public void setInProgress(boolean inProgress) {
+    this.inProgress = inProgress;
+  }
+
   public boolean isInProgress() {
     return inProgress;
   }

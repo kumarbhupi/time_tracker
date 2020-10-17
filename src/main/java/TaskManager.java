@@ -5,10 +5,6 @@ import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
-enum TrackerType {
-  TASK,
-  PROJECT
-}
 
 public class TaskManager extends Tracker implements Element {
 
@@ -16,12 +12,6 @@ public class TaskManager extends Tracker implements Element {
   private TaskManager parentProject;
 
   private List<Tracker> trackers;
-
-
-  //TODO LListat de TaskManagers+Tasks
-  //TODO Variable per diferenciar TaskManager de Task
-  //TODO Recuperar la duració TOTAL del conjunt de Tasks+TaskManagers
-
 
   public TaskManager(String name) {
     super(name);
@@ -37,6 +27,10 @@ public class TaskManager extends Tracker implements Element {
     super(name);
     trackers = new ArrayList<Tracker>();
     this.parentProject = parentProject;
+  }
+
+  public void setTrackers(List<Tracker> trackers) {
+    this.trackers = trackers;
   }
 
   @Override
@@ -95,7 +89,8 @@ public class TaskManager extends Tracker implements Element {
   }
 
   @Override
-  public JSONObject accept(VisitorRead v) {
+  public TaskManager accept(VisitorRead v) {
+    //Not implemented
     return null;
   }
 

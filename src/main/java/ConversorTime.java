@@ -1,6 +1,5 @@
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
 
 public class ConversorTime {
   private LocalDateTime startTime;
@@ -17,7 +16,7 @@ public class ConversorTime {
     this.startTime=start;
     this.endTime=end;
     duration = Duration.between(start,end);
-    //TODO: Acabar esto YA /Alberto
+
     /*tempDateTime = LocalDateTime.from( startTime );
     //extreiem anys,mesos,dias,horas,minuts,segons del tempDateTime
     long years= tempDateTime.until( endTime, ChronoUnit.YEARS );

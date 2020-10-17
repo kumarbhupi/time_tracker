@@ -23,6 +23,7 @@ public class Task extends Tracker{
     this.duration = duration;
   }
 
+
   public List<Interval> getListIntervals() {
     return listIntervals;
   }
