@@ -11,6 +11,7 @@ enum TrackerType {
 }
 public class TaskManager extends Tracker{
   private TaskManager parentProject;
+
   private List<Tracker> trackers;
 
 
@@ -22,12 +23,13 @@ public class TaskManager extends Tracker{
   public TaskManager(String name) {
     super(name);
     trackers = new ArrayList<Tracker>();
+
   }
 
   public TaskManager(TaskManager parentProject,String name) {
     super(name);
     trackers = new ArrayList<Tracker>();
-    this.parentProject =parentProject;
+    this.parentProject = parentProject;
   }
 
   @Override
@@ -43,10 +45,15 @@ public class TaskManager extends Tracker{
   @Override
   protected void updateDuration(Duration durationToAdd) {
     if (parentProject == null){
-      this.duration = this.duration.plus(durationToAdd);
+      duration = duration.plus(durationToAdd);
+
     }else {
-      parentProject.updateDuration(duration);
+      parentProject.updateDuration(durationToAdd);
     }
+  }
+
+  public void addChild(Tracker child){
+    trackers.add(child);
   }
 
   public Tracker createTrackers(String name, TrackerType type){

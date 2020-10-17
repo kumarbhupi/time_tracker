@@ -3,8 +3,6 @@ import org.json.JSONArray;
 import java.io.FileWriter;
 import java.io.IOException;
 
-import static java.lang.Thread.sleep;
-
 
 public class DataStorage {
   public static final String JSON_SAVED_FILE_NAME = "json_data.json";
@@ -36,7 +34,7 @@ public class DataStorage {
 
 
   public static void main(String[] args) throws InterruptedException {
-    Clock clock = new Clock();
+    /*Clock clock = Clock.getInstance();
     clock.startTick();
     ClockNotifier clockNotifier = new ClockNotifier(clock);
 

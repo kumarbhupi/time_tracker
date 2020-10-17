@@ -1,48 +1,54 @@
-import java.io.IOException;
-
 import static java.lang.Thread.sleep;
 
 public class Main {
 
-  public static void main(String[] args) throws InterruptedException, IOException {
+  public static void main(String[] args) throws InterruptedException {
     //TODO: Al eliminar/terminar un intervalo hay que quitarlo de escuchador==OBSERVER del clock
-    Clock clock = new Clock();
-    clock.startTick();
-    ClockNotifier notify = new ClockNotifier(clock);
+    Clock clock = Clock.getInstance();
+    //clock.startTick();
+    //ClockNotifier notify = new ClockNotifier(clock);
+
     TaskManager root= new TaskManager("main");
-    DataStorage Data=new DataStorage();
+
     //Primer Task
-    Tracker task0 = root.createTrackers("Task1", TrackerType.TASK);
+    Tracker task0 = root.createTrackers("first task", TrackerType.TASK);
     //TODO assegurar que al castejar no afecta res
     Interval interval0 = ((Task) task0).createInterval();
+    sleep(5000);
     Interval interval01 = ((Task) task0).createInterval();
-    notify.addListener(interval0);
-    notify.addListener(interval01);
+
+    //notify.addListener(interval0);
+    //notify.addListener(interval01);
+
 
     //Segon Task1
-    Tracker task1 = root.createTrackers("Task2", TrackerType.TASK);
+    Tracker task1 = root.createTrackers("second task", TrackerType.TASK);
     Interval interval1 = ((Task) task1).createInterval();
-    notify.addListener(interval1);
+    //notify.addListener(interval1);
 
     sleep(5000);
     interval0.stopInterval();
+    System.out.println("interval0 "+interval0.getDuration().getSeconds());
+    System.out.println(task0.name+" "+task0.getDuration().getSeconds());
+    System.out.println(root.name+"-->"+root.getDuration().getSeconds());
     interval01.stopInterval();
+    System.out.println("interval01 "+interval01.getDuration().getSeconds());
+    System.out.println(task0.name+" "+task0.getDuration().getSeconds());
+    System.out.println(root.name+"-->"+root.getDuration().getSeconds());
     interval1.stopInterval();
+    System.out.println("interval1 "+interval1.getDuration().getSeconds());
+    System.out.println(task1.name+" "+task1.getDuration().getSeconds());
+    System.out.println(root.name+"-->"+root.getDuration().getSeconds());
+
 
     //TODO notify.removeListener
-    notify.removeListener(interval0);
-    notify.removeListener(interval01);
-    notify.removeListener(interval1);
+    //notify.removeListener(interval0);
+    //notify.removeListener(interval01);
+    //notify.removeListener(interval1);
 
     clock.stopClock();
-    System.out.println(root.getDuration().getSeconds());
 
-
-
-    //Data.saveData(root);
-
-    Data.readData();
-
+    System.out.println(root.name+"-->"+root.getDuration().getSeconds());
 
   }
 }

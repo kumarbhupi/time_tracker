@@ -45,15 +45,18 @@ public class Task extends Tracker {
   }
 
   public Interval createInterval() {
-
+    Clock clock = Clock.getInstance();
     Interval interval = new Interval(this, LocalDateTime.now());
     listIntervals.add(interval);
+    clock.addObserver(interval);
     return interval;
   }
 
   public void endInterval(Interval interval){
+    Clock clock = Clock.getInstance();
     duration = duration.plus(interval.getDuration());
-    updateDuration(duration);
+    updateDuration(interval.getDuration());
+    clock.deleteObserver(interval);
   }
 
   @Override
