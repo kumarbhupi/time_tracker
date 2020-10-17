@@ -14,8 +14,8 @@ public abstract class Tracker {
 
   public abstract Tracker getTracker();
   protected abstract void updateDuration(Duration durationToAdd);
-  public abstract JSONObject getJSON();
-  public abstract void fromJSON(JSONObject jsonObject);
+  //public abstract JSONObject getJSON();
+  //public abstract void fromJSON(JSONObject jsonObject);
   public String getName() {
     return this.name;
   }

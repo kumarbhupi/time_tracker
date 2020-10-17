@@ -1,13 +1,16 @@
 import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 
 public class DataStorage {
   public static final String JSON_SAVED_FILE_NAME = "json_data.json";
 
-  public void saveData(Tracker toSave){
+  /*public void saveData(Tracker toSave){
 
     JSONArray trackerListJson = new JSONArray();
     trackerListJson.put(toSave.getJSON());
@@ -17,7 +20,7 @@ public class DataStorage {
     }catch (IOException e){
       e.printStackTrace();
     }
-  }
+  }*/
 
   public void readData() throws IOException {
     Tracker tracker=null;

@@ -38,7 +38,10 @@ public class TaskManager extends Tracker implements Element {
     trackers = new ArrayList<Tracker>();
     this.parentProject = parentProject;
   }
-
+  //TODO OBTENIR EL START TIME DE TASK MANAGER
+  /*public String getStartTime(){
+    return parentProject.getStartTime();
+  }*/
   @Override
   public Duration getDuration() {
     return duration;
@@ -63,11 +66,13 @@ public class TaskManager extends Tracker implements Element {
     }
   }
 
+
+
   public void addChild(Tracker child) {
     trackers.add(child);
   }
 
-  @Override
+  /*@Override
   public JSONObject getJSON() {
     JSONObject object = new JSONObject();
     object.put("name", name);
@@ -92,7 +97,7 @@ public class TaskManager extends Tracker implements Element {
       JSONObject eachTrack = jsonArray.getJSONObject(i);
 
     }
-  }
+  }*/
 
   @Override
   public JSONObject accept(VisitorRead v) {
@@ -102,5 +107,10 @@ public class TaskManager extends Tracker implements Element {
   @Override
   public JSONObject accept(Visitor v) {
     return v.visit(this);
+  }
+
+  @Override
+  public void acceptPrinter(PrintVisitor v){
+    v.print(this);
   }
 }

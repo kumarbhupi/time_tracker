@@ -1,15 +1,13 @@
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Task extends Tracker{
+public class Task extends Tracker implements Element{
 
-  private final TaskManager parentProject;
+  private TaskManager parentProject;
   private List<Interval> listIntervals;
   private boolean status;
 
@@ -18,6 +16,16 @@ public class Task extends Tracker{
     parentProject=parent;
     listIntervals = new ArrayList<Interval>();
     status = true;
+  }
+  public String getStartTime(){
+    if(listIntervals.get(0)!=null){
+      return(listIntervals.get(0).getStartTime());}
+    return null;
+  }
+  public String getProgressTime(){
+    if(listIntervals.get(0)!=null){
+      return(listIntervals.get(0).getProgressTime());}
+    return null;
   }
 
   public void setDuration(Duration duration){
@@ -89,7 +97,23 @@ public class Task extends Tracker{
         ", duration=" + duration +
         '}';
   }
+
   @Override
+  public JSONObject accept(VisitorRead v) {
+    return null;
+  }
+
+  @Override
+  public JSONObject accept(Visitor v) {
+    return null;
+  }
+
+  @Override
+  public void acceptPrinter(PrintVisitor v) {
+    v.print(this);
+  }
+
+  /*@Override
   public JSONObject getJSON(){
     JSONObject object = new JSONObject();
     object.put("name", name);
@@ -103,9 +127,9 @@ public class Task extends Tracker{
     }
     object.put("listIntervals", intervals);
     return object;
-  }
+  }*/
 
-  public void fromJSON(JSONObject jsonObject) {
+  /*public void fromJSON(JSONObject jsonObject) {
     DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE_TIME;
     LocalDateTime optionalDateTime;
     this.duration=Duration.ofSeconds(jsonObject.getInt("duration"));
@@ -123,6 +147,6 @@ public class Task extends Tracker{
       this.listIntervals.add(interval);
     }
     this.listIntervals(interval);
-  }
+  }*/
 }
 

@@ -8,6 +8,8 @@ public interface Visitor {
   JSONObject visit(Task task);
 
   JSONObject visit(Interval interval);
+
+
 }
 
 

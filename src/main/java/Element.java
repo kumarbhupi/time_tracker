@@ -5,4 +5,5 @@ public interface Element {
 
   JSONObject accept(Visitor v);
 
+  void acceptPrinter(PrintVisitor v);
 }
