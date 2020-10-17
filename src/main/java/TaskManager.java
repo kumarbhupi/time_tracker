@@ -9,7 +9,10 @@ enum TrackerType {
   TASK,
   PROJECT
 }
-public class TaskManager extends Tracker{
+
+public class TaskManager extends Tracker implements Element {
+
+
   private TaskManager parentProject;
 
   private List<Tracker> trackers;
@@ -26,7 +29,11 @@ public class TaskManager extends Tracker{
 
   }
 
-  public TaskManager(TaskManager parentProject,String name) {
+  public List<Tracker> getTrackers() {
+    return trackers;
+  }
+
+  public TaskManager(TaskManager parentProject, String name) {
     super(name);
     trackers = new ArrayList<Tracker>();
     this.parentProject = parentProject;
@@ -37,6 +44,10 @@ public class TaskManager extends Tracker{
     return duration;
   }
 
+  public void setDuration(Duration duration) {
+    this.duration = duration;
+  }
+
   @Override
   public Tracker getTracker() {
     return this;
@@ -44,44 +55,28 @@ public class TaskManager extends Tracker{
 
   @Override
   protected void updateDuration(Duration durationToAdd) {
-    if (parentProject == null){
+    if (parentProject == null) {
       duration = duration.plus(durationToAdd);
 
-    }else {
+    } else {
       parentProject.updateDuration(durationToAdd);
     }
   }
 
-  public void addChild(Tracker child){
+  public void addChild(Tracker child) {
     trackers.add(child);
   }
 
-  public Tracker createTrackers(String name, TrackerType type){
-    switch (type){
-      case TASK:
-        Tracker task = new Task(this, name);
-        trackers.add(task);
-        return task;
-      case PROJECT:
-        Tracker project = new TaskManager(this, name);
-        trackers.add(project);
-        return project;
-      default:
-        break;
-    }
-    return null;
-  }
-
   @Override
-  public JSONObject getJSON(){
+  public JSONObject getJSON() {
     JSONObject object = new JSONObject();
     object.put("name", name);
     object.put("duration", duration.getSeconds());
-    if (parentProject != null){
+    if (parentProject != null) {
       object.put("parentProject", parentProject.getName());
     }
     JSONArray trackersArray = new JSONArray();
-    for (Tracker tracker: trackers) {
+    for (Tracker tracker : trackers) {
       trackersArray.put(tracker.getJSON());
     }
     object.put("trackers", trackersArray);
@@ -97,5 +92,15 @@ public class TaskManager extends Tracker{
       JSONObject eachTrack = jsonArray.getJSONObject(i);
 
     }
+  }
+
+  @Override
+  public JSONObject accept(VisitorRead v) {
+    return null;
+  }
+
+  @Override
+  public JSONObject accept(Visitor v) {
+    return v.visit(this);
   }
 }

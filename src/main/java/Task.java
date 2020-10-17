@@ -7,7 +7,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Task extends Tracker {
+public class Task extends Tracker{
 
   private final TaskManager parentProject;
   private List<Interval> listIntervals;
@@ -20,6 +20,22 @@ public class Task extends Tracker {
     status = true;
   }
 
+  public void setDuration(Duration duration){
+    this.duration = duration;
+  }
+
+  public List<Interval> getListIntervals() {
+    return listIntervals;
+  }
+
+  public void setListIntervals(List<Interval> listIntervals) {
+    this.listIntervals = listIntervals;
+  }
+
+  public void setStatus(boolean status) {
+    this.status = status;
+  }
+
   public void endTask(){
     status = false;
     for (Interval interval : listIntervals){
@@ -27,6 +43,10 @@ public class Task extends Tracker {
         interval.stopInterval();
       }
     }
+  }
+
+  public boolean isStatus() {
+    return status;
   }
 
   @Override

@@ -5,24 +5,13 @@ import java.time.LocalDateTime;
 import java.util.Observable;
 import java.util.Observer;
 
-public class Interval implements Observer {
-  private Task parentTask;
+public class Interval implements Observer{
+  private final Task parentTask;
   private LocalDateTime startTime;
   private LocalDateTime endTime;
   private Duration duration;
   private boolean inProgress;
 
-  public void setDuration(Duration duration) {
-    this.duration = duration;
-  }
-  public void setParentTask(Task parentTask){
-    this.parentTask=parentTask;
-  }
-
-  public void setInProgress(boolean inProgress) {
-    this.inProgress = inProgress;
-  }
-  public Interval() {}
   public Interval(Task task, LocalDateTime startTime){
     this.parentTask=task;
     this.startTime=startTime;
@@ -50,6 +39,14 @@ public class Interval implements Observer {
   }
   public void setEndTime(LocalDateTime endTime){
     this.endTime=endTime;
+  }
+
+  public Task getParentTask() {
+    return parentTask;
+  }
+
+  public String getStartTime() {
+    return startTime.toString();
   }
 
   public void stopInterval(){
@@ -85,5 +82,4 @@ public class Interval implements Observer {
     object.put("inProgress", inProgress);
     return object;
   }
-
 }
