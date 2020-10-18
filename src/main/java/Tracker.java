@@ -20,6 +20,8 @@ public abstract class Tracker {
     return this.name;
   }
   public abstract Duration getDuration();
+  public abstract String getStartTimeToString();
+  public abstract String getEndTimeToString();
 
 
 

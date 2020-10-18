@@ -5,7 +5,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
-public class FileManager implements Element{
+public class FileManager implements Element {
   public static final String JSON_SAVED_FILE_NAME = "json_data.json";
   private JSONObject jsonObjectRead;
 
@@ -40,5 +40,10 @@ public class FileManager implements Element{
   @Override
   public JSONObject accept(Visitor v) {
     return null;
+  }
+
+  @Override
+  public void print(VisitorPrint visitorPrint) {
+
   }
 }
