@@ -1,6 +1,4 @@
-import org.json.JSONObject;
-
 public interface VisitorRead {
-  TaskManager visit(JSONObject object);
+  TaskManager visit(FileManager fileManager);
 
 }

@@ -3,12 +3,13 @@ import org.json.JSONObject;
 
 import java.util.List;
 
-public class ToJsonFileVisitor implements Visitor {
+public class ToJsonVisitor implements Visitor {
+  //TODO: Mirar si los instanceof estan bien o no.
   @Override
   public JSONObject visit(Tracker tracker) {
-    if (tracker instanceof Task){
+    if (tracker instanceof Task) {
       return visit((Task) tracker);
-    }else if (tracker instanceof TaskManager){
+    } else if (tracker instanceof TaskManager) {
       return visit((TaskManager) tracker);
     }
     return null;
@@ -23,7 +24,7 @@ public class ToJsonFileVisitor implements Visitor {
     List<Tracker> trackerList = taskManager.getTrackers();
 
     JSONArray jsonArray = new JSONArray();
-    for (Tracker tracker: trackerList) {
+    for (Tracker tracker : trackerList) {
       jsonArray.put(visit(tracker));
     }
     jsonObject.put("trackers", jsonArray);

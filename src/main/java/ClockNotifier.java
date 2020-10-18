@@ -1,7 +1,5 @@
-import java.beans.PropertyChangeListener;
 import java.util.Observer;
 
-//TODO: Mirar esto con detalle/ Alberto
 public class ClockNotifier {
   private final Clock clockObservable;
 

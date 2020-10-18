@@ -1,4 +1,4 @@
-import org.json.JSONObject;
+import javafx.print.Printer;
 
 import static java.lang.Thread.sleep;
 
@@ -6,6 +6,7 @@ public class Main {
 
   public static void main(String[] args) throws InterruptedException {
 
+    /*
     Clock clock = Clock.getInstance();
 
     TaskManager root = new TaskManager("main");
@@ -51,7 +52,31 @@ public class Main {
     ToJsonFileVisitor jsonFileVisitor = new ToJsonFileVisitor();
     JSONObject object = root.accept(jsonFileVisitor);
 
-    System.out.println(object.toString());
+    FileManager fileManager = new FileManager();
+    fileManager.saveToJsonFile(object);
+
+
+    FileManager fileManager = new FileManager();
+    fileManager.readFromJsonFile();
+    FromJsonVisitor fromJsonVisitor = new FromJsonVisitor();
+    TaskManager taskManager = fromJsonVisitor.visit(fileManager);
+     */
+
+    PrinterVisitor printerVisitor = new PrinterVisitor();
+
+
+    TaskManager root = new TaskManager("root");
+    printerVisitor.print(root);
+    Task transportation = new Task(root, "transportation");
+    root.addChild(transportation);
+
+    transportation.createInterval();
+    sleep(4000);
+
+
+
+
+
 
   }
 

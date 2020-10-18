@@ -3,8 +3,6 @@ import java.util.Observable;
 import java.util.Timer;
 import java.util.TimerTask;
 
-//TODO:Arreglar y mirar que todo este correcto /Alberto
-
 public class Clock extends Observable {
   private Observable observable;
   private final Timer clock;
