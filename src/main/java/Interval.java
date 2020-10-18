@@ -6,7 +6,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Observable;
 import java.util.Observer;
 
-public class Interval implements Observer, Element{
+public class Interval implements Observer{
   private final Task parentTask;
   private LocalDateTime startTime;
   private LocalDateTime endTime;
@@ -72,6 +72,7 @@ public class Interval implements Observer, Element{
   public void stopInterval(){
     inProgress = false;
     parentTask.endInterval(this);
+
   }
 
   @Override
@@ -95,33 +96,5 @@ public class Interval implements Observer, Element{
         ", duration :" + duration.getSeconds() +
         ", inProgress :" + inProgress +
         '}';
-  }
-
-  public JSONObject getJSON(){
-    JSONObject object = new JSONObject();
-    object.put("parentTask", parentTask.getName());
-    object.put("startTime", startTime.toString());
-    object.put("endTime", endTime.toString());
-    object.put("duration", duration.getSeconds());
-    object.put("inProgress", inProgress);
-    return object;
-  }
-
-  @Override
-  public TaskManager accept(VisitorRead v) {
-    //Not implmented
-    return null;
-  }
-
-  @Override
-  public JSONObject accept(Visitor v) {
-    //Not implmented
-    return null;
-  }
-
-  @Override
-  public void print(VisitorPrint visitorPrint) {
-    visitorPrint.print(this);
-
   }
 }

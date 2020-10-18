@@ -23,7 +23,7 @@ public class FileManager implements Element {
   }
 
   public void readFromJsonFile(){
-    try(FileReader reader = new FileReader(DataStorage.JSON_SAVED_FILE_NAME)){
+    try(FileReader reader = new FileReader(JSON_SAVED_FILE_NAME)){
       jsonObjectRead = (JSONObject) new JSONTokener(reader).nextValue();
       System.out.println(jsonObjectRead.toString());
     } catch (IOException e) {

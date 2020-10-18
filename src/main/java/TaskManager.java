@@ -104,32 +104,6 @@ public class TaskManager extends Tracker implements Element {
         trackers.add(child);
     }
 
-    @Override
-    public JSONObject getJSON() {
-        JSONObject object = new JSONObject();
-        object.put("name", name);
-        object.put("duration", duration.getSeconds());
-        if (parentProject != null) {
-            object.put("parentProject", parentProject.getName());
-        }
-        JSONArray trackersArray = new JSONArray();
-        for (Tracker tracker : trackers) {
-            trackersArray.put(tracker.getJSON());
-        }
-        object.put("trackers", trackersArray);
-        return object;
-    }
-
-    @Override
-    public void fromJSON(JSONObject jsonObject) {
-        this.name = jsonObject.getString("name");
-        this.duration = Duration.ofSeconds(jsonObject.getLong("duration"));
-        JSONArray jsonArray = jsonObject.getJSONArray("trackers");
-        for (int i = 0; i < jsonArray.length(); i++) {
-            JSONObject eachTrack = jsonArray.getJSONObject(i);
-
-        }
-    }
 
     @Override
     public TaskManager accept(VisitorRead v) {

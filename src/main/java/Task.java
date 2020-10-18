@@ -52,9 +52,6 @@ public class Task extends Tracker implements Element {
 
   @Override
   public String getStartTimeToString(){
-    if (parentProject.getStartTime() == null){
-      parentProject.setStartTime(listIntervals.get(0).getStartTime());
-    }
     return listIntervals.get(0).getStartTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
   }
 
@@ -82,6 +79,8 @@ public class Task extends Tracker implements Element {
   }
 
   public Interval createInterval() {
+    System.out.println(name+" started");
+    status = true;
     LocalDateTime now = LocalDateTime.now();
     Clock clock = Clock.getInstance();
     Interval interval = new Interval(this, now);
@@ -94,10 +93,23 @@ public class Task extends Tracker implements Element {
   }
 
   public void endInterval(Interval interval){
+    System.out.println(name+ " stops");
+    checkStatus();
     Clock clock = Clock.getInstance();
-    duration = duration.plus(interval.getDuration());
-    updateDuration(interval.getDuration());
+    updateInterval(interval);
     clock.deleteObserver(interval);
+
+  }
+
+  public void checkStatus(){
+    boolean status = false;
+    for (Interval interval: listIntervals) {
+      if (interval.isInProgress()){
+        status = true;
+      }
+    }
+    setStatus(status);
+
   }
 
   public void updateInterval(Interval interval){
@@ -118,26 +130,6 @@ public class Task extends Tracker implements Element {
         ", name='" + name + '\'' +
         ", duration=" + duration +
         '}';
-  }
-  @Override
-  public JSONObject getJSON(){
-    JSONObject object = new JSONObject();
-    object.put("name", name);
-    object.put("duration", duration.getSeconds());
-    object.put("parentProject", parentProject.getName());
-    object.put("status", status);
-
-    JSONArray intervals = new JSONArray();
-    for (Interval inter : listIntervals) {
-      intervals.put(inter.getJSON());
-    }
-    object.put("listIntervals", intervals);
-    return object;
-  }
-
-  @Override
-  public void fromJSON(JSONObject jsonObject) {
-
   }
 
   public LocalDateTime getEndTime() {
