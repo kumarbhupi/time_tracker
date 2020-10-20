@@ -1,13 +1,10 @@
-import javafx.print.Printer;
-
 import static java.lang.Thread.sleep;
 
 public class Main {
 
   public static void main(String[] args) throws InterruptedException {
 
-    /*
-    Clock clock = Clock.getInstance();
+    /*Clock clock = Clock.getInstance();
 
     TaskManager root = new TaskManager("main");
 
@@ -49,7 +46,7 @@ public class Main {
 
     System.out.println(root.name + "-->" + root.getDuration().getSeconds());
 
-    ToJsonFileVisitor jsonFileVisitor = new ToJsonFileVisitor();
+    /*ToJsonFileVisitor jsonFileVisitor = new ToJsonFileVisitor();
     JSONObject object = root.accept(jsonFileVisitor);
 
     FileManager fileManager = new FileManager();
@@ -59,8 +56,8 @@ public class Main {
     FileManager fileManager = new FileManager();
     fileManager.readFromJsonFile();
     FromJsonVisitor fromJsonVisitor = new FromJsonVisitor();
-    TaskManager taskManager = fromJsonVisitor.visit(fileManager);
-     */
+    TaskManager taskManager = fromJsonVisitor.visit(fileManager);*/
+
 
 
 
@@ -97,16 +94,6 @@ public class Main {
 
     Clock.getInstance().stopClock();
     printerVisitor.stopPrinting();
-
-
-
-
-
-
-
-
-
-
 
   }
 

@@ -30,7 +30,7 @@ public class PrinterVisitor implements VisitorPrint {
 
     @Override
     public void print(Task task) {
-        if (task.isStatus()){
+        if (task.isActive()){
             for (Interval interval: task.getListIntervals()) {
                 print(interval);
             }

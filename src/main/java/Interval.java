@@ -1,5 +1,3 @@
-import org.json.JSONObject;
-
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -10,20 +8,12 @@ public class Interval implements Observer{
   private final Task parentTask;
   private LocalDateTime startTime;
   private LocalDateTime endTime;
-  private Duration duration;
-  private LocalDateTime progressTime;
   private boolean inProgress;
 
   public Interval(Task task, LocalDateTime startTime){
     this.parentTask=task;
     this.startTime=startTime;
     this.inProgress=true;
-    this.duration = Duration.ZERO;
-    this.progressTime = startTime;
-  }
-
-  public void setDuration(Duration duration) {
-    this.duration = duration;
   }
 
   public void setInProgress(boolean inProgress) {
@@ -35,7 +25,7 @@ public class Interval implements Observer{
   }
 
   public Duration getDuration(){
-    return duration;
+    return Duration.between(startTime, endTime);
   }
   public LocalDateTime getEndTime(){
     return endTime;
@@ -44,16 +34,12 @@ public class Interval implements Observer{
   public String getEndTimeToString(){
     return endTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
   }
-  private Duration updateDuration() {
-    return Duration.between(progressTime, endTime);
-  }
 
   public void setStartTime(LocalDateTime startTime) {
     this.startTime = startTime;
   }
 
   public void setEndTime(LocalDateTime endTime){
-    parentTask.setEndTime(endTime);
     this.endTime=endTime;
   }
 
@@ -71,20 +57,16 @@ public class Interval implements Observer{
 
   public void stopInterval(){
     inProgress = false;
+    //parentTask.intervalUpdated(this.endTime);
     parentTask.endInterval(this);
-
   }
 
   @Override
   public void update(Observable observable, Object time) {
     setEndTime((LocalDateTime) time);
     if (inProgress){
-      duration = updateDuration();
-      parentTask.updateInterval(this);
-    }else{
-      progressTime = (LocalDateTime) time;
+      parentTask.intervalUpdated(this.endTime);
     }
-
   }
 
   @Override
@@ -93,7 +75,7 @@ public class Interval implements Observer{
         "parentTask :" + parentTask.getName() +
         ", startTime :" + startTime +
         ", endTime :" + endTime +
-        ", duration :" + duration.getSeconds() +
+        ", duration :" + getDuration() +
         ", inProgress :" + inProgress +
         '}';
   }

@@ -1,5 +1,5 @@
-import org.json.JSONArray;
 import org.json.JSONObject;
+
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -10,18 +10,14 @@ public class Task extends Tracker implements Element {
 
   private final TaskManager parentProject;
   private List<Interval> listIntervals;
-  private boolean status;
-  private LocalDateTime endTime; //TODO: Think better name
+  private boolean active;
 
   public Task(TaskManager parent, String name) {
     super(name);
     parentProject=parent;
     listIntervals = new ArrayList<Interval>();
-    status = true;
-  }
+    active = false;
 
-  public void setDuration(Duration duration){
-    this.duration = duration;
   }
 
 
@@ -33,22 +29,6 @@ public class Task extends Tracker implements Element {
     this.listIntervals = listIntervals;
   }
 
-  public void setStatus(boolean status) {
-    this.status = status;
-  }
-
-  public void endTask(){
-    status = false;
-    for (Interval interval : listIntervals){
-      if (interval.isInProgress()){
-        interval.stopInterval();
-      }
-    }
-  }
-
-  public boolean isStatus() {
-    return status;
-  }
 
   @Override
   public String getStartTimeToString(){
@@ -64,23 +44,39 @@ public class Task extends Tracker implements Element {
   }
 
   @Override
+  public LocalDateTime getStartTime() {
+    return this.startTime;
+  }
+
+  @Override
+  protected void updateParentEndTime(LocalDateTime endTime) {
+    parentProject.updateParentEndTime(endTime);
+
+  }
+
+  @Override
   public Duration getDuration() {
+    Duration duration = Duration.ZERO;
+    for (Interval interval: listIntervals) {
+      duration = duration.plus(Duration.between(interval.getStartTime(),interval.getEndTime()));
+    }
     return duration;
   }
 
-  @Override
-  public Tracker getTracker() {
-    return parentProject;
+
+  public void endInterval(Interval interval){
+    System.out.println(name+ " stops");
+    Clock clock = Clock.getInstance();
+    clock.deleteObserver(interval);
+    active = false;
   }
 
-  @Override
-  protected void updateDuration(Duration durationToAdd) {
-    parentProject.updateDuration(durationToAdd);
+  public boolean isActive() {
+    return active;
   }
 
   public Interval createInterval() {
     System.out.println(name+" started");
-    status = true;
     LocalDateTime now = LocalDateTime.now();
     Clock clock = Clock.getInstance();
     Interval interval = new Interval(this, now);
@@ -89,36 +85,14 @@ public class Task extends Tracker implements Element {
     if (parentProject.getStartTime() == null){
       parentProject.setStartTime(now);
     }
+    active = true;
     return interval;
   }
 
-  public void endInterval(Interval interval){
-    System.out.println(name+ " stops");
-    checkStatus();
-    Clock clock = Clock.getInstance();
-    updateInterval(interval);
-    clock.deleteObserver(interval);
 
-  }
-
-  public void checkStatus(){
-    boolean status = false;
-    for (Interval interval: listIntervals) {
-      if (interval.isInProgress()){
-        status = true;
-      }
-    }
-    setStatus(status);
-
-  }
-
-  public void updateInterval(Interval interval){
-    updateDuration(durationDifference(interval.getDuration(), duration));
-    duration = duration.plus(durationDifference(interval.getDuration(), duration));
-  }
-
-  public Duration durationDifference(Duration firstDuration, Duration secondDuration){
-    return firstDuration.minus(secondDuration);
+  public void intervalUpdated(LocalDateTime endTime){
+    this.endTime = endTime;
+    updateParentEndTime(endTime);
   }
 
   @Override
@@ -126,9 +100,8 @@ public class Task extends Tracker implements Element {
     return "{" +
         "parentProject=" + parentProject.getName() +
         ", listIntervals=" + listIntervals.toString() +
-        ", status=" + status +
         ", name='" + name + '\'' +
-        ", duration=" + duration +
+        ", duration=" + getDuration() +
         '}';
   }
 

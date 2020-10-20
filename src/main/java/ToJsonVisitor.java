@@ -37,7 +37,7 @@ public class ToJsonVisitor implements Visitor {
     jsonObject.put("name", task.name);
     jsonObject.put("seconds", task.getDuration().getSeconds());
     jsonObject.put("nano", task.getDuration().getNano());
-    jsonObject.put("status", task.isStatus());
+    jsonObject.put("status", task.isActive());
     List<Interval> intervalList = task.getListIntervals();
     JSONArray jsonArray = new JSONArray();
 
