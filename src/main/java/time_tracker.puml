@@ -62,11 +62,6 @@ Observable observable
 LocalDateTime time
 }
 
-class DataStorage{
-+string JSON_SAVE_FILE_NAME
-+saveData()
-+readData()
-}
 
 class ClockNotifier{
 -clock clockObservable
