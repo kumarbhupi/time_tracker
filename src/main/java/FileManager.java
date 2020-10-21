@@ -31,7 +31,6 @@ public class FileManager implements Element {
     }
   }
 
-
   @Override
   public TaskManager accept(VisitorRead v) {
     return v.visit(this);

@@ -29,6 +29,9 @@ public class Task extends Tracker implements Element {
     this.listIntervals = listIntervals;
   }
 
+  public void setActive(boolean active) {
+    this.active = active;
+  }
 
   @Override
   public String getStartTimeToString(){

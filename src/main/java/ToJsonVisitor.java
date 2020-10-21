@@ -3,8 +3,9 @@ import org.json.JSONObject;
 
 import java.util.List;
 
-public class ToJsonVisitor implements Visitor {
-  //TODO: Mirar si los instanceof estan bien o no.
+public class ToJsonVisitor implements Visitor {     //passa els objectes que hi han a JSON per guardar
+  //TODO: S'ha canviat el instanceof per un accept.
+
   @Override
   public JSONObject visit(Tracker tracker) {
     return tracker.accept(this);
@@ -32,7 +33,7 @@ public class ToJsonVisitor implements Visitor {
     jsonObject.put("name", task.name);
     jsonObject.put("seconds", task.getDuration().getSeconds());
     jsonObject.put("nano", task.getDuration().getNano());
-    jsonObject.put("status", task.isActive());
+    jsonObject.put("active", task.isActive());
     List<Interval> intervalList = task.getListIntervals();
     JSONArray jsonArray = new JSONArray();
 

@@ -37,7 +37,7 @@ public class TaskManager extends Tracker implements Element {
 
   public List<Tracker> getTrackers() {
     return trackers;
-  }
+  } //Para tener lista de proyectos y tasks.
 
   public TaskManager(TaskManager parentProject, String name) {
     super(name);
@@ -98,7 +98,6 @@ public class TaskManager extends Tracker implements Element {
 
   @Override
   public TaskManager accept(VisitorRead v) {
-    //Not implemented
     return null;
   }
 

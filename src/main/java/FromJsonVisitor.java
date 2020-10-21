@@ -1,13 +1,22 @@
+import org.json.JSONArray;
+import org.json.JSONObject;
 
+import java.time.Duration;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
-public class FromJsonVisitor {}/* implements VisitorRead {
-
+public class FromJsonVisitor implements VisitorRead {
 
   @Override
   public TaskManager visit(FileManager fileManager) {
     JSONObject object = fileManager.getJsonObjectRead();
     TaskManager rootManager = new TaskManager(object.getString("name"));
-    rootManager.setDuration(durationConverter(object.getLong("seconds"), object.getLong("nano")));
     JSONArray jsonTrackers = object.getJSONArray("trackers");
     List<Tracker> trackerList = new ArrayList<>();
 
@@ -16,6 +25,7 @@ public class FromJsonVisitor {}/* implements VisitorRead {
       createTreeFromJsonObject(jsonObject, rootManager, trackerList);
     }
     rootManager.setTrackers(trackerList);
+
     return rootManager;
   }
 
@@ -23,9 +33,7 @@ public class FromJsonVisitor {}/* implements VisitorRead {
   private void createTreeFromJsonObject(JSONObject jsonObject, TaskManager rootManager, List<Tracker> trackers ) {
     if (jsonObject.has("listIntervals")) {
       Task task = new Task(rootManager, jsonObject.getString("name"));
-      task.setStatus(jsonObject.getBoolean("status"));
-      task.setDuration(durationConverter(jsonObject.getLong("seconds"), jsonObject.getLong("nano")));
-
+      task.setActive(jsonObject.getBoolean("active"));
       JSONArray jsonArrayInterval = jsonObject.getJSONArray("listIntervals");
       List<Interval> intervalList = new ArrayList<>();
 
@@ -34,7 +42,7 @@ public class FromJsonVisitor {}/* implements VisitorRead {
         LocalDateTime startTime = stringToLocalDateTime(jsonInterval.getString("startTime"));
         Interval interval = new Interval(task, startTime);
         interval.setEndTime(stringToLocalDateTime(jsonInterval.getString("endTime")));
-        interval.setDuration(durationConverter(jsonInterval.getLong("seconds"), jsonInterval.getLong("nano")));
+        //interval.setDuration(durationConverter(jsonInterval.getLong("seconds"), jsonInterval.getLong("nano")));
         interval.setInProgress(jsonInterval.getBoolean("inProgress"));
         intervalList.add(interval);
       }
@@ -42,7 +50,7 @@ public class FromJsonVisitor {}/* implements VisitorRead {
       trackers.add(task);
     } else if(jsonObject.has("trackers")){
       TaskManager taskManager = new TaskManager(rootManager, jsonObject.getString("name"));
-      taskManager.setDuration(durationConverter(jsonObject.getLong("seconds"), jsonObject.getLong("nano")));
+      //taskManager.setDuration(durationConverter(jsonObject.getLong("seconds"), jsonObject.getLong("nano")));
       JSONArray jsonTrackers = jsonObject.getJSONArray("trackers");
       List<Tracker> trackerList = new ArrayList<>();
       for (int i = 0; i < jsonTrackers.length(); i++) {
@@ -68,4 +76,4 @@ public class FromJsonVisitor {}/* implements VisitorRead {
     duration = duration.plus(Duration.ofNanos(nano));
     return duration;
   }
-}*/
+}
