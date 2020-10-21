@@ -1,22 +1,21 @@
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 public class FromJsonVisitor implements VisitorRead {
+
 
   @Override
   public TaskManager visit(FileManager fileManager) {
     JSONObject object = fileManager.getJsonObjectRead();
     TaskManager rootManager = new TaskManager(object.getString("name"));
+    //rootManager.setDuration(durationConverter(object.getLong("seconds"), object.getLong("nano")));
     JSONArray jsonTrackers = object.getJSONArray("trackers");
     List<Tracker> trackerList = new ArrayList<>();
 
@@ -25,7 +24,6 @@ public class FromJsonVisitor implements VisitorRead {
       createTreeFromJsonObject(jsonObject, rootManager, trackerList);
     }
     rootManager.setTrackers(trackerList);
-
     return rootManager;
   }
 
@@ -34,6 +32,8 @@ public class FromJsonVisitor implements VisitorRead {
     if (jsonObject.has("listIntervals")) {
       Task task = new Task(rootManager, jsonObject.getString("name"));
       task.setActive(jsonObject.getBoolean("active"));
+      //task.setDuration(durationConverter(jsonObject.getLong("seconds"), jsonObject.getLong("nano")));
+
       JSONArray jsonArrayInterval = jsonObject.getJSONArray("listIntervals");
       List<Interval> intervalList = new ArrayList<>();
 
@@ -71,9 +71,9 @@ public class FromJsonVisitor implements VisitorRead {
     return LocalDateTime.of(localDate, localTime);
   }
 
-  private Duration durationConverter(long seconds, long nano) {
+  /*private Duration durationConverter(long seconds, long nano) {
     Duration duration = Duration.ofSeconds(seconds);
     duration = duration.plus(Duration.ofNanos(nano));
     return duration;
-  }
+  }*/
 }

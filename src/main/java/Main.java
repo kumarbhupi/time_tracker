@@ -1,56 +1,52 @@
-import org.json.JSONObject;
-
-import org.json.JSONObject;
-
-import java.util.Arrays;
-
 import static java.lang.Thread.sleep;
 
 public class Main {
 
   public static void main(String[] args) throws InterruptedException {
 
-    /*TaskManager root = new TaskManager("root");
+    TaskManager root = new TaskManager(null,"root");
+
+
+    Task transportations = new Task(root, "Transportation");
+    root.addChild(transportations);
+
     PrinterVisitor printerVisitor = new PrinterVisitor(root);
-    //printerVisitor.print(root);
-    Task transportation = new Task(root, "transportation");
-    Task firstList = new Task(root,"first list");
-    Task secondList = new Task(root, "second list");
-
-    root.addChild(transportation);
-
-    Interval transportationInterval = transportation.createInterval();
-    sleep(4000);
-    transportationInterval.stopInterval();
-    sleep(2000);
-    root.addChild(firstList);
-    Interval firstListInterval =  firstList.createInterval();
+    Interval transportationsInterval = transportations.createInterval();
     sleep(6000);
-    root.addChild(secondList);
-    Interval secondListInterval =  secondList.createInterval();
+    transportationsInterval.stopInterval();
+
+    TaskManager softwareDesign = new TaskManager(root, "Software Design");
+    root.addChild(softwareDesign);
+
+    TaskManager problems = new TaskManager(softwareDesign, "Problems");
+    softwareDesign.addChild(problems);
+
+    Task firstList = new Task(problems, "First List");
+    problems.addChild(firstList);
+
+    Task secondList = new Task(problems, "Second List");
+    problems.addChild(secondList);
+
+    sleep(2000);
+    Interval firstListInterval = firstList.createInterval();
+    sleep(6000);
+    Interval secondListInterval = secondList.createInterval();
+
     sleep(4000);
     firstListInterval.stopInterval();
     sleep(2000);
     secondListInterval.stopInterval();
     sleep(2000);
-    transportationInterval = transportation.createInterval();
+    Interval transportationsSecondInterval = transportations.createInterval();
     sleep(4000);
-    transportationInterval.stopInterval();
+    transportationsSecondInterval.stopInterval();
 
-    Clock.getInstance().stopClock();
     printerVisitor.stopPrinting();
-
+    Clock.getInstance().stopClock();
     ToJsonVisitor toJsonVisitor = new ToJsonVisitor();
-    JSONObject jsonObject = toJsonVisitor.visit(root);*/
 
     FileManager fileManager = new FileManager();
-    //fileManager.saveToJsonFile(jsonObject);
-    fileManager.readFromJsonFile();
-    FromJsonVisitor fromJsonVisitor = new FromJsonVisitor();
-    TaskManager root = fromJsonVisitor.visit(fileManager);
-    int lol = 1;
-
-    //TODO starttime y endtime no tiene que ser null
+    fileManager.saveToJsonFile(toJsonVisitor.visit(root));
   }
-
+  //TODO starttime y endtime no tiene que ser null
 }
