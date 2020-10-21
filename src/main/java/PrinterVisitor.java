@@ -19,14 +19,6 @@ public class PrinterVisitor implements VisitorPrint, Observer {
 
   @Override
   public void print(TaskManager taskManager) {
-
-    /*timer.schedule(new TimerTask() {
-      @Override
-      public void run() {
-
-      }
-    }, 0, 2000);*/
-
     for (Tracker tracker : taskManager.getTrackers()) {
       print(tracker);
     }

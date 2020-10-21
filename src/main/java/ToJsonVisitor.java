@@ -7,12 +7,7 @@ public class ToJsonVisitor implements Visitor {
   //TODO: Mirar si los instanceof estan bien o no.
   @Override
   public JSONObject visit(Tracker tracker) {
-    if (tracker instanceof Task) {
-      return visit((Task) tracker);
-    } else if (tracker instanceof TaskManager) {
-      return visit((TaskManager) tracker);
-    }
-    return null;
+    return tracker.accept(this);
   }
 
   @Override

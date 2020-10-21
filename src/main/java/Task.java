@@ -121,7 +121,7 @@ public class Task extends Tracker implements Element {
 
   @Override
   public JSONObject accept(Visitor v) {
-    return null;
+    return v.visit(this);
   }
 
   @Override

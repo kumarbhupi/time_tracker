@@ -1,3 +1,5 @@
+import org.json.JSONObject;
+
 import static java.lang.Thread.sleep;
 
 public class Main {
@@ -95,6 +97,10 @@ public class Main {
 
     Clock.getInstance().stopClock();
     printerVisitor.stopPrinting();
+
+    ToJsonVisitor toJsonVisitor = new ToJsonVisitor();
+    JSONObject jsonObject = toJsonVisitor.visit(root);
+    System.out.println(jsonObject.toString());
 
   }
 

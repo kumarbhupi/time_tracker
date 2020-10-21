@@ -89,7 +89,7 @@ public class Interval implements Observer, Element{
 
   @Override
   public JSONObject accept(Visitor v) {
-    return null;
+    return v.visit(this);
   }
 
   @Override
