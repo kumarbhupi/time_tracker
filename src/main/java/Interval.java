@@ -1,10 +1,12 @@
+import org.json.JSONObject;
+
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Observable;
 import java.util.Observer;
 
-public class Interval implements Observer{
+public class Interval implements Observer, Element{
   private final Task parentTask;
   private LocalDateTime startTime;
   private LocalDateTime endTime;
@@ -78,5 +80,20 @@ public class Interval implements Observer{
         ", duration :" + getDuration() +
         ", inProgress :" + inProgress +
         '}';
+  }
+
+  @Override
+  public TaskManager accept(VisitorRead v) {
+    return null;
+  }
+
+  @Override
+  public JSONObject accept(Visitor v) {
+    return null;
+  }
+
+  @Override
+  public void print(VisitorPrint visitorPrint) {
+    visitorPrint.print(this);
   }
 }
