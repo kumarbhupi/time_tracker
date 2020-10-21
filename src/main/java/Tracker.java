@@ -1,7 +1,7 @@
 import java.time.Duration;
 import java.time.LocalDateTime;
 
-public abstract class Tracker {
+public abstract class Tracker implements Element {
   protected String name;
   protected LocalDateTime startTime;
   protected LocalDateTime endTime;
@@ -9,8 +9,6 @@ public abstract class Tracker {
   public Tracker(String name){
     this.name = name;
   }
-
-
 
   protected abstract void updateParentEndTime(LocalDateTime endTime);
   public String getName() {
@@ -22,4 +20,8 @@ public abstract class Tracker {
   public abstract LocalDateTime getStartTime();
   public abstract LocalDateTime getEndTime();
 
+  @Override
+  public void print(VisitorPrint visitorPrint) {
+    visitorPrint.print(this);
+  }
 }

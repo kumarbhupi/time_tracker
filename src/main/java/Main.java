@@ -62,9 +62,10 @@ public class Main {
 
 
 
-    PrinterVisitor printerVisitor = new PrinterVisitor();
+
     TaskManager root = new TaskManager("root");
-    printerVisitor.print(root);
+    PrinterVisitor printerVisitor = new PrinterVisitor(root);
+    //printerVisitor.print(root);
     Task transportation = new Task(root, "transportation");
     Task firstList = new Task(root,"first list");
     Task secondList = new Task(root, "second list");
