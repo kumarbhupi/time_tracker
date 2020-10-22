@@ -1,3 +1,5 @@
+import org.json.JSONObject;
+
 import java.time.Duration;
 import java.time.LocalDateTime;
 
@@ -19,6 +21,11 @@ public abstract class Tracker implements Element {
   public abstract String getEndTimeToString();
   public abstract LocalDateTime getStartTime();
   public abstract LocalDateTime getEndTime();
+
+  @Override
+  public JSONObject accept(Visitor v) {
+    return v.visit(this);
+  }
 
   @Override
   public void print(VisitorPrint visitorPrint) {

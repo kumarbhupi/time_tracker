@@ -1,9 +1,7 @@
 import java.util.Observable;
 import java.util.Observer;
-import java.util.Timer;
 
 public class PrinterVisitor implements VisitorPrint, Observer {
-  final Timer timer = new Timer();
   private final TaskManager taskManager;
 
   public PrinterVisitor(TaskManager taskManager) {
@@ -19,18 +17,12 @@ public class PrinterVisitor implements VisitorPrint, Observer {
 
   @Override
   public void print(TaskManager taskManager) {
-
-    /*timer.schedule(new TimerTask() {
-      @Override
-      public void run() {
-
+    if (taskManager.isActive()){
+      for (Tracker tracker : taskManager.getTrackers()) {
+        print(tracker);
       }
-    }, 0, 2000);*/
-
-    for (Tracker tracker : taskManager.getTrackers()) {
-      print(tracker);
+      System.out.println("activity:    " + taskManager.getName() + "    " + taskManager.getStartTimeToString() + "    " + taskManager.getEndTimeToString() + "    " + taskManager.getDuration().getSeconds());
     }
-    System.out.println("activity:    " + taskManager.getName() + "    " + taskManager.getStartTimeToString() + "    " + taskManager.getEndTimeToString() + "    " + taskManager.getDuration().getSeconds());
   }
 
 
@@ -42,6 +34,8 @@ public class PrinterVisitor implements VisitorPrint, Observer {
       }
       System.out.println("activity:    " + task.getName() + "    " + task.getStartTimeToString() + "    " + task.getEndTimeToString() + "    " + task.getDuration().getSeconds());
     }
+
+
   }
 
   @Override

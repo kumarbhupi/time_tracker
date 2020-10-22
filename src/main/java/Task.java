@@ -21,6 +21,10 @@ public class Task extends Tracker implements Element {
   }
 
 
+  public void setActive(boolean active) {
+    this.active = active;
+  }
+
   public List<Interval> getListIntervals() {
     return listIntervals;
   }
@@ -28,7 +32,6 @@ public class Task extends Tracker implements Element {
   public void setListIntervals(List<Interval> listIntervals) {
     this.listIntervals = listIntervals;
   }
-
 
   @Override
   public String getStartTimeToString(){
@@ -51,6 +54,7 @@ public class Task extends Tracker implements Element {
   @Override
   protected void updateParentEndTime(LocalDateTime endTime) {
     parentProject.updateParentEndTime(endTime);
+    parentProject.setActive(true);
 
   }
 
@@ -60,7 +64,10 @@ public class Task extends Tracker implements Element {
     for (Interval interval: listIntervals) {
       duration = duration.plus(Duration.between(interval.getStartTime(),interval.getEndTime()));
     }
-    return duration;
+    float millis = duration.toMillis();
+    int rounded = Math.round(millis/1000);
+    return Duration.ofSeconds(rounded);
+    //return duration;
   }
 
 
@@ -69,6 +76,7 @@ public class Task extends Tracker implements Element {
     Clock clock = Clock.getInstance();
     clock.deleteObserver(interval);
     active = false;
+    parentProject.setActive(false);
   }
 
   public boolean isActive() {
@@ -141,7 +149,7 @@ public class Task extends Tracker implements Element {
 
   @Override
   public JSONObject accept(Visitor v) {
-    return null;
+    return v.visit(this);
   }
 
   @Override

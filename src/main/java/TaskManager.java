@@ -11,13 +11,27 @@ public class TaskManager extends Tracker implements Element {
 
 
   private TaskManager parentProject;
-
   private List<Tracker> trackers;
+  private boolean active;
 
+  public boolean isActive() {
+    return active;
+  }
+
+  public void setActive(boolean active) {
+    if (parentProject!= null){
+      parentProject.setActive(active);
+    }
+    this.active = active;
+  }
 
   public TaskManager(String name) {
     super(name);
     trackers = new ArrayList<Tracker>();
+  }
+
+  public TaskManager getParentProject() {
+    return parentProject;
   }
 
   @Override
@@ -32,12 +46,17 @@ public class TaskManager extends Tracker implements Element {
 
   public void setStartTime(LocalDateTime startTime) {
     this.startTime = startTime;
+    if (parentProject!= null ){
+      if (parentProject.getStartTime() == null){
+        parentProject.setStartTime(startTime);
+      }
+    }
   }
 
 
   public List<Tracker> getTrackers() {
     return trackers;
-  }
+  } //Para tener lista de proyectos y tasks.
 
   public TaskManager(TaskManager parentProject, String name) {
     super(name);
@@ -98,7 +117,6 @@ public class TaskManager extends Tracker implements Element {
 
   @Override
   public TaskManager accept(VisitorRead v) {
-    //Not implemented
     return null;
   }
 
