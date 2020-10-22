@@ -50,7 +50,6 @@ public class Main {
     FromJsonVisitor fromJsonVisitor = new FromJsonVisitor();
     TaskManager taskManager = fromJsonVisitor.visit(fileManager);
 
-
   }
 
 }

@@ -17,9 +17,7 @@ public class Task extends Tracker implements Element {
     parentProject=parent;
     listIntervals = new ArrayList<Interval>();
     active = false;
-
   }
-
 
   public void setActive(boolean active) {
     this.active = active;
@@ -55,7 +53,6 @@ public class Task extends Tracker implements Element {
   protected void updateParentEndTime(LocalDateTime endTime) {
     parentProject.updateParentEndTime(endTime);
     parentProject.setActive(true);
-
   }
 
   @Override
@@ -67,9 +64,7 @@ public class Task extends Tracker implements Element {
     float millis = duration.toMillis();
     int rounded = Math.round(millis/1000);
     return Duration.ofSeconds(rounded);
-    //return duration;
   }
-
 
   public void endInterval(Interval interval){
     System.out.println(name+ " stops");
@@ -100,7 +95,6 @@ public class Task extends Tracker implements Element {
     return interval;
   }
 
-
   public void intervalUpdated(LocalDateTime endTime){
     this.endTime = endTime;
     updateParentEndTime(endTime);
@@ -115,7 +109,6 @@ public class Task extends Tracker implements Element {
         ", duration=" + getDuration() +
         '}';
   }
-
 
   public LocalDateTime getEndTime() {
     return endTime;

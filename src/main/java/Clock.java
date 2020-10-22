@@ -16,12 +16,12 @@ public class Clock extends Observable {
     startTick();
   }
 
-
+  /* getInstance is used to make sure we only instance the clock once. -> Singleton */
   public static Clock getInstance() {
     if (uniqueInstance == null) {
         uniqueInstance = new Clock();
     }
-    return uniqueInstance;
+    return uniqueInstance; //uniqueInstance is clock type.
   }
 
   private void startTick() {
@@ -31,9 +31,9 @@ public class Clock extends Observable {
       public void run() {
         setTime(LocalDateTime.now());
       }
-    }, 2000, 2000);
+    }, 0, 2000);
   }
-
+/* Is created when clock instance exists. Schedule updates actual time every 2sec. */
   private void startTick2sec(){
     System.out.println("Clock is ticking");
     clock.schedule(new TimerTask() {
@@ -44,11 +44,12 @@ public class Clock extends Observable {
     }, 0, 2000);
   }
 
+  /* This method keeps the time updated for all Tracker-Task-Interval type objects. */
   private void setTime(LocalDateTime time) {
     //System.out.println("Se ha enviado esto --> " + time.toString());
 
     setChanged();
-    notifyObservers(time);
+    notifyObservers(time); //Notifies all of the observers (PrinterVisitor, Interval-Task-TaskManager) the actual time.
   }
 
   public void stopClock() {

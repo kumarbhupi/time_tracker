@@ -29,6 +29,7 @@ public class Interval implements Observer, Element{
   public Duration getDuration(){
     return Duration.between(startTime, endTime);
   }
+
   public LocalDateTime getEndTime(){
     return endTime;
   }
@@ -62,13 +63,13 @@ public class Interval implements Observer, Element{
     parentTask.endInterval(this);
   }
 
+  /*Because it's an observer, each time the clock ticks, this method is immediately called. */
   @Override
-  public void update(Observable observable, Object time) {
+  public void update(Observable observable, Object time) { //This method is from the Observable(clock). Variable time.
     setEndTime((LocalDateTime) time);
     if (inProgress){
       parentTask.intervalUpdated(this.endTime);
     }
-
   }
 
   @Override

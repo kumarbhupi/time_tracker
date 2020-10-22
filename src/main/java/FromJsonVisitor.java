@@ -11,7 +11,7 @@ import java.util.List;
 
 public class FromJsonVisitor implements VisitorRead {
 
-
+  /* We take the root. From there we access all Trackers (TaskManager -> Task -> Interval). Tree. */
   @Override
   public TaskManager visit(FileManager fileManager) {
     JSONObject object = fileManager.getJsonObjectRead();
@@ -29,7 +29,7 @@ public class FromJsonVisitor implements VisitorRead {
     return rootManager;
   }
 
-
+  /* From the JsonObject we check for an Interval List. The Tracker structure is created. */
   private void createTreeFromJsonObject(JSONObject jsonObject, TaskManager rootManager, List<Tracker> trackers ) {
     if (jsonObject.has("listIntervals")) {
       Task task = new Task(rootManager, jsonObject.getString("name"));
@@ -64,6 +64,7 @@ public class FromJsonVisitor implements VisitorRead {
     }
   }
 
+  /* Created because a LocalDateTime can´t be cast directly to String. */
   private LocalDateTime stringToLocalDateTime(String stringLocalDateTime) {
     String[] stringSplit = stringLocalDateTime.split("T");
     String[] timeSplit = stringSplit[1].split(":");
@@ -74,9 +75,4 @@ public class FromJsonVisitor implements VisitorRead {
     return LocalDateTime.of(localDate, localTime);
   }
 
-  /*private Duration durationConverter(long seconds, long nano) {
-    Duration duration = Duration.ofSeconds(seconds);
-    duration = duration.plus(Duration.ofNanos(nano));
-    return duration;
-  }*/
 }

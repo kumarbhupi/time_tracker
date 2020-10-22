@@ -9,10 +9,19 @@ import java.util.List;
 
 public class TaskManager extends Tracker implements Element {
 
-
   private TaskManager parentProject;
   private List<Tracker> trackers;
   private boolean active;
+
+  public TaskManager(String name) {
+    super(name);                          //super calls Tracker's constructor (bc of the extend).
+    trackers = new ArrayList<Tracker>();
+  }
+  public TaskManager(TaskManager parentProject, String name) {
+    super(name);
+    trackers = new ArrayList<Tracker>();
+    this.parentProject = parentProject;
+  }
 
   public boolean isActive() {
     return active;
@@ -25,16 +34,11 @@ public class TaskManager extends Tracker implements Element {
     this.active = active;
   }
 
-  public TaskManager(String name) {
-    super(name);
-    trackers = new ArrayList<Tracker>();
-  }
-
   public TaskManager getParentProject() {
     return parentProject;
   }
 
-  @Override
+  @Override //This method is also in his parents class(Tracker).
   protected void updateParentEndTime(LocalDateTime endTime) {
     if (parentProject == null) {
       this.endTime = endTime;
@@ -53,22 +57,16 @@ public class TaskManager extends Tracker implements Element {
     }
   }
 
-
   public List<Tracker> getTrackers() {
     return trackers;
-  } //Para tener lista de proyectos y tasks.
+  } //List of projects and tasks (including intervals).
 
-  public TaskManager(TaskManager parentProject, String name) {
-    super(name);
-    trackers = new ArrayList<Tracker>();
-    this.parentProject = parentProject;
-  }
 
   public void setTrackers(List<Tracker> trackers) {
     this.trackers = trackers;
   }
 
-  @Override
+  @Override //Updates tree method. From parent to leaf.
   public Duration getDuration() {
     Duration duration = Duration.ZERO;
     for (Tracker tracker : trackers) {
@@ -109,13 +107,11 @@ public class TaskManager extends Tracker implements Element {
     return "null";
   }
 
-
-
   public void addChild(Tracker child) {
     trackers.add(child);
-  }
+  } //Child is Tracker Type. (Projects can have projects or tasks).
 
-
+  //Accepts to use visitor class.
   @Override
   public TaskManager accept(VisitorRead v) {
     return null;
@@ -128,7 +124,7 @@ public class TaskManager extends Tracker implements Element {
 
   @Override
   public void print(VisitorPrint visitorPrint) {
-    visitorPrint.print(this);
+    visitorPrint.print(this); //The this is what differenciates what type to print. (Task Manager-Task-Interval..)
 
   }
 
