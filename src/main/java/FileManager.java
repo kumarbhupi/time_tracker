@@ -22,16 +22,14 @@ public class FileManager implements Element {
     }
   }
 
-  public TaskManager readFromJsonFile(){
-    /*try(FileReader reader = new FileReader(JSON_SAVED_FILE_NAME)){
+  public void readFromJsonFile(){
+    try(FileReader reader = new FileReader(JSON_SAVED_FILE_NAME)){
       jsonObjectRead = (JSONObject) new JSONTokener(reader).nextValue();
       System.out.println(jsonObjectRead.toString());
     } catch (IOException e) {
       e.printStackTrace();
-    }*/
-    FromJsonVisitor fromJsonVisitor=new FromJsonVisitor();
-    return fromJsonVisitor.visit(this);
-  }
+    }
+  }º
 
   @Override
   public TaskManager accept(VisitorRead v) {

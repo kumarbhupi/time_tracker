@@ -1,3 +1,5 @@
+import static java.lang.Thread.sleep;
+
 public class Main {
 
   public static void main(String[] args) throws InterruptedException {
@@ -49,8 +51,6 @@ public class Main {
     TaskManager taskManager = fromJsonVisitor.visit(fileManager);
 
 
-
-
   }
-  //TODO starttime y endtime no tiene que ser null
+
 }
