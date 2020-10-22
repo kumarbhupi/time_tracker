@@ -1,82 +1,151 @@
 @startuml
-class Tracker{
-#String name
-#Duration duration
-+getDuration()
-+getTracker()
-+getName()
+class Clock{
+-Observable observable
+-Timer clock
+-Clock uniqueInstance
+-Clock()
++getInstance():clock
+-startTick()
+-setTime()
++stopClock()
+}
+interface Visitor{
++visit(Tracker)
++visit(TaskManager)
++visit(Task)
++visit(Interval);
 }
 
-class TaskManager{
--TaskManager parentTask
--list<Tracker> listTracker
-+getDuration()
-+getTracker()
-+createTracker()
-#updateDuration()
-+getJSON()
-+fromJSON()
+interface VisitorRead{
++visit(FileManager)
+}
+interface Element{
++print()
 }
 
-class Task{
--TaskManager parentProject
--List <Interval> listIntervals
--boolean status
-+endTask()
-+getDuration()
-+getTracker()
-+createTracker()
-+endInterval()
-+toString()
-+getJSON()
+interface VisitorPrint{
++print(Tracker)
++print(Task)
++print(TaskManager)
++print(Interval)
+}
+
+class FileManager{
++getJsonObjectRead():JSONObject
++saveToJsonFile(JSONObject)
++readFromJsonFile():TaskManager
++accept():TaskManager
++accept():JSONObject
+}
+
+class ToJsonVisitor{
++visit(Tracker):JSONObject
++visit(TaskManager):JSONObject
++visit(Task):JSONObject
++visit(Interval):JSONObject
+}
+
+class FromJsonVisitor{
++visit():TaskManager
+-createTreeFromJsonObject(JSONObject, TaskManager, List<Tracker>)
+-stringToLocalDateTime(String):LocalDateTime
 }
 
 class Interval{
 -Task parentTask
 -LocalDateTime startTime
 -LocalDateTime endTime
--Duration duration
 -boolean inProgress
-+isInProgress()
-+getDuration()
-+getEndTime()
--updateDuration()
-+setTime()
++Interval()
++isInProgress():boolean
++getDuration():Duration
++getEndTime():LocalDateTime
++getEndTimeToString():String
 +setEndTime()
-+stopInterval()
++getStartTimeToString():String
++getStartTime():LocalDateTime
 +update()
-+ToString()
-+getJSON()
++toString():String
++print()
 }
 
-Interface Observer
-
-Class Observable
-
-class Clock{
-+startTime()
--setTime()
-+stopTime()
-Timer clock
-Observable observable
-LocalDateTime time
+class PrinterVisitor{
++Timer timer
+-TaskManager taskManager
++PrinterVisitor()
++print(Tracker)
++print(TaskManager)
++print(Task)
++print(Interval)
++stopPrinting()
++update()
 }
 
-
-class ClockNotifier{
--clock clockObservable
-+addListener()
-+removeListener()
+class Task{
+-TaskManager parentProject
+-List<Interval> listIntervals
+-boolean active
++Task()
++getListIntervals():List<Interval>
++getStartTimeToString():String
++getEndTimeToString():String
++getStartTime():LocalDateTime
++updateParentEndTime()
++getDuration():Duration
++endInterval()
++createInterval():Interval
++intervalUpdated()
++toString():String
++getEndTime():LocalDateTime
++print()
 }
+
+class TaskManager{
+-TaskManager parentProject
+-List<Tracker> trackers
++TaskManager(String)
++TaskManager(TaskManager,String)
+#updateParentEndTime()
++setStartTime()
++getTrackers():List<Tracker>
++getDuration():Duration
++getStartTime():LocalDateTime
++getStartTimeToString():String
++setEndTime()
++getEndTime():LocalDateTime
++getEndTimeToString():String
++addChild(Tracker)
+}
+
+class Tracker{
+#String name
+#LocalDateTime startTime
+#LocalDateTime endTime
++Tracker()
+#updateParentEndTime()
++getName():String
++getDuration():Duration
++getStartTimeToString():String
++getEndTimeToString():String
++getStartTime():LocalDateTime
++getEndTime():LocalDateTime
+}
+
+interface Observer
+
+class Observable
 
 TaskManager"0.." -- "1.." Task
 Tracker<|--(TaskManager, Task)
 Task"1"*--"0..*"Interval
-Interval--|>Observer
-TaskManager o--Tracker
+Interval--|>(Element,Observer)
+(Task,TaskManager) o--Tracker
 Observable <|-- Clock
 Clock --* TimerTask
-
-
-
+PrinterVisitor--|>(VisitorPrint,Observer)
+(Tracker, TaskManager) --|> Element
+(Task,FileManager)--|>Element
+Clock o--Tracker
+class FromJsonVisitor implements VisitorRead
+ToJsonVisitor --|> Visitor
 @enduml

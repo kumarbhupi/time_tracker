@@ -112,26 +112,7 @@ public class Task extends Tracker implements Element {
         ", duration=" + getDuration() +
         '}';
   }
-  @Override
-  public JSONObject getJSON(){
-    JSONObject object = new JSONObject();
-    object.put("name", name);
-    object.put("duration", duration.getSeconds());
-    object.put("parentProject", parentProject.getName());
-    object.put("status", status);
 
-    JSONArray intervals = new JSONArray();
-    for (Interval inter : listIntervals) {
-      intervals.put(inter.getJSON());
-    }
-    object.put("listIntervals", intervals);
-    return object;
-  }
-
-  @Override
-  public void fromJSON(JSONObject jsonObject) {
-
-  }
 
   public LocalDateTime getEndTime() {
     return endTime;
@@ -155,6 +136,10 @@ public class Task extends Tracker implements Element {
   @Override
   public void print(VisitorPrint visitorPrint) {
     visitorPrint.print(this);
+  }
+
+  public void setActive(Boolean active) {
+    this.active=active;
   }
 }
 

@@ -8,15 +8,18 @@ public class Clock extends Observable {
   private final Timer clock;
   private static Clock uniqueInstance;
 
+
   private Clock() {
     observable = new Observable();
     clock = new Timer();
+    startTick2sec();
     startTick();
   }
 
+
   public static Clock getInstance() {
     if (uniqueInstance == null) {
-      uniqueInstance = new Clock();
+        uniqueInstance = new Clock();
     }
     return uniqueInstance;
   }
@@ -31,8 +34,19 @@ public class Clock extends Observable {
     }, 0, 2000);
   }
 
+  private void startTick2sec(){
+    System.out.println("Clock is ticking");
+    clock.schedule(new TimerTask() {
+      @Override
+      public void run() {
+        setTime(LocalDateTime.now());
+      }
+    }, 0, 2000);
+  }
+
   private void setTime(LocalDateTime time) {
     //System.out.println("Se ha enviado esto --> " + time.toString());
+
     setChanged();
     notifyObservers(time);
   }
@@ -40,4 +54,5 @@ public class Clock extends Observable {
   public void stopClock() {
     clock.cancel();
   }
+
 }
