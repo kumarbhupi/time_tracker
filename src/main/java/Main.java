@@ -1,10 +1,8 @@
-import static java.lang.Thread.sleep;
-
 public class Main {
 
   public static void main(String[] args) throws InterruptedException {
 
-    TaskManager root = new TaskManager(null,"root");
+    /*TaskManager root = new TaskManager(null,"root");
 
 
     Task transportations = new Task(root, "Transportation");
@@ -43,10 +41,13 @@ public class Main {
 
     printerVisitor.stopPrinting();
     Clock.getInstance().stopClock();
-    ToJsonVisitor toJsonVisitor = new ToJsonVisitor();
+    ToJsonVisitor toJsonVisitor = new ToJsonVisitor();*/
 
     FileManager fileManager = new FileManager();
-    fileManager.saveToJsonFile(toJsonVisitor.visit(root));
+    fileManager.readFromJsonFile();
+    FromJsonVisitor fromJsonVisitor = new FromJsonVisitor();
+    TaskManager taskManager = fromJsonVisitor.visit(fileManager);
+
 
 
 
