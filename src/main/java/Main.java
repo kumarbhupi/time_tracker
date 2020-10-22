@@ -47,6 +47,9 @@ public class Main {
 
     FileManager fileManager = new FileManager();
     fileManager.saveToJsonFile(toJsonVisitor.visit(root));
+
+
+
   }
   //TODO starttime y endtime no tiene que ser null
 }
