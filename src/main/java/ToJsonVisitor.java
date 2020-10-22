@@ -3,7 +3,9 @@ import org.json.JSONObject;
 
 import java.util.List;
 
-public class ToJsonVisitor implements Visitor {     //passa els objectes que hi han a JSON per guardar
+
+/*Esta classe se encarga de transformar los Interval y Trackers a JSONObject*/
+public class ToJsonVisitor implements Visitor {
   //TODO: S'ha canviat el instanceof per un accept.
 
   @Override

@@ -12,7 +12,6 @@ public class Clock extends Observable {
   private Clock() {
     observable = new Observable();
     clock = new Timer();
-    startTick2sec();
     startTick();
   }
 
@@ -33,16 +32,7 @@ public class Clock extends Observable {
       }
     }, 0, 2000);
   }
-/* Is created when clock instance exists. Schedule updates actual time every 2sec. */
-  private void startTick2sec(){
-    System.out.println("Clock is ticking");
-    clock.schedule(new TimerTask() {
-      @Override
-      public void run() {
-        setTime(LocalDateTime.now());
-      }
-    }, 0, 2000);
-  }
+
 
   /* This method keeps the time updated for all Tracker-Task-Interval type objects. */
   private void setTime(LocalDateTime time) {

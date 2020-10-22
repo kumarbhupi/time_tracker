@@ -6,7 +6,9 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
+/*Estamos implementando Composite pattern, esta classe serà el composite*/
 
+/*Classe que permite gestionar proyectos y tascas*/
 public class TaskManager extends Tracker implements Element {
 
   private TaskManager parentProject;
@@ -38,7 +40,9 @@ public class TaskManager extends Tracker implements Element {
     return parentProject;
   }
 
-  @Override //This method is also in his parents class(Tracker).
+  /*A la hora de actualizar el tiempo, lo haremos de leaf a root (ascendiente), es un metodo sobreescrito
+  * por lo tanto, las siguientes classes en la jerarquia tambien usarán este metodo*/
+  @Override
   protected void updateParentEndTime(LocalDateTime endTime) {
     if (parentProject == null) {
       this.endTime = endTime;
@@ -66,7 +70,8 @@ public class TaskManager extends Tracker implements Element {
     this.trackers = trackers;
   }
 
-  @Override //Updates tree method. From parent to leaf.
+  /*Asks from parent to leaf the duration of the current project*/
+  @Override
   public Duration getDuration() {
     Duration duration = Duration.ZERO;
     for (Tracker tracker : trackers) {

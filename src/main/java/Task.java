@@ -5,7 +5,8 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
-
+//TODO TRADUCIR
+/*Estamos implementando Composite pattern, esta classe serà el leaf*/
 public class Task extends Tracker implements Element {
 
   private final TaskManager parentProject;
@@ -19,6 +20,7 @@ public class Task extends Tracker implements Element {
     active = false;
   }
 
+  /*Vamos a printear solo tareas activas, es por eso que usamos este metodo*/
   public void setActive(boolean active) {
     this.active = active;
   }
@@ -55,6 +57,7 @@ public class Task extends Tracker implements Element {
     parentProject.setActive(true);
   }
 
+
   @Override
   public Duration getDuration() {
     Duration duration = Duration.ZERO;
@@ -77,7 +80,8 @@ public class Task extends Tracker implements Element {
   public boolean isActive() {
     return active;
   }
-
+  /*Task sera la unica classe que pueda crear intervalos ya que un proyecto
+  * no puede tenerlos directamente*/
   public Interval createInterval() {
     System.out.println(name+" started");
     LocalDateTime now = LocalDateTime.now();
@@ -94,6 +98,7 @@ public class Task extends Tracker implements Element {
     active = true;
     return interval;
   }
+
 
   public void intervalUpdated(LocalDateTime endTime){
     this.endTime = endTime;

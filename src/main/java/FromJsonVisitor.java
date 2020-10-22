@@ -7,7 +7,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
-
+/*Esta classe se encarga de transformar los JSONObject a Interval o Trackers*/
 
 public class FromJsonVisitor implements VisitorRead {
 

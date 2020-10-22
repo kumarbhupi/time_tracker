@@ -5,6 +5,9 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Observable;
 import java.util.Observer;
+/*Interval es una composicion de Task, por lo que un interval no puede existir sin un padre que sea Task*/
+/*Interval es observer de Clock, por lo que cada vez que se llama al metodo setTime de Clock, todos los
+/*intervalos podran ver la hora actual y actualizarla*/
 
 public class Interval implements Observer, Element{
   private final Task parentTask;
@@ -21,11 +24,13 @@ public class Interval implements Observer, Element{
   public void setInProgress(boolean inProgress) {
     this.inProgress = inProgress;
   }
-
+  /*Si un intervalo esta en progreso, podrá ser printeado,
+  * es por eso que usamos este metodo*/
   public boolean isInProgress() {
     return inProgress;
   }
-
+  /*Al no tener mas hijos (interval es la "hoja del arbol"), este
+  * va a obtener la duración a partir de su startTime y endTime*/
   public Duration getDuration(){
     return Duration.between(startTime, endTime);
   }
@@ -65,7 +70,7 @@ public class Interval implements Observer, Element{
 
   /*Because it's an observer, each time the clock ticks, this method is immediately called. */
   @Override
-  public void update(Observable observable, Object time) { //This method is from the Observable(clock). Variable time.
+  public void update(Observable observable, Object time) {
     setEndTime((LocalDateTime) time);
     if (inProgress){
       parentTask.intervalUpdated(this.endTime);

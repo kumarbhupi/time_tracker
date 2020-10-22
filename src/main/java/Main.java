@@ -1,3 +1,5 @@
+import org.json.JSONObject;
+
 import static java.lang.Thread.sleep;
 
 public class Main {
@@ -46,9 +48,9 @@ public class Main {
     ToJsonVisitor toJsonVisitor = new ToJsonVisitor();
 
     FileManager fileManager = new FileManager();
-    fileManager.readFromJsonFile();
-    FromJsonVisitor fromJsonVisitor = new FromJsonVisitor();
-    TaskManager taskManager = fromJsonVisitor.visit(fileManager);
+    fileManager.saveToJsonFile(toJsonVisitor.visit(root));
+
+    
 
   }
 

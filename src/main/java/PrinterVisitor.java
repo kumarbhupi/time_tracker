@@ -4,6 +4,7 @@ import java.util.Observer;
 public class PrinterVisitor implements VisitorPrint, Observer {
   private final TaskManager taskManager;
 
+
   public PrinterVisitor(TaskManager taskManager) {
     Clock clock = Clock.getInstance();
     this.taskManager = taskManager;

@@ -6,5 +6,4 @@ public interface Element { //Accepts visitor. It can access the code executed by
   JSONObject accept(Visitor v); //Passes from any element to JSONObject.
 
   void print(VisitorPrint visitorPrint);
-
 }
