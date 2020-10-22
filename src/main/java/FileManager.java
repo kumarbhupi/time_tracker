@@ -29,7 +29,7 @@ public class FileManager implements Element {
     } catch (IOException e) {
       e.printStackTrace();
     }
-  }º
+  }
 
   @Override
   public TaskManager accept(VisitorRead v) {
