@@ -4,7 +4,7 @@ public class Main {
 
   public static void main(String[] args) throws InterruptedException {
 
-    TaskManager root = new TaskManager(null,"root");
+    TaskManager root = new TaskManager(null, "root");
 
 
     Task transportations = new Task(root, "Transportation");
@@ -47,7 +47,6 @@ public class Main {
 
     FileManager fileManager = new FileManager();
     fileManager.saveToJsonFile(toJsonVisitor.visit(root));
-
 
 
   }

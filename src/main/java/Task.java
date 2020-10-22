@@ -5,8 +5,8 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
-//TODO TRADUCIR
-/*Estamos implementando Composite pattern, esta classe serà el leaf*/
+
+//This class is the leaf in the Composite pattern.
 public class Task extends Tracker implements Element {
 
   private final TaskManager parentProject;
@@ -15,12 +15,12 @@ public class Task extends Tracker implements Element {
 
   public Task(TaskManager parent, String name) {
     super(name);
-    parentProject=parent;
-    listIntervals = new ArrayList<Interval>();
+    parentProject = parent;
+    listIntervals = new ArrayList<>();
     active = false;
   }
 
-  /*Vamos a printear solo tareas activas, es por eso que usamos este metodo*/
+
   public void setActive(boolean active) {
     this.active = active;
   }
@@ -34,13 +34,13 @@ public class Task extends Tracker implements Element {
   }
 
   @Override
-  public String getStartTimeToString(){
+  public String getStartTimeToString() {
     return listIntervals.get(0).getStartTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
   }
 
   @Override
   public String getEndTimeToString() {
-    if (endTime!= null){
+    if (endTime != null) {
       return endTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
     }
     return "null";
@@ -61,16 +61,16 @@ public class Task extends Tracker implements Element {
   @Override
   public Duration getDuration() {
     Duration duration = Duration.ZERO;
-    for (Interval interval: listIntervals) {
-      duration = duration.plus(Duration.between(interval.getStartTime(),interval.getEndTime()));
+    for (Interval interval : listIntervals) {
+      duration = duration.plus(Duration.between(interval.getStartTime(), interval.getEndTime()));
     }
     float millis = duration.toMillis();
-    int rounded = Math.round(millis/1000);
+    int rounded = Math.round(millis / 1000);
     return Duration.ofSeconds(rounded);
   }
 
-  public void endInterval(Interval interval){
-    System.out.println(name+ " stops");
+  public void endInterval(Interval interval) {
+    System.out.println(name + " stops");
     Clock clock = Clock.getInstance();
     clock.deleteObserver(interval);
     active = false;
@@ -80,19 +80,19 @@ public class Task extends Tracker implements Element {
   public boolean isActive() {
     return active;
   }
-  /*Task sera la unica classe que pueda crear intervalos ya que un proyecto
-  * no puede tenerlos directamente*/
+
+
   public Interval createInterval() {
-    System.out.println(name+" started");
+    System.out.println(name + " started");
     LocalDateTime now = LocalDateTime.now();
     Clock clock = Clock.getInstance();
     Interval interval = new Interval(this, now);
     listIntervals.add(interval);
     clock.addObserver(interval);
-    if (parentProject.getStartTime() == null){
+    if (parentProject.getStartTime() == null) {
       parentProject.setStartTime(now);
     }
-    if(startTime==null){
+    if (startTime == null) {
       startTime = now;
     }
     active = true;
@@ -100,7 +100,7 @@ public class Task extends Tracker implements Element {
   }
 
 
-  public void intervalUpdated(LocalDateTime endTime){
+  public void intervalUpdated(LocalDateTime endTime) {
     this.endTime = endTime;
     updateParentEndTime(endTime);
   }
@@ -124,7 +124,7 @@ public class Task extends Tracker implements Element {
     this.endTime = endTime;
   }
 
-  public void setStartTime(LocalDateTime startTime){
+  public void setStartTime(LocalDateTime startTime) {
     this.startTime = startTime;
   }
 
@@ -144,7 +144,7 @@ public class Task extends Tracker implements Element {
   }
 
   public void setActive(Boolean active) {
-    this.active=active;
+    this.active = active;
   }
 }
 

@@ -1,31 +1,35 @@
 import org.json.JSONObject;
+
 import java.time.Duration;
 import java.time.LocalDateTime;
 
-//TODO TRADUCIR
-/*Estamos implementando Composite pattern, esta classe serà el component*/
-
-/*Utilizamos la interfaz Element para poder utilizar los metodos del visitor.*/
+//This class is the component of the Composite pattern.
 public abstract class Tracker implements Element {
   protected String name;
   protected LocalDateTime startTime;
   protected LocalDateTime endTime;
 
-  public Tracker(String name){
+  public Tracker(String name) {
     this.name = name;
   }
 
-
   protected abstract void updateParentEndTime(LocalDateTime endTime);
+
   public String getName() {
     return this.name;
   }
-  public abstract Duration getDuration();
-  public abstract String getStartTimeToString();
-  public abstract String getEndTimeToString();
-  public abstract LocalDateTime getStartTime();
-  public abstract LocalDateTime getEndTime();
 
+  //Provides the duration of all children, doesn't distinct between TaskManager or Tasks
+  public abstract Duration getDuration();
+
+  //Provides the time in following format: YYYY-MM-DD HH:mm:ss
+  public abstract String getStartTimeToString();
+
+  public abstract String getEndTimeToString();
+
+  public abstract LocalDateTime getStartTime();
+
+  public abstract LocalDateTime getEndTime();
 
   @Override
   public JSONObject accept(Visitor v) {

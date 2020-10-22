@@ -5,8 +5,6 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
-/*Esta classe se encarga de guardar/obtener la informacion de
-/*nuestros Trackers/Intervals a partir de un archivo .json*/
 public class FileManager implements Element {
   public static final String JSON_SAVED_FILE_NAME = "json_data.json";
   private JSONObject jsonObjectRead;
@@ -24,8 +22,8 @@ public class FileManager implements Element {
     }
   }
 
-  public void readFromJsonFile(){
-    try(FileReader reader = new FileReader(JSON_SAVED_FILE_NAME)){
+  public void readFromJsonFile() {
+    try (FileReader reader = new FileReader(JSON_SAVED_FILE_NAME)) {
       jsonObjectRead = (JSONObject) new JSONTokener(reader).nextValue();
     } catch (IOException e) {
       e.printStackTrace();

@@ -11,7 +11,7 @@ import java.util.List;
 
 public class FromJsonVisitor implements VisitorRead {
 
-  /* We take the root. From there we access all Trackers (TaskManager -> Task -> Interval). Tree. */
+  // We take the root. From there we access all Trackers (TaskManager -> Task -> Interval). Tree.
   @Override
   public TaskManager visit(FileManager fileManager) {
     JSONObject object = fileManager.getJsonObjectRead();
@@ -29,8 +29,8 @@ public class FromJsonVisitor implements VisitorRead {
     return rootManager;
   }
 
-  /* From the JsonObject we check for an Interval List. The Tracker structure is created. */
-  private void createTreeFromJsonObject(JSONObject jsonObject, TaskManager rootManager, List<Tracker> trackers ) {
+  //Recursive method that creates a TaskManager structure from a well-formed JsonObject.
+  private void createTreeFromJsonObject(JSONObject jsonObject, TaskManager rootManager, List<Tracker> trackers) {
     if (jsonObject.has("listIntervals")) {
       Task task = new Task(rootManager, jsonObject.getString("name"));
       task.setActive(jsonObject.getBoolean("active"));
@@ -50,7 +50,7 @@ public class FromJsonVisitor implements VisitorRead {
       }
       task.setListIntervals(intervalList);
       trackers.add(task);
-    } else if(jsonObject.has("trackers")){
+    } else if (jsonObject.has("trackers")) {
       TaskManager taskManager = new TaskManager(rootManager, jsonObject.getString("name"));
       taskManager.setStartTime(stringToLocalDateTime(jsonObject.getString("startTime")));
       taskManager.setEndTime(stringToLocalDateTime(jsonObject.getString("endTime")));
@@ -64,14 +64,14 @@ public class FromJsonVisitor implements VisitorRead {
     }
   }
 
-  /* Created because a LocalDateTime can´t be cast directly to String. */
+  //Converts strings formatted YYYY-MM-hhTHH:mm:ss:nanos to LocalDateTime
   private LocalDateTime stringToLocalDateTime(String stringLocalDateTime) {
     String[] stringSplit = stringLocalDateTime.split("T");
     String[] timeSplit = stringSplit[1].split(":");
-    int seconds = Integer.parseInt(timeSplit[2].substring(0,2));
-    int nano = (int) (Float.parseFloat(timeSplit[2].substring(2))*10e8);
+    int seconds = Integer.parseInt(timeSplit[2].substring(0, 2));
+    int nano = (int) (Float.parseFloat(timeSplit[2].substring(2)) * 10e8);
     LocalDate localDate = LocalDate.parse(stringSplit[0], DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-    LocalTime localTime = LocalTime.of(Integer.parseInt(timeSplit[0]), Integer.parseInt(timeSplit[1]),seconds,nano);
+    LocalTime localTime = LocalTime.of(Integer.parseInt(timeSplit[0]), Integer.parseInt(timeSplit[1]), seconds, nano);
     return LocalDateTime.of(localDate, localTime);
   }
 

@@ -5,44 +5,42 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Observable;
 import java.util.Observer;
-/*Interval es una composicion de Task, por lo que un interval no puede existir sin un padre que sea Task*/
-/*Interval es observer de Clock, por lo que cada vez que se llama al metodo setTime de Clock, todos los
-/*intervalos podran ver la hora actual y actualizarla*/
 
-public class Interval implements Observer, Element{
+
+public class Interval implements Observer, Element {
   private final Task parentTask;
   private LocalDateTime startTime;
   private LocalDateTime endTime;
   private boolean inProgress;
 
-  public Interval(Task task, LocalDateTime startTime){
-    this.parentTask=task;
-    this.startTime=startTime;
-    this.inProgress=true;
+  public Interval(Task task, LocalDateTime startTime) {
+    this.parentTask = task;
+    this.startTime = startTime;
+    this.inProgress = true;
   }
 
   public void setInProgress(boolean inProgress) {
     this.inProgress = inProgress;
   }
-  /*Si un intervalo esta en progreso, podrá ser printeado,
-  * es por eso que usamos este metodo*/
+
   public boolean isInProgress() {
     return inProgress;
   }
-  /*Al no tener mas hijos (interval es la "hoja del arbol"), este
-  * va a obtener la duración a partir de su startTime y endTime*/
-  public Duration getDuration(){
+
+
+  //This duration is calculated by extracting endTime to startTime.
+  public Duration getDuration() {
     float millis = Duration.between(startTime, endTime).toMillis();
-    int rounded = Math.round(millis/1000);
+    int rounded = Math.round(millis / 1000);
     return Duration.ofSeconds(rounded);
-    //return Duration.between(startTime, endTime);
   }
 
-  public LocalDateTime getEndTime(){
+  public LocalDateTime getEndTime() {
     return endTime;
   }
 
-  public String getEndTimeToString(){
+  //Provides the time in following format: YYYY-MM-DD HH:mm:ss
+  public String getEndTimeToString() {
     return endTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
   }
 
@@ -50,8 +48,8 @@ public class Interval implements Observer, Element{
     this.startTime = startTime;
   }
 
-  public void setEndTime(LocalDateTime endTime){
-    this.endTime=endTime;
+  public void setEndTime(LocalDateTime endTime) {
+    this.endTime = endTime;
   }
 
   public Task getParentTask() {
@@ -66,16 +64,16 @@ public class Interval implements Observer, Element{
     return startTime;
   }
 
-  public void stopInterval(){
+  public void stopInterval() {
     inProgress = false;
     parentTask.endInterval(this);
   }
 
-  /*Because it's an observer, each time the clock ticks, this method is immediately called. */
+  //As an observer, each time the clock ticks, this method updates the parents endTimes.
   @Override
   public void update(Observable observable, Object time) {
     setEndTime((LocalDateTime) time);
-    if (inProgress){
+    if (inProgress) {
       parentTask.intervalUpdated(this.endTime);
     }
   }

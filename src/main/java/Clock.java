@@ -3,6 +3,7 @@ import java.util.Observable;
 import java.util.Timer;
 import java.util.TimerTask;
 
+//This class implements Singleton pattern.
 public class Clock extends Observable {
   private Observable observable;
   private final Timer clock;
@@ -15,14 +16,14 @@ public class Clock extends Observable {
     startTick();
   }
 
-  /* getInstance is used to make sure we only instance the clock once. -> Singleton */
   public static Clock getInstance() {
     if (uniqueInstance == null) {
-        uniqueInstance = new Clock();
+      uniqueInstance = new Clock();
     }
-    return uniqueInstance; //uniqueInstance is clock type.
+    return uniqueInstance;
   }
 
+  //Creates a thread that executes every 2 seconds notifying to the observers.
   private void startTick() {
     System.out.println("Clock is ticking");
     clock.schedule(new TimerTask() {
@@ -34,12 +35,10 @@ public class Clock extends Observable {
   }
 
 
-  /* This method keeps the time updated for all Tracker-Task-Interval type objects. */
+  //As an observable alerts to each observers the current time.
   private void setTime(LocalDateTime time) {
-    //System.out.println("Se ha enviado esto --> " + time.toString());
-
     setChanged();
-    notifyObservers(time); //Notifies all of the observers (PrinterVisitor, Interval-Task-TaskManager) the actual time.
+    notifyObservers(time);
   }
 
   public void stopClock() {
