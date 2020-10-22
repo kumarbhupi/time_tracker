@@ -110,6 +110,7 @@ public class TaskManager extends Tracker implements Element {
   }
 
 
+
   public void addChild(Tracker child) {
     trackers.add(child);
   }

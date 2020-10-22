@@ -116,6 +116,7 @@ public class Task extends Tracker implements Element {
         '}';
   }
 
+
   public LocalDateTime getEndTime() {
     return endTime;
   }
@@ -142,6 +143,10 @@ public class Task extends Tracker implements Element {
   @Override
   public void print(VisitorPrint visitorPrint) {
     visitorPrint.print(this);
+  }
+
+  public void setActive(Boolean active) {
+    this.active=active;
   }
 }
 

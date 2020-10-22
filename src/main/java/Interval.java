@@ -59,7 +59,6 @@ public class Interval implements Observer, Element{
 
   public void stopInterval(){
     inProgress = false;
-    //parentTask.intervalUpdated(this.endTime);
     parentTask.endInterval(this);
   }
 
@@ -69,6 +68,7 @@ public class Interval implements Observer, Element{
     if (inProgress){
       parentTask.intervalUpdated(this.endTime);
     }
+
   }
 
   @Override
