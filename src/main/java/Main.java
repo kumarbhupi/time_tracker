@@ -46,10 +46,11 @@ public class Main {
     ToJsonVisitor toJsonVisitor = new ToJsonVisitor();
 
     FileManager fileManager = new FileManager();
-    fileManager.saveToJsonFile(toJsonVisitor.visit(root));
-
+    fileManager.readFromJsonFile();
+    FromJsonVisitor fromJsonVisitor = new FromJsonVisitor();
+    TaskManager taskManager = fromJsonVisitor.visit(fileManager);
 
 
   }
-  //TODO starttime y endtime no tiene que ser null
+
 }

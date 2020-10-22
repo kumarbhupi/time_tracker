@@ -126,6 +126,10 @@ public class Task extends Tracker implements Element {
     this.endTime = endTime;
   }
 
+  public void setStartTime(LocalDateTime startTime){
+    this.startTime = startTime;
+  }
+
   @Override
   public TaskManager accept(VisitorRead v) {
     return null;

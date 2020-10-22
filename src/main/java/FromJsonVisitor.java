@@ -16,7 +16,8 @@ public class FromJsonVisitor implements VisitorRead {
   public TaskManager visit(FileManager fileManager) {
     JSONObject object = fileManager.getJsonObjectRead();
     TaskManager rootManager = new TaskManager(object.getString("name"));
-    //rootManager.setDuration(durationConverter(object.getLong("seconds"), object.getLong("nano")));
+    rootManager.setStartTime(stringToLocalDateTime(object.getString("startTime")));
+    rootManager.setEndTime(stringToLocalDateTime(object.getString("endTime")));
     JSONArray jsonTrackers = object.getJSONArray("trackers");
     List<Tracker> trackerList = new ArrayList<>();
 
@@ -33,7 +34,8 @@ public class FromJsonVisitor implements VisitorRead {
     if (jsonObject.has("listIntervals")) {
       Task task = new Task(rootManager, jsonObject.getString("name"));
       task.setActive(jsonObject.getBoolean("active"));
-      //task.setDuration(durationConverter(jsonObject.getLong("seconds"), jsonObject.getLong("nano")));
+      task.setStartTime(stringToLocalDateTime(jsonObject.getString("startTime")));
+      task.setEndTime(stringToLocalDateTime(jsonObject.getString("endTime")));
 
       JSONArray jsonArrayInterval = jsonObject.getJSONArray("listIntervals");
       List<Interval> intervalList = new ArrayList<>();
@@ -43,7 +45,6 @@ public class FromJsonVisitor implements VisitorRead {
         LocalDateTime startTime = stringToLocalDateTime(jsonInterval.getString("startTime"));
         Interval interval = new Interval(task, startTime);
         interval.setEndTime(stringToLocalDateTime(jsonInterval.getString("endTime")));
-        //interval.setDuration(durationConverter(jsonInterval.getLong("seconds"), jsonInterval.getLong("nano")));
         interval.setInProgress(jsonInterval.getBoolean("inProgress"));
         intervalList.add(interval);
       }
@@ -51,7 +52,8 @@ public class FromJsonVisitor implements VisitorRead {
       trackers.add(task);
     } else if(jsonObject.has("trackers")){
       TaskManager taskManager = new TaskManager(rootManager, jsonObject.getString("name"));
-      //taskManager.setDuration(durationConverter(jsonObject.getLong("seconds"), jsonObject.getLong("nano")));
+      taskManager.setStartTime(stringToLocalDateTime(jsonObject.getString("startTime")));
+      taskManager.setEndTime(stringToLocalDateTime(jsonObject.getString("endTime")));
       JSONArray jsonTrackers = jsonObject.getJSONArray("trackers");
       List<Tracker> trackerList = new ArrayList<>();
       for (int i = 0; i < jsonTrackers.length(); i++) {
