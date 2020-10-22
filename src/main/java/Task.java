@@ -93,6 +93,9 @@ public class Task extends Tracker implements Element {
     if (parentProject.getStartTime() == null){
       parentProject.setStartTime(now);
     }
+    if(startTime==null){
+      startTime = now;
+    }
     active = true;
     return interval;
   }

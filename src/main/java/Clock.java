@@ -31,7 +31,7 @@ public class Clock extends Observable {
       public void run() {
         setTime(LocalDateTime.now());
       }
-    }, 0, 2000);
+    }, 2000, 2000);
   }
 
   private void startTick2sec(){
