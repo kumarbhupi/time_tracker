@@ -136,16 +136,19 @@ interface Observer
 class Observable
 
 TaskManager"0.." -- "1.." Task
-Tracker<|--(TaskManager, Task)
+class Task extends Tracker
+class TaskManager extends Tracker
 Task"1"*--"0..*"Interval
-Interval--|>(Element,Observer)
-(Task,TaskManager) o--Tracker
-Observable <|-- Clock
-Clock --* TimerTask
-PrinterVisitor--|>(VisitorPrint,Observer)
-(Tracker, TaskManager) --|> Element
-(Task,FileManager)--|>Element
-Clock o--Tracker
+class Interval implements Element
+class Interval implements Observer
+TaskManager o--Tracker
+class Clock extends Observable
+class PrinterVisitor implements VisitorPrint
+class PrinterVisitor implements Observer
+class Task implements Element
+class Tracker implements Element
+class TaskManager implements Element
+class FileManager implements Element
 class FromJsonVisitor implements VisitorRead
-ToJsonVisitor --|> Visitor
+class ToJsonVisitor implements Visitor
 @enduml
