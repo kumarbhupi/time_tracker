@@ -32,7 +32,10 @@ public class Interval implements Observer, Element{
   /*Al no tener mas hijos (interval es la "hoja del arbol"), este
   * va a obtener la duración a partir de su startTime y endTime*/
   public Duration getDuration(){
-    return Duration.between(startTime, endTime);
+    float millis = Duration.between(startTime, endTime).toMillis();
+    int rounded = Math.round(millis/1000);
+    return Duration.ofSeconds(rounded);
+    //return Duration.between(startTime, endTime);
   }
 
   public LocalDateTime getEndTime(){
