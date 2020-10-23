@@ -41,6 +41,5 @@ public class FileManager implements Element {
   }
 
   @Override
-  public void print(VisitorPrint visitorPrint) {
-  }
+  public void print(VisitorPrint visitorPrint) { }
 }

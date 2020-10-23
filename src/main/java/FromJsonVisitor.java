@@ -7,11 +7,10 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
-/*Esta classe se encarga de transformar los JSONObject a Interval o Trackers*/
 
 public class FromJsonVisitor implements VisitorRead {
 
-  // We take the root. From there we access all Trackers (TaskManager -> Task -> Interval). Tree.
+
   @Override
   public TaskManager visit(FileManager fileManager) {
     JSONObject object = fileManager.getJsonObjectRead();

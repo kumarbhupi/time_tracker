@@ -39,9 +39,17 @@ public class Interval implements Observer, Element {
     return endTime;
   }
 
+  public LocalDateTime getStartTime() {
+    return startTime;
+  }
+
   //Provides the time in following format: YYYY-MM-DD HH:mm:ss
   public String getEndTimeToString() {
     return endTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+  }
+
+  public String getStartTimeToString() {
+    return startTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
   }
 
   public void setStartTime(LocalDateTime startTime) {
@@ -54,14 +62,6 @@ public class Interval implements Observer, Element {
 
   public Task getParentTask() {
     return parentTask;
-  }
-
-  public String getStartTimeToString() {
-    return startTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-  }
-
-  public LocalDateTime getStartTime() {
-    return startTime;
   }
 
   public void stopInterval() {

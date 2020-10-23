@@ -6,7 +6,6 @@ public class Main {
 
     /*TaskManager root = new TaskManager(null, "root");
 
-
     Task transportations = new Task(root, "Transportation");
     root.addChild(transportations);
 
@@ -43,15 +42,16 @@ public class Main {
 
     printerVisitor.stopPrinting();
     Clock.getInstance().stopClock();
-     */
+
 
     //Write Root Object to JsonFile
     ToJsonVisitor toJsonVisitor = new ToJsonVisitor();
     FileManager fileManager = new FileManager();
-    //fileManager.saveToJsonFile(toJsonVisitor.visit(root));
+    fileManager.saveToJsonFile(toJsonVisitor.visit(root));
 
-
+    /**/
     //Read from Root JsonFile to TaskManager
+    FileManager fileManager = new FileManager();
     FromJsonVisitor fromJsonVisitor = new FromJsonVisitor();
     fileManager.readFromJsonFile();
     TaskManager rootFromJson = fileManager.accept(fromJsonVisitor);
@@ -62,6 +62,7 @@ public class Main {
     Interval interval = afterReadingTask.createInterval();
     sleep(7000);
     interval.stopInterval();
+
 
 
   }

@@ -1,9 +1,9 @@
 import org.json.JSONObject;
 
 public interface Element { //Accepts visitor. It can access the code executed by visitor.
-  TaskManager accept(VisitorRead v); //Accept = indicates which elements it has to return. From JSONObject to TaskManager.
+  TaskManager accept(VisitorRead v);
 
-  JSONObject accept(Visitor v); //Passes from any element to JSONObject.
+  JSONObject accept(Visitor v);
 
   void print(VisitorPrint visitorPrint);
 }
