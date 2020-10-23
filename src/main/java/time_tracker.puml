@@ -135,13 +135,13 @@ interface Observer
 
 class Observable
 
-TaskManager"0.." -- "1.." Task
+TaskManager"1  " -- "1..*" Task
 class Task extends Tracker
 class TaskManager extends Tracker
-Task"1"*--"0..*"Interval
+Task "1 "*--"0..*"Interval
 class Interval implements Element
 class Interval implements Observer
-TaskManager o--Tracker
+TaskManager "1 " o--"0..* "Tracker
 class Clock extends Observable
 class PrinterVisitor implements VisitorPrint
 class PrinterVisitor implements Observer
