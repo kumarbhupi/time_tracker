@@ -4,7 +4,7 @@ public class Main {
 
   public static void main(String[] args) throws InterruptedException {
 
-    TaskManager root = new TaskManager(null, "root");
+    /*TaskManager root = new TaskManager(null, "root");
 
 
     Task transportations = new Task(root, "Transportation");
@@ -43,10 +43,25 @@ public class Main {
 
     printerVisitor.stopPrinting();
     Clock.getInstance().stopClock();
-    ToJsonVisitor toJsonVisitor = new ToJsonVisitor();
+     */
 
+    //Write Root Object to JsonFile
+    ToJsonVisitor toJsonVisitor = new ToJsonVisitor();
     FileManager fileManager = new FileManager();
-    fileManager.saveToJsonFile(toJsonVisitor.visit(root));
+    //fileManager.saveToJsonFile(toJsonVisitor.visit(root));
+
+
+    //Read from Root JsonFile to TaskManager
+    FromJsonVisitor fromJsonVisitor = new FromJsonVisitor();
+    fileManager.readFromJsonFile();
+    TaskManager rootFromJson = fileManager.accept(fromJsonVisitor);
+    PrinterVisitor printerVisitor = new PrinterVisitor(rootFromJson);
+    Task afterReadingTask = new Task(rootFromJson, "Task After Reading");
+    rootFromJson.addChild(afterReadingTask);
+
+    Interval interval = afterReadingTask.createInterval();
+    sleep(7000);
+    interval.stopInterval();
 
 
   }
