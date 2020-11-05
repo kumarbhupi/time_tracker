@@ -1,3 +1,5 @@
+package core;
+
 import java.time.LocalDateTime;
 import java.util.Observable;
 import java.util.Timer;
@@ -25,7 +27,7 @@ public class Clock extends Observable {
 
   //Creates a thread that executes every 2 seconds notifying to the observers.
   private void startTick() {
-    System.out.println("Clock is ticking");
+    System.out.println("core.Clock is ticking");
     clock.schedule(new TimerTask() {
       @Override
       public void run() {

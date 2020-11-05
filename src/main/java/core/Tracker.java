@@ -1,4 +1,9 @@
+package core;
+
 import org.json.JSONObject;
+import visitor_utils.Element;
+import visitor_utils.Visitor;
+import visitor_utils.VisitorPrint;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -19,7 +24,7 @@ public abstract class Tracker implements Element {
     return this.name;
   }
 
-  //Provides the duration of all children, doesn't distinct between TaskManager or Tasks
+  //Provides the duration of all children, doesn't distinct between core.TaskManager or Tasks
   public abstract Duration getDuration();
 
   //Provides the time in following format: YYYY-MM-DD HH:mm:ss

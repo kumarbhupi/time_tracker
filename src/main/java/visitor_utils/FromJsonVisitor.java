@@ -1,5 +1,12 @@
+package visitor_utils;
+
+import core.Interval;
+import core.Task;
+import core.TaskManager;
+import core.Tracker;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import persistence_utils.FileManager;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -28,7 +35,7 @@ public class FromJsonVisitor implements VisitorRead {
     return rootManager;
   }
 
-  //Recursive method that creates a TaskManager structure from a well-formed JsonObject.
+  //Recursive method that creates a core.TaskManager structure from a well-formed JsonObject.
   private void createTreeFromJsonObject(JSONObject jsonObject, TaskManager rootManager, List<Tracker> trackers) {
     if (jsonObject.has("listIntervals")) {
       Task task = new Task(rootManager, jsonObject.getString("name"));

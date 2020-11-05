@@ -1,9 +1,15 @@
+package visitor_utils;
+
+import core.Interval;
+import core.Task;
+import core.TaskManager;
+import core.Tracker;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.List;
 
-//This visitor class converts Tracker Objects to JsonObjects
+//This visitor class converts core.Tracker Objects to JsonObjects
 public class ToJsonVisitor implements Visitor {
 
   @Override
@@ -30,7 +36,7 @@ public class ToJsonVisitor implements Visitor {
   @Override
   public JSONObject visit(Task task) {
     JSONObject jsonObject = new JSONObject();
-    jsonObject.put("name", task.name);
+    jsonObject.put("name", task.getName());
     jsonObject.put("startTime", task.getStartTime());
     jsonObject.put("endTime", task.getEndTime());
     jsonObject.put("active", task.isActive());
