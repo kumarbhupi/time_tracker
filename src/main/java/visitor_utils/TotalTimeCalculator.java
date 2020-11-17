@@ -6,7 +6,6 @@ import core.Tracker;
 
 import java.time.LocalDateTime;
 
-//TODO: Finish this class to calculate time spend between two periods.
 public class TotalTimeCalculator implements VisitorTotalTime{
     LocalDateTime startInterval;
     LocalDateTime endInterval;
