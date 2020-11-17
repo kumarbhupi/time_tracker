@@ -13,7 +13,7 @@ public class Main {
 
   public static void main(String[] args) throws InterruptedException {
 
-    /*core.TaskManager root = new core.TaskManager(null, "root");
+    core.TaskManager root = new core.TaskManager(null, "root");
 
     core.Task transportations = new core.Task(root, "Transportation");
     root.addChild(transportations);
@@ -60,7 +60,7 @@ public class Main {
 
     /**/
     //Read from Root JsonFile to core.TaskManager
-    FileManager fileManager = new FileManager();
+    /*FileManager fileManager = new FileManager();
     FromJsonVisitor fromJsonVisitor = new FromJsonVisitor();
     fileManager.readFromJsonFile();
     TaskManager rootFromJson = fileManager.accept(fromJsonVisitor);
@@ -70,7 +70,7 @@ public class Main {
 
     Interval interval = afterReadingTask.createInterval();
     sleep(7000);
-    interval.stopInterval();
+    interval.stopInterval();*/
 
 
 
