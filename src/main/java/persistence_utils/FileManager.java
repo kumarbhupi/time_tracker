@@ -3,10 +3,7 @@ package persistence_utils;
 import core.TaskManager;
 import org.json.JSONObject;
 import org.json.JSONTokener;
-import visitor_utils.Element;
-import visitor_utils.Visitor;
-import visitor_utils.VisitorPrint;
-import visitor_utils.VisitorRead;
+import visitor_utils.*;
 
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -49,4 +46,8 @@ public class FileManager implements Element {
 
   @Override
   public void print(VisitorPrint visitorPrint) { }
+
+  @Override
+  public void calculateTotalTime(VisitorTotalTime visitorTotalTime) {}
+
 }

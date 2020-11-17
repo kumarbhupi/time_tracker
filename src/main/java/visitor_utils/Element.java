@@ -9,4 +9,6 @@ public interface Element { //Accepts visitor. It can access the code executed by
   JSONObject accept(Visitor v);
 
   void print(VisitorPrint visitorPrint);
+
+  void calculateTotalTime(VisitorTotalTime visitorTotalTime);
 }

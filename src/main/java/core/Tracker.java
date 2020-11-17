@@ -1,9 +1,7 @@
 package core;
 
 import org.json.JSONObject;
-import visitor_utils.Element;
-import visitor_utils.Visitor;
-import visitor_utils.VisitorPrint;
+import visitor_utils.*;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -44,5 +42,10 @@ public abstract class Tracker implements Element {
   @Override
   public void print(VisitorPrint visitorPrint) {
     visitorPrint.print(this);
+  }
+
+  @Override
+  public void calculateTotalTime(VisitorTotalTime visitorTotalTime) {
+    visitorTotalTime.visit(this);
   }
 }
