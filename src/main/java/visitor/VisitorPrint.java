@@ -1,4 +1,4 @@
-package visitor_utils;
+package visitor;
 
 import core.Interval;
 import core.Task;

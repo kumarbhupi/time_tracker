@@ -1,12 +1,5 @@
 package client;
 
-import persistence_utils.FileManager;
-import core.Interval;
-import core.Task;
-import core.TaskManager;
-import visitor_utils.FromJsonVisitor;
-import visitor_utils.PrinterVisitor;
-
 import static java.lang.Thread.sleep;
 
 public class Main {
@@ -18,7 +11,7 @@ public class Main {
     core.Task transportations = new core.Task(root, "Transportation");
     root.addChild(transportations);
 
-    visitor_utils.PrinterVisitor printerVisitor = new visitor_utils.PrinterVisitor(root);
+    visitor.PrinterVisitor printerVisitor = new visitor.PrinterVisitor(root);
     core.Interval transportationsInterval = transportations.createInterval();
     sleep(6000);
     transportationsInterval.stopInterval();
@@ -54,7 +47,7 @@ public class Main {
 
 
     //Write Root Object to JsonFile
-    visitor_utils.ToJsonVisitor toJsonVisitor = new visitor_utils.ToJsonVisitor();
+    visitor.ToJsonVisitor toJsonVisitor = new visitor.ToJsonVisitor();
     persistence_utils.FileManager fileManager = new persistence_utils.FileManager();
     fileManager.saveToJsonFile(toJsonVisitor.visit(root));
 

@@ -1,10 +1,12 @@
 package core;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import org.json.JSONObject;
-import visitor_utils.Element;
-import visitor_utils.Visitor;
-import visitor_utils.VisitorPrint;
-import visitor_utils.VisitorRead;
+import visitor.Element;
+import visitor.Visitor;
+import visitor.VisitorPrint;
+import visitor.VisitorRead;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -18,7 +20,7 @@ public class Task extends Tracker implements Element {
   private final TaskManager parentProject;
   private List<Interval> listIntervals;
   private boolean active;
-
+  static Logger logger= LoggerFactory.getLogger("core.Task");
   public Task(TaskManager parent, String name) {
     super(name);
     parentProject = parent;
@@ -76,7 +78,8 @@ public class Task extends Tracker implements Element {
   }
 
   public void endInterval(Interval interval) {
-    System.out.println(name + " stops");
+    //System.out.println(name + " stops");
+    logger.info(name + " stops");
     Clock clock = Clock.getInstance();
     clock.deleteObserver(interval);
     active = false;
@@ -89,7 +92,8 @@ public class Task extends Tracker implements Element {
 
 
   public Interval createInterval() {
-    System.out.println(name + " started");
+    //System.out.println(name + " started");
+    logger.info(name + " started");
     LocalDateTime now = LocalDateTime.now();
     Clock clock = Clock.getInstance();
     Interval interval = new Interval(this, now);

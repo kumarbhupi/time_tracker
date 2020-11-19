@@ -1,9 +1,9 @@
-package visitor_utils;
+package visitor;
 
 import core.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.util.logging.*;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -11,8 +11,8 @@ import java.util.Observer;
 public class PrinterVisitor implements VisitorPrint, Observer {
   private final TaskManager taskManager;
   private final String STRING_ACTIVITY = "Activity:";
-  private final static Logger LOGGER =
-      Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+  static Logger logger= LoggerFactory.getLogger("visitor.PrinterVisitor");
+
 
   public PrinterVisitor(TaskManager taskManager) {
     Clock clock = Clock.getInstance();
@@ -31,7 +31,8 @@ public class PrinterVisitor implements VisitorPrint, Observer {
       for (Tracker tracker : taskManager.getTrackers()) {
         print(tracker);
       }
-      System.out.printf("%s %30s %30s %30s %30s\n", STRING_ACTIVITY, taskManager.getName(), taskManager.getStartTimeToString(), taskManager.getEndTimeToString(), taskManager.getDuration().getSeconds());
+      logger.info("%s %30s %30s %30s %30s\n", STRING_ACTIVITY, taskManager.getName(), taskManager.getStartTimeToString(), taskManager.getEndTimeToString(), taskManager.getDuration().getSeconds());
+      //System.out.printf("%s %30s %30s %30s %30s\n", STRING_ACTIVITY, taskManager.getName(), taskManager.getStartTimeToString(), taskManager.getEndTimeToString(), taskManager.getDuration().getSeconds());
       //LOGGER.warning("Hola");
     }
   }
@@ -43,7 +44,8 @@ public class PrinterVisitor implements VisitorPrint, Observer {
       for (Interval interval : task.getListIntervals()) {
         print(interval);
       }
-      System.out.printf("%s %30s %30s %30s %30s\n", STRING_ACTIVITY, task.getName(), task.getStartTimeToString(), task.getEndTimeToString(), task.getDuration().getSeconds());
+      logger.info("%s %30s %30s %30s %30s\n", STRING_ACTIVITY, task.getName(), task.getStartTimeToString(), task.getEndTimeToString(), task.getDuration().getSeconds());
+      //System.out.printf("%s %30s %30s %30s %30s\n", STRING_ACTIVITY, task.getName(), task.getStartTimeToString(), task.getEndTimeToString(), task.getDuration().getSeconds());
       //LOGGER.warning("Hola");
     }
   }
@@ -52,7 +54,8 @@ public class PrinterVisitor implements VisitorPrint, Observer {
   public void print(Interval interval) {
     if (interval.isInProgress()) {
       String STRING_INTERVAL = "Interval:";
-      System.out.printf("%s  %60s %30s %30s\n", STRING_INTERVAL, interval.getStartTimeToString(), interval.getEndTimeToString(), interval.getDuration().getSeconds());
+      logger.info("%s  %60s %30s %30s\n", STRING_INTERVAL, interval.getStartTimeToString(), interval.getEndTimeToString(), interval.getDuration().getSeconds());
+      //System.out.printf("%s  %60s %30s %30s\n", STRING_INTERVAL, interval.getStartTimeToString(), interval.getEndTimeToString(), interval.getDuration().getSeconds());
       //LOGGER.warning("Hola");
     }
   }
