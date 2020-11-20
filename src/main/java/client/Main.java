@@ -1,5 +1,12 @@
 package client;
 
+import core.Interval;
+import core.Task;
+import core.TaskManager;
+import persistence.FileManager;
+import visitor.FromJsonVisitor;
+import visitor.PrinterVisitor;
+import visitor.ToJsonVisitor;
 import visitor.TotalTimeCalculator;
 
 import java.time.LocalDate;
@@ -12,26 +19,20 @@ public class Main {
 
   public static void main(String[] args) throws InterruptedException {
 
+
     Main client = new Main();
-    //client.testGetTotalTime();//Si se quiere ejecutar test de 0:02:40 h. //Previamente ejectuado y guardado en el json
+    client.testTotalTimeFunctionalities();
+
+  }
 
 
-    core.TaskManager jsonRoot = client.readFromJsonToTaskManager(); //Para evitar ejecutar testGetTotalTime()
-
-    LocalDate today = LocalDate.of(2020, 11, 20);
-    LocalDateTime periodStartTime = LocalDateTime.of(today, LocalTime.of(15, 43, 30,734228));//Temps correspondent a 60seg
-    LocalDateTime periodEndTime = LocalDateTime.of(today, LocalTime.of(15, 44, 30,739900));////Temps correspondent a 120seg
-    visitor.TotalTimeCalculator totalTimeCalculator = new TotalTimeCalculator(periodStartTime, periodEndTime);
-    long totalTime = totalTimeCalculator.calculateTime(jsonRoot);
-    System.out.println(totalTime);
-    
-    /*core.TaskManager root = new core.TaskManager(null, "root");
+  private void testMiletone1() throws InterruptedException{
     core.TaskManager root = new core.TaskManager(null, "root");
 
     core.Task transportations = new core.Task(root, "Transportation");
     root.addChild(transportations);
 
-    visitor_utils.PrinterVisitor printerVisitor = new visitor_utils.PrinterVisitor(root);
+    PrinterVisitor printerVisitor = new PrinterVisitor(root);
     core.Interval transportationsInterval = transportations.createInterval();
     sleep(6000);
     transportationsInterval.stopInterval();
@@ -67,34 +68,35 @@ public class Main {
 
 
     //Write Root Object to JsonFile
-    visitor_utils.ToJsonVisitor toJsonVisitor = new visitor_utils.ToJsonVisitor();
-    persistence_utils.FileManager fileManager = new persistence_utils.FileManager();
+    ToJsonVisitor toJsonVisitor = new ToJsonVisitor();
+    FileManager fileManager = new FileManager();
     fileManager.saveToJsonFile(toJsonVisitor.visit(root));
-
-    /**/
-
-
-
-    //Read from Root JsonFile to core.TaskManager
-   /* FileManager fileManager = new FileManager();
     FromJsonVisitor fromJsonVisitor = new FromJsonVisitor();
     fileManager.readFromJsonFile();
     TaskManager rootFromJson = fileManager.accept(fromJsonVisitor);
     LocalDate today = LocalDate.of(2020, 11, 20);
     LocalDateTime periodeStartTime = LocalDateTime.of(today, LocalTime.of(10, 29, 50,613710));
     LocalDateTime periodeEndTime = LocalDateTime.of(today, LocalTime.of(10, 30, 30,620238));
-    PrinterVisitor printerVisitor = new PrinterVisitor(rootFromJson);
+    printerVisitor = new PrinterVisitor(rootFromJson);
     Task afterReadingTask = new Task(rootFromJson, "Task After Reading");
     rootFromJson.addChild(afterReadingTask);
 
     Interval interval = afterReadingTask.createInterval();
     sleep(7000);
-    interval.stopInterval()
+    interval.stopInterval();
+  }
 
-    TotalTimeCalculator totalTimeCalculator = new TotalTimeCalculator(periodeStartTime, periodeEndTime);
-    long time = totalTimeCalculator.calculateTime(rootFromJson);
-    System.out.println(time);;*/
 
+  private void testTotalTimeFunctionalities(){
+
+    core.TaskManager jsonRoot = readFromJsonToTaskManager(); //Para evitar ejecutar testGetTotalTime()
+
+    LocalDate today = LocalDate.of(2020, 11, 20);
+    LocalDateTime periodStartTime = LocalDateTime.of(today, LocalTime.of(15, 43, 30,734228));//Temps correspondent a 60seg
+    LocalDateTime periodEndTime = LocalDateTime.of(today, LocalTime.of(15, 44, 30,739900));////Temps correspondent a 120seg
+    visitor.TotalTimeCalculator totalTimeCalculator = new TotalTimeCalculator(periodStartTime, periodEndTime);
+    long totalTime = totalTimeCalculator.calculateTime(jsonRoot);
+    System.out.println(totalTime);
   }
 
 
@@ -105,7 +107,7 @@ public class Main {
      return fileManager.accept(fromJsonVisitor);
   }
 
-  private void testGetTotalTime() throws InterruptedException{
+  private void testGetTotalTimeAndSaveItInJson() throws InterruptedException{
     core.TaskManager root = new core.TaskManager(null, "root");
     visitor.PrinterVisitor printerVisitor = new visitor.PrinterVisitor(root);
     //0
