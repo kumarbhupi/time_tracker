@@ -1,5 +1,6 @@
 package client;
 
+import core.Tag;
 import persistence_utils.FileManager;
 import core.Interval;
 import core.Task;
@@ -58,7 +59,7 @@ public class Main {
     persistence_utils.FileManager fileManager = new persistence_utils.FileManager();
     fileManager.saveToJsonFile(toJsonVisitor.visit(root));
 
-    /**/
+
     //Read from Root JsonFile to core.TaskManager
     FileManager fileManager = new FileManager();
     FromJsonVisitor fromJsonVisitor = new FromJsonVisitor();
@@ -70,8 +71,24 @@ public class Main {
 
     Interval interval = afterReadingTask.createInterval();
     sleep(7000);
-    interval.stopInterval();
+    interval.stopInterval();*/
 
+    core.TaskManager root = new core.TaskManager(null, "root");
+
+    core.Task task1 = new core.Task(root, "Task1");
+    root.addChild(task1);
+    Tag Tag1 = new Tag("Tag1");
+    task1.addTag(Tag1);
+    core.Task task2 = new core.Task(root, "Task2");
+    root.addChild(task2);
+    Tag Tag2 = new Tag("Tag2");
+    task2.addTag(Tag2);
+    core.TaskManager Project1 = new core.TaskManager(root, "Project1");
+    root.addChild(Project1);
+    Tag Tag3 = new Tag("Tag3");
+    Project1.addTag(Tag3);
+
+    Tag1.searchTag("Tag3", root);
 
 
   }

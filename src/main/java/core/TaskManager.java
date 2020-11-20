@@ -137,4 +137,15 @@ public class TaskManager extends Tracker implements Element {
   public void print(VisitorPrint visitorPrint) {
     visitorPrint.print(this);
   }
+
+  public void addTag(Tag tag){
+    super.addTag(tag);
+  }
+
+  public void removeTag(Tag tag){
+    super.removeTag(tag);
+  }
+
+
+
 }

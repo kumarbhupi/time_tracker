@@ -152,5 +152,13 @@ public class Task extends Tracker implements Element {
   public void setActive(Boolean active) {
     this.active = active;
   }
+
+  public void addTag(Tag tag){
+    super.addTag(tag);
+  }
+
+  public void removeTag(Tag tag){
+    super.removeTag(tag);
+  }
 }
 
