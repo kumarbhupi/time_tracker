@@ -4,6 +4,7 @@ import core.Interval;
 import core.Task;
 import core.TaskManager;
 import persistence.FileManager;
+import searcher.TagManager;
 import visitor.FromJsonVisitor;
 import visitor.PrinterVisitor;
 import visitor.ToJsonVisitor;
@@ -19,72 +20,88 @@ public class Main {
 
   public static void main(String[] args) throws InterruptedException {
 
-
+    System.out.println("C++".equalsIgnoreCase("c++"));
     Main client = new Main();
     client.testTotalTimeFunctionalities();
+
+
+    client.testTags();
 
   }
 
 
-  private void testMiletone1() throws InterruptedException{
+  private void testTags(){
     core.TaskManager root = new core.TaskManager(null, "root");
-
-    core.Task transportations = new core.Task(root, "Transportation");
-    root.addChild(transportations);
-
-    PrinterVisitor printerVisitor = new PrinterVisitor(root);
-    core.Interval transportationsInterval = transportations.createInterval();
-    sleep(6000);
-    transportationsInterval.stopInterval();
 
     core.TaskManager softwareDesign = new core.TaskManager(root, "Software Design");
     root.addChild(softwareDesign);
 
+    core.TaskManager softwareTesting = new core.TaskManager(root, "Software Testing");
+    root.addChild(softwareTesting);
+
+    core.TaskManager database = new core.TaskManager(root, "Database");
+    root.addChild(database);
+
+    core.TaskManager taskTrasnportation = new core.TaskManager(root, "Task Transportation");
+    root.addChild(taskTrasnportation);
+
     core.TaskManager problems = new core.TaskManager(softwareDesign, "Problems");
     softwareDesign.addChild(problems);
 
-    core.Task firstList = new core.Task(problems, "First List");
+    core.TaskManager projectTime = new core.TaskManager(softwareDesign, "Project Time");
+    softwareDesign.addChild(projectTime);
+
+    core.Task firstList = new core.Task(problems, "First list");
     problems.addChild(firstList);
 
-    core.Task secondList = new core.Task(problems, "Second List");
+    core.Task secondList = new core.Task(problems, "Second list");
     problems.addChild(secondList);
 
-    sleep(2000);
-    core.Interval firstListInterval = firstList.createInterval();
-    sleep(6000);
-    core.Interval secondListInterval = secondList.createInterval();
+    core.Task readHeadout = new core.Task(projectTime, "Read Headout");
+    projectTime.addChild(readHeadout);
 
-    sleep(4000);
-    firstListInterval.stopInterval();
-    sleep(2000);
-    secondListInterval.stopInterval();
-    sleep(2000);
-    core.Interval transportationsSecondInterval = transportations.createInterval();
-    sleep(4000);
-    transportationsSecondInterval.stopInterval();
+    core.Task firstMilestone = new core.Task(projectTime, "First Milestone");
+    projectTime.addChild(firstMilestone);
 
-    printerVisitor.stopPrinting();
-    core.Clock.getInstance().stopClock();
+    TagManager tagManager = new TagManager();
 
+    tagManager.createTag("java");
+    tagManager.addTracker("java",softwareDesign);
+    tagManager.addTracker("java",firstList);
 
-    //Write Root Object to JsonFile
-    ToJsonVisitor toJsonVisitor = new ToJsonVisitor();
-    FileManager fileManager = new FileManager();
-    fileManager.saveToJsonFile(toJsonVisitor.visit(root));
-    FromJsonVisitor fromJsonVisitor = new FromJsonVisitor();
-    fileManager.readFromJsonFile();
-    TaskManager rootFromJson = fileManager.accept(fromJsonVisitor);
-    LocalDate today = LocalDate.of(2020, 11, 20);
-    LocalDateTime periodeStartTime = LocalDateTime.of(today, LocalTime.of(10, 29, 50,613710));
-    LocalDateTime periodeEndTime = LocalDateTime.of(today, LocalTime.of(10, 30, 30,620238));
-    printerVisitor = new PrinterVisitor(rootFromJson);
-    Task afterReadingTask = new Task(rootFromJson, "Task After Reading");
-    rootFromJson.addChild(afterReadingTask);
+    tagManager.createTag("flutter");
+    tagManager.addTracker("flutter",softwareDesign);
 
-    Interval interval = afterReadingTask.createInterval();
-    sleep(7000);
-    interval.stopInterval();
+    tagManager.createTag("c++");
+    tagManager.addTracker("c++",softwareTesting);
+
+    tagManager.createTag("Java");
+    tagManager.addTracker("Java",softwareTesting);
+    tagManager.addTracker("Java",firstMilestone);
+
+    tagManager.createTag("python");
+    tagManager.addTracker("python",softwareTesting);
+    tagManager.addTracker("python",database);
+
+    tagManager.createTag("C++");
+    tagManager.addTracker("C++",database);
+
+    tagManager.createTag("SQL");
+    tagManager.addTracker("SQL",database);
+
+    tagManager.createTag("Dart");
+    tagManager.addTracker("Dart",secondList);
+
+    tagManager.createTag("IntelliJ");
+    tagManager.addTracker("IntelliJ",firstList);
+
+    //Test.removeTracker("java",softwareDesign);
+
+    tagManager.searchTag("java");
+
   }
+
+
 
 
   private void testTotalTimeFunctionalities(){
@@ -227,6 +244,66 @@ public class Main {
     System.out.println(START_TIME.toString() + "START-TIME");
     System.out.println(END_TIME.toString() + "END-TIME");
 
+  }
+
+  private void testMiletone1() throws InterruptedException{
+    core.TaskManager root = new core.TaskManager(null, "root");
+
+    core.Task transportations = new core.Task(root, "Transportation");
+    root.addChild(transportations);
+
+    PrinterVisitor printerVisitor = new PrinterVisitor(root);
+    core.Interval transportationsInterval = transportations.createInterval();
+    sleep(6000);
+    transportationsInterval.stopInterval();
+
+    core.TaskManager softwareDesign = new core.TaskManager(root, "Software Design");
+    root.addChild(softwareDesign);
+
+    core.TaskManager problems = new core.TaskManager(softwareDesign, "Problems");
+    softwareDesign.addChild(problems);
+
+    core.Task firstList = new core.Task(problems, "First List");
+    problems.addChild(firstList);
+
+    core.Task secondList = new core.Task(problems, "Second List");
+    problems.addChild(secondList);
+
+    sleep(2000);
+    core.Interval firstListInterval = firstList.createInterval();
+    sleep(6000);
+    core.Interval secondListInterval = secondList.createInterval();
+
+    sleep(4000);
+    firstListInterval.stopInterval();
+    sleep(2000);
+    secondListInterval.stopInterval();
+    sleep(2000);
+    core.Interval transportationsSecondInterval = transportations.createInterval();
+    sleep(4000);
+    transportationsSecondInterval.stopInterval();
+
+    printerVisitor.stopPrinting();
+    core.Clock.getInstance().stopClock();
+
+
+    //Write Root Object to JsonFile
+    ToJsonVisitor toJsonVisitor = new ToJsonVisitor();
+    FileManager fileManager = new FileManager();
+    fileManager.saveToJsonFile(toJsonVisitor.visit(root));
+    FromJsonVisitor fromJsonVisitor = new FromJsonVisitor();
+    fileManager.readFromJsonFile();
+    TaskManager rootFromJson = fileManager.accept(fromJsonVisitor);
+    LocalDate today = LocalDate.of(2020, 11, 20);
+    LocalDateTime periodeStartTime = LocalDateTime.of(today, LocalTime.of(10, 29, 50,613710));
+    LocalDateTime periodeEndTime = LocalDateTime.of(today, LocalTime.of(10, 30, 30,620238));
+    printerVisitor = new PrinterVisitor(rootFromJson);
+    Task afterReadingTask = new Task(rootFromJson, "Task After Reading");
+    rootFromJson.addChild(afterReadingTask);
+
+    Interval interval = afterReadingTask.createInterval();
+    sleep(7000);
+    interval.stopInterval();
   }
 
 }
