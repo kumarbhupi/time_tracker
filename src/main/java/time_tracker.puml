@@ -3,6 +3,7 @@ class Clock{
 -Observable observable
 -Timer clock
 -Clock uniqueInstance
+-Logger logger
 -Clock()
 +getInstance():clock
 -startTick()
@@ -67,6 +68,7 @@ class Interval{
 +update()
 +toString():String
 +print()
++calculateTotalTime():long
 }
 
 class PrinterVisitor{
@@ -98,6 +100,9 @@ class Task{
 +toString():String
 +getEndTime():LocalDateTime
 +print()
++invariant():boolean
++setActive()
++calculateTotalTime():long
 }
 
 class TaskManager{
@@ -129,6 +134,45 @@ class Tracker{
 +getEndTimeToString():String
 +getStartTime():LocalDateTime
 +getEndTime():LocalDateTime
++calculateTotalTime():long
+}
+
+class TotalTimeCalculator{
++LocalDateTime startInterval;
++LocalDateTime endInterval;
++TotalTimeCalculator()
++calculateTotalTime(Tracker):long()
++calculateTotalTime(TaskManager):long()
++calculateTotalTime(Task):long()
++calculateTotalTime(Interval):long()
+-checkIfIsOut()
+-getSpentTime()
+}
+
+interface VisitorTotalTime{
+  +calculateTime(tracker):long
+  +calculateTime(taskManager):long
+  +calculateTime(task):long
+  +calculateTimeinterval):long
+}
+
+class TagManager{
+#ArrayList<Tags> tags
++TagManager(String)
++addTracker(String, tracker)
++rmoveTracker(String, tracker)
++searchTag(String):List<Tracker>
+}
+
+class Tag{
++String tag
++ArrayList<Tracker> trackersTag
++Tag(String)
++removeTracker(tracker)
++addTracker(tracker)
++getTag():Tag
++getTagName():String
++getTrackers:ArrayList<Tracker> trackersTag
 }
 
 interface Observer
@@ -151,4 +195,6 @@ class TaskManager implements Element
 class FileManager implements Element
 class FromJsonVisitor implements VisitorRead
 class ToJsonVisitor implements Visitor
+class TotalTimeCalculator implements VisitorTotalTime
+TagManager *--- Tag
 @enduml
