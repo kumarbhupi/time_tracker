@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--This class is used to substitute system outs (prints) for loggers. A logger is a register of all prints from MileStone1.-->
 <configuration>
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
             <pattern>%-4relative [%thread] %-5level %logger{35} - %msg %n</pattern>
         </encoder>
     </appender>
-
+<!-- Filtering loggers depending of type: information, warning, debugging.-->
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <filter class="ch.qos.logback.classic.filter.LevelFilter">
             <level>INFO</level>
@@ -21,20 +22,22 @@
     <root level="DEBUG">
         <appender-ref ref="CONSOLE" />
     </root>
-
+<!--Used to unable Logger class.-->
     <appender name="FILE" class="ch.qos.logback.core.FileAppender">
         <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
             <layout class="ch.qos.logback.classic.html.HTMLLayout">
                 <pattern>%relative%thread%mdc%level%logger%msg</pattern>
             </layout>
         </encoder>
+        <!--Using following tag to save loggers into a HTML file.-->
         <file>out/production/test.html</file>
     </appender>
     <root level="info">
         <appender-ref ref="STDOUT" />
         <appender-ref ref="FILE" />
     </root>
-
+<!-- Creating two loggers. One for each class that in MileStone1 used prints. Task and Clock.-->
+<!-- Giving Logger register type:information for all prints.-->
     <logger name="core.Task" level="info"/>
     <logger name="visitor.PrinterVisitor" level="info"/>
 

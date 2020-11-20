@@ -29,5 +29,4 @@ public class LevelFilter extends AbstractMatcherFilter<ILoggingEvent> {
     }
   }
 
-
 }
