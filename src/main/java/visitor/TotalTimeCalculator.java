@@ -25,10 +25,13 @@ public class TotalTimeCalculator implements VisitorTotalTime {
   public long calculateTime(TaskManager taskManager) {
     assert startInterval != null && endInterval != null;
     long spendTime = 0;
-    if (!checkIfIsOutArea(taskManager.getStartTime(), taskManager.getEndTime())) {
-      for (Tracker tracker : taskManager.getTrackers()) {
-        spendTime += calculateTime(tracker);
+    if (taskManager.getStartTime() != null && taskManager.getStartTime()!= null ){
+      if (!checkIfIsOutArea(taskManager.getStartTime(), taskManager.getEndTime())) {
+        for (Tracker tracker : taskManager.getTrackers()) {
+          spendTime += calculateTime(tracker);
+        }
       }
+      return spendTime;
     }
     return spendTime;
   }
@@ -66,7 +69,7 @@ public class TotalTimeCalculator implements VisitorTotalTime {
         return Duration.between(this.startInterval, endInterval).getSeconds();
       }
       if (this.endInterval.isBefore(endInterval)) {
-        return Duration.between(this.endInterval, this.startInterval).getSeconds();
+        return Duration.between(this.startInterval, this.endInterval).getSeconds();
       }
     }
     if (this.startInterval.isBefore(startInterval)) {

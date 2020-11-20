@@ -1,138 +1,30 @@
 package client;
 
-import core.TaskManager;
-import persistence_utils.FileManager;
-import visitor_utils.FromJsonVisitor;
-import visitor_utils.TotalTimeCalculator;
+import visitor.TotalTimeCalculator;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
+import static java.lang.Thread.sleep;
+
 public class Main {
 
   public static void main(String[] args) throws InterruptedException {
 
-    /*
-    TaskManager root = new TaskManager(null, "root");
-    PrinterVisitor printerVisitor = new PrinterVisitor(root);
-
-    TaskManager p0 = new TaskManager(root, "P0");
-    root.addChild(p0);
-    Task t0 = new Task(p0,"T0");
-    p0.addChild(t0);
-
-    sleep(10000); //10
-    Interval t0_i = t0.createInterval();
-
-    sleep(10000);//20
-
-    Task t4 = new Task(root, "T4");
-    root.addChild(t4);
-    Interval t4_i = t4.createInterval();
+    Main client = new Main();
+    //client.testGetTotalTime();//Si se quiere ejecutar test de 0:02:40 h. //Previamente ejectuado y guardado en el json
 
 
-    sleep(10000);//30
-    t0_i.stopInterval();
-    t4_i.stopInterval();
+    core.TaskManager jsonRoot = client.readFromJsonToTaskManager(); //Para evitar ejecutar testGetTotalTime()
 
-    Task t1 = new Task(p0, "T1");
-    p0.addChild(t1);
-    Interval t1_i = t1.createInterval();
-
-    Task t2 = new Task(p0, "T2");
-    p0.addChild(t2);
-    Interval t2_i = t2.createInterval();
-
-    sleep(10000);//40
-    t0_i =t0.createInterval();
-
-    Task t5 = new Task(root, "T5");
-    root.addChild(t5);
-    Interval t5_i = t5.createInterval();
-
-    sleep(10000);//50
-    t0_i.stopInterval();
-
-    t1_i.stopInterval();
-
-    t4_i = t4.createInterval();
-
-    sleep(10000);//60
-    LocalDateTime START_TIME = LocalDateTime.now();
-
-
-    sleep(10000);//70
-    t1_i = t1.createInterval();
-
-    t5_i.stopInterval();
-
-    sleep(10000);//80
-    t5_i = t5.createInterval();
-
-    sleep(10000);//90
-    t2_i.stopInterval();
-
-    t5_i.stopInterval();
-
-    sleep(10000);//100
-    t5_i = t5.createInterval();
-
-    sleep(10000);//110
-    t2_i = t2.createInterval();
-
-    t5_i.stopInterval();
-
-    sleep(10000); //120
-    LocalDateTime END_TIME = LocalDateTime.now();
-
-
-    sleep(10000);//130
-
-    t1_i.stopInterval();
-
-    t2_i.stopInterval();
-
-    TaskManager p1 = new TaskManager(root, "P1");
-    root.addChild(p1);
-    Task t3 = new Task(p1, "T3");
-    p1.addChild(t3);
-    Interval t3_i = t3.createInterval();
-
-    t4_i.stopInterval();
-
-
-    sleep(10000);//140
-    t0_i = t0.createInterval();
-
-    t3_i.stopInterval();
-
-    t4_i = t4.createInterval();
-
-    sleep(10000);//150
-    t0_i.stopInterval();
-
-    sleep(10000);//160
-    t4_i.stopInterval();
-
-
-    TaskManager p3 = new TaskManager(root, "P3");
-    root.addChild(p3);
-
-    printerVisitor.stopPrinting();
-
-    visitor_utils.ToJsonVisitor toJsonVisitor = new visitor_utils.ToJsonVisitor();
-    persistence_utils.FileManager fileManager = new persistence_utils.FileManager();
-    fileManager.saveToJsonFile(toJsonVisitor.visit(root));
-    System.out.println(START_TIME.toString() + "START-TIME");
-    System.out.println(END_TIME.toString() + "END-TIME");
-
-
-
-
-
-
-
+    LocalDate today = LocalDate.of(2020, 11, 20);
+    LocalDateTime periodStartTime = LocalDateTime.of(today, LocalTime.of(15, 43, 30,734228));//Temps correspondent a 60seg
+    LocalDateTime periodEndTime = LocalDateTime.of(today, LocalTime.of(15, 44, 30,739900));////Temps correspondent a 120seg
+    visitor.TotalTimeCalculator totalTimeCalculator = new TotalTimeCalculator(periodStartTime, periodEndTime);
+    long totalTime = totalTimeCalculator.calculateTime(jsonRoot);
+    System.out.println(totalTime);
+    
     /*core.TaskManager root = new core.TaskManager(null, "root");
     core.TaskManager root = new core.TaskManager(null, "root");
 
@@ -202,6 +94,136 @@ public class Main {
     TotalTimeCalculator totalTimeCalculator = new TotalTimeCalculator(periodeStartTime, periodeEndTime);
     long time = totalTimeCalculator.calculateTime(rootFromJson);
     System.out.println(time);;*/
+
+  }
+
+
+  private core.TaskManager readFromJsonToTaskManager(){
+    persistence.FileManager fileManager = new persistence.FileManager();
+    visitor.FromJsonVisitor fromJsonVisitor = new visitor.FromJsonVisitor();
+    fileManager.readFromJsonFile();
+     return fileManager.accept(fromJsonVisitor);
+  }
+
+  private void testGetTotalTime() throws InterruptedException{
+    core.TaskManager root = new core.TaskManager(null, "root");
+    visitor.PrinterVisitor printerVisitor = new visitor.PrinterVisitor(root);
+    //0
+    core.TaskManager p0 = new core.TaskManager(root, "P0");
+    root.addChild(p0);
+    core.Task t0 = new core.Task(p0,"T0");
+    p0.addChild(t0);
+    core.Task t1 = new core.Task(p0, "T1");
+    p0.addChild(t1);
+    core.Task t2 = new core.Task(p0, "T2");
+    p0.addChild(t2);
+
+    core.TaskManager p1 = new core.TaskManager(root, "P1");
+    root.addChild(p1);
+
+    core.Task t3 = new core.Task(p1, "T3");
+    p1.addChild(t3);
+    core.Task t4 = new core.Task(root, "T4");
+    root.addChild(t4);
+    core.Task t5 = new core.Task(root, "T5");
+    root.addChild(t5);
+
+    core.TaskManager p3 = new core.TaskManager(root, "P3");
+    root.addChild(p3);
+
+
+
+    Thread.sleep(10000); //10
+    core.Interval t0_i = t0.createInterval();
+
+    sleep(10000);//20
+
+    core.Interval t4_i = t4.createInterval();
+
+    sleep(10000);//30
+    t0_i.stopInterval();
+    t4_i.stopInterval();
+
+    core.Interval t1_i = t1.createInterval();
+
+    core.Interval t2_i = t2.createInterval();
+
+    sleep(10000);//40
+    t0_i =t0.createInterval();
+
+
+    core.Interval t5_i = t5.createInterval();
+
+    sleep(10000);//50
+    t0_i.stopInterval();
+
+    t1_i.stopInterval();
+
+    t4_i = t4.createInterval();
+
+    sleep(10000);//60
+    LocalDateTime START_TIME = LocalDateTime.now();
+
+
+    sleep(10000);//70
+    t1_i = t1.createInterval();
+
+    t5_i.stopInterval();
+
+    sleep(10000);//80
+    t5_i = t5.createInterval();
+
+    sleep(10000);//90
+    t2_i.stopInterval();
+
+    t5_i.stopInterval();
+
+    sleep(10000);//100
+    t5_i = t5.createInterval();
+
+    sleep(10000);//110
+    t2_i = t2.createInterval();
+
+    t5_i.stopInterval();
+
+    sleep(10000); //120
+    LocalDateTime END_TIME = LocalDateTime.now();
+
+
+    sleep(10000);//130
+
+    t1_i.stopInterval();
+
+    t2_i.stopInterval();
+
+
+    core.Interval t3_i = t3.createInterval();
+
+    t4_i.stopInterval();
+
+
+    sleep(10000);//140
+    t0_i = t0.createInterval();
+
+    t3_i.stopInterval();
+
+    t4_i = t4.createInterval();
+
+    sleep(10000);//150
+    t0_i.stopInterval();
+
+
+    sleep(10000);//160
+    t4_i.stopInterval();
+
+
+    printerVisitor.stopPrinting();
+
+    visitor.ToJsonVisitor toJsonVisitor = new visitor.ToJsonVisitor();
+    persistence.FileManager fileManager = new persistence.FileManager();
+    fileManager.saveToJsonFile(toJsonVisitor.visit(root));
+    System.out.println(START_TIME.toString() + "START-TIME");
+    System.out.println(END_TIME.toString() + "END-TIME");
 
   }
 
