@@ -34,6 +34,7 @@ public class TaskManager extends Tracker implements Element {
     assert (invariant()) : "Invariant has detected wrong value.";
   }
 
+  //Implementation of invariant method. Checking variables are valid before and after a method's execution.
   private boolean invariant(){
     boolean isInvariant = false;
 
@@ -53,10 +54,6 @@ public class TaskManager extends Tracker implements Element {
       isInvariant=true;
     }
 
-    /*if ((this.endTime.isAfter(this.startTime))){
-      isInvariant=true;
-    }*/
-
     if ((this.startTime!=null)){
       isInvariant=true;
     }
@@ -72,18 +69,18 @@ public class TaskManager extends Tracker implements Element {
     return active;
   }
 
-  //
+  //First method using invariant.
   public void setActive(boolean active) {
     //Precondition
-    assert (invariant()) : "Invariant has detected wrong value.";
-    assert (!active) : "TaskManager not active";
+    assert (invariant()) : "Invariant has detected wrong value."; //Runs method to check all different possible parameter values are correct.
+    assert (!active) : "TaskManager not active"; //Specifying contract with variable passed by parameter.
 
     if (parentProject != null) {
       parentProject.setActive(active);
     }
     this.active = active;
     //Postcondition
-    assert (invariant()) : "Invariant has detected wrong value.";
+    assert (invariant()) : "Invariant has detected wrong value."; //Checking all variables have valid values by the end of the method.
   }
 
   public TaskManager getParentProject() {
@@ -213,7 +210,6 @@ public class TaskManager extends Tracker implements Element {
 
     assert (invariant()) : "Invariant has detected wrong value.";
   }
-
 
   @Override
   public long calculateTotalTime(VisitorTotalTime visitorTotalTime) {

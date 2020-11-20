@@ -17,6 +17,8 @@ public class Task extends Tracker implements Element {
   private final TaskManager parentProject;
   private List<Interval> listIntervals;
   private boolean active;
+
+  //Implementing Logger class to print messages and saving them in register mode.
   static Logger logger= LoggerFactory.getLogger(Task.class);
   public Task(TaskManager parent, String name) {
     super(name);
@@ -28,6 +30,7 @@ public class Task extends Tracker implements Element {
     assert (invariant()) : "Invariant has detected wrong value.";
   }
 
+  //Implementation of invariant method. Checking variables are valid before and after a method's execution.
   private boolean invariant(){
     boolean isInvariant = false;
 
@@ -47,10 +50,6 @@ public class Task extends Tracker implements Element {
       isInvariant=true;
     }
 
-    /*if ((this.endTime.isAfter(this.startTime))){
-      isInvariant=true;
-    }*/
-
     if ((this.startTime!=null)){
       isInvariant=true;
     }
@@ -62,14 +61,15 @@ public class Task extends Tracker implements Element {
     return isInvariant;
   }
 
+  //First method using invariant.
   public void setActive(boolean active) {
     //Precondition
-    assert (invariant()) : "Invariant has detected wrong value.";
-    assert (!active): "Is not active";
+    assert (invariant()) : "Invariant has detected wrong value."; //Runs method to check all different possible parameter values are correct.
+    assert (!active): "Is not active"; //Specifying contract with variable passed by parameter.
     this.active = active;
 
     //Post condition
-    assert (invariant()) : "Invariant has detected wrong value.";
+    assert (invariant()) : "Invariant has detected wrong value."; //Checking all variables have valid values by the end of the method.
   }
 
   public List<Interval> getListIntervals() {
@@ -115,7 +115,7 @@ public class Task extends Tracker implements Element {
 
     //PostCondition
     assert (invariant()) : "Invariant has detected wrong value.";
-    assert(parentProject.getDuration() != null);
+    assert(parentProject.getDuration() != null) : "Parent Project has wrong value of duration";
   }
 
 
@@ -131,14 +131,12 @@ public class Task extends Tracker implements Element {
   }
 
   public void endInterval(Interval interval) {
-    //System.out.println(name + " stops");
+    //Changed system out for a Logger type information.
     logger.info(name + " stops");
     //PreCondition
     assert (invariant()) : "Invariant has detected wrong value.";
-    assert(interval!=null);
-    assert(interval.isInProgress());
-
-    System.out.println(name + " stops");
+    assert(interval!=null) : "Interval has wrong value.";
+    assert(interval.isInProgress()) :"Interval is not in progress.";
     Clock clock = Clock.getInstance();
     clock.deleteObserver(interval);
     active = false;
@@ -146,7 +144,7 @@ public class Task extends Tracker implements Element {
 
     //PostCondition
     assert (invariant()) : "Invariant has detected wrong value.";
-    assert(!interval.isInProgress());
+    assert(!interval.isInProgress()) : "Interval is not in progress.";
   }
 
   public boolean isActive() {
@@ -155,7 +153,7 @@ public class Task extends Tracker implements Element {
 
 
   public Interval createInterval() {
-    //System.out.println(name + " started");
+
     logger.info(name + " started");
     LocalDateTime now = LocalDateTime.now();
     Clock clock = Clock.getInstance();
@@ -229,7 +227,7 @@ public class Task extends Tracker implements Element {
   public void print(VisitorPrint visitorPrint) {
     //Precondition
     assert (invariant()) : "Invariant has detected wrong value.";
-    assert(visitorPrint!=null);
+    assert(visitorPrint!=null) :"Visitor print is empty.";
 
     visitorPrint.print(this);
 
