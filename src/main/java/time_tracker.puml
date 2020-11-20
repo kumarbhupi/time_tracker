@@ -160,7 +160,7 @@ class TagManager{
 #ArrayList<Tags> tags
 +TagManager(String)
 +addTracker(String, tracker)
-+rmoveTracker(String, tracker)
++removeTracker(String, tracker)
 +searchTag(String):List<Tracker>
 }
 
@@ -182,7 +182,7 @@ class Observable
 TaskManager"1  " -- "1..*" Task
 class Task extends Tracker
 class TaskManager extends Tracker
-Task "1 "*--"0..*"Interval
+Task "1 "--"0.."Interval
 class Interval implements Element
 class Interval implements Observer
 TaskManager "1 " o--"0..* "Tracker
@@ -196,5 +196,11 @@ class FileManager implements Element
 class FromJsonVisitor implements VisitorRead
 class ToJsonVisitor implements Visitor
 class TotalTimeCalculator implements VisitorTotalTime
-TagManager *--- Tag
+class VisitorTotalTime implements Element
+TagManager "1"*--"1..*" Tag
+Tag *-- Tracker
+
+VisitorTotalTime "1"--"1..*" Tracker
+VisitorTotalTime "1"--"1..*" TaskManager
+VisitorTotalTime "1"--"1..*" Interval
 @enduml
