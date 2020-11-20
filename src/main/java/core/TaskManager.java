@@ -1,7 +1,10 @@
 package core;
 
 import org.json.JSONObject;
-import visitor_utils.*;
+import visitor.Element;
+import visitor.Visitor;
+import visitor.VisitorPrint;
+import visitor.VisitorRead;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
