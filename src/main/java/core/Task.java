@@ -7,7 +7,6 @@ import visitor.Element;
 import visitor.Visitor;
 import visitor.VisitorPrint;
 import visitor.VisitorRead;
-
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -16,11 +15,10 @@ import java.util.List;
 
 //This class is the leaf in the Composite pattern.
 public class Task extends Tracker implements Element {
-
   private final TaskManager parentProject;
   private List<Interval> listIntervals;
   private boolean active;
-  static Logger logger= LoggerFactory.getLogger("core.Task");
+  static Logger logger= LoggerFactory.getLogger(Task.class);
   public Task(TaskManager parent, String name) {
     super(name);
     parentProject = parent;
@@ -56,6 +54,7 @@ public class Task extends Tracker implements Element {
 
   @Override
   public LocalDateTime getStartTime() {
+
     return this.startTime;
   }
 

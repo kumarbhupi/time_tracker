@@ -5,13 +5,17 @@ import java.util.Observable;
 import java.util.Timer;
 import java.util.TimerTask;
 
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 //This class implements Singleton pattern.
 public class Clock extends Observable {
   private Observable observable;
   private final Timer clock;
   private static Clock uniqueInstance;
-
-
+  private String data;
+  static Logger logger= LoggerFactory.getLogger(Clock.class);
   private Clock() {
     observable = new Observable();
     clock = new Timer();
@@ -27,7 +31,8 @@ public class Clock extends Observable {
 
   //Creates a thread that executes every 2 seconds notifying to the observers.
   private void startTick() {
-    System.out.println("core.Clock is ticking");
+    data= "Clock is ticking";
+    logger.info("{}",data);
     clock.schedule(new TimerTask() {
       @Override
       public void run() {
@@ -45,6 +50,7 @@ public class Clock extends Observable {
 
   public void stopClock() {
     clock.cancel();
+
   }
 
 }
