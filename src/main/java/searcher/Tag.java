@@ -5,25 +5,23 @@ import core.Tracker;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Tags {
+public class Tag {
   private String tag;
-  private ArrayList<Tracker> trackersTag = new ArrayList<Tracker>();
+  private ArrayList<Tracker> trackersTag = new ArrayList<>();
 
-  public Tags(String tag){
+  public Tag(String tag){
     this.tag = tag;
   }
 
   public void removeTracker(Tracker tracker){
-    this.tag = tag;
     trackersTag.remove(tracker);
   }
 
   public void addTracker(Tracker tracker){
-    this.tag = tag;
     trackersTag.add(tracker);
   }
 
-  public Tags getTag(){return this;}
+  public Tag getTag(){return this;}
 
   public String getNameTag(){return this.tag;}
 

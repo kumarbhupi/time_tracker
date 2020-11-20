@@ -6,7 +6,6 @@ import core.TaskManager;
 import core.Tracker;
 import persistence.FileManager;
 import searcher.TagManager;
-import searcher.Tags;
 import visitor.FromJsonVisitor;
 import visitor.PrinterVisitor;
 import visitor.ToJsonVisitor;
@@ -22,11 +21,9 @@ import static java.lang.Thread.sleep;
 public class Main {
 
   public static void main(String[] args) throws InterruptedException {
-
-    System.out.println("C++".equalsIgnoreCase("c++"));
     Main client = new Main();
-    client.testTotalTimeFunctionalities();
 
+    client.testGetTotalTimeAndSaveItInJson();
 
     client.testTags();
 
@@ -245,11 +242,28 @@ public class Main {
 
     printerVisitor.stopPrinting();
 
-    visitor.ToJsonVisitor toJsonVisitor = new visitor.ToJsonVisitor();
+    visitor.TotalTimeCalculator totalTimeCalculator = new TotalTimeCalculator(START_TIME, END_TIME);
+    System.out.println("Root :"+totalTimeCalculator.calculateTime(root));
+    System.out.println("P0 :"+totalTimeCalculator.calculateTime(p0));
+    System.out.println("T1 :"+totalTimeCalculator.calculateTime(t1));
+    System.out.println("T2 :"+totalTimeCalculator.calculateTime(t2));
+
+    System.out.println("P1 :"+totalTimeCalculator.calculateTime(p1));
+
+    System.out.println("T4 :"+totalTimeCalculator.calculateTime(t4));
+
+    System.out.println("T5 :"+totalTimeCalculator.calculateTime(t5));
+
+
+    System.out.println("P3 :"+totalTimeCalculator.calculateTime(p3));
+
+
+    /*visitor.ToJsonVisitor toJsonVisitor = new visitor.ToJsonVisitor();
     persistence.FileManager fileManager = new persistence.FileManager();
-    fileManager.saveToJsonFile(toJsonVisitor.visit(root));
-    System.out.println(START_TIME.toString() + "START-TIME");
-    System.out.println(END_TIME.toString() + "END-TIME");
+    fileManager.saveToJsonFile(toJsonVisitor.visit(root));*/
+
+
+
 
   }
 

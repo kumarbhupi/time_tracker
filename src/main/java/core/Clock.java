@@ -1,13 +1,14 @@
 package core;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.time.LocalDateTime;
 import java.util.Observable;
 import java.util.Timer;
 import java.util.TimerTask;
 
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 //This class implements Singleton pattern.
 public class Clock extends Observable {
@@ -15,7 +16,8 @@ public class Clock extends Observable {
   private final Timer clock;
   private static Clock uniqueInstance;
   private String data;
-  static Logger logger= LoggerFactory.getLogger(Clock.class);
+  static Logger logger = LoggerFactory.getLogger(Clock.class);
+
   private Clock() {
     observable = new Observable();
     clock = new Timer();
@@ -31,8 +33,8 @@ public class Clock extends Observable {
 
   //Creates a thread that executes every 2 seconds notifying to the observers.
   private void startTick() {
-    data= "Clock is ticking";
-    logger.info("{}",data);
+    data = "Clock is ticking";
+    logger.info("{}", data);
     clock.schedule(new TimerTask() {
       @Override
       public void run() {
