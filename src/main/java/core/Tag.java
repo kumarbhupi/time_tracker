@@ -13,16 +13,22 @@ public class Tag {
         this.tag = tag;
     }
 
-    String getTag(){return this.tag;}
+    public String getTag(){return this.tag;}
 
     public void searchTag(String tag, TaskManager taskManager){
         for (int i = 0; i < taskManager.getTrackers().size(); i++){
             Tracker currentTracker = taskManager.getTrackers().get(i);
             for (int j = 0; j < currentTracker.getTags().size(); j++){
                 Tag currentTag = currentTracker.getTags().get(j);
-                if(currentTag.getTag() == tag){
+                String currentStringTag = currentTag.getTag();
+                boolean find = currentStringTag.equalsIgnoreCase(tag);
+                if(find){
                     System.out.println(currentTracker.getName());
                 }
+            }
+            if(currentTracker instanceof TaskManager){
+                TaskManager nextTaskManager = ((TaskManager) currentTracker);
+                searchTag(tag, nextTaskManager);
             }
         }
     }
