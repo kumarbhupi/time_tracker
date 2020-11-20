@@ -3,8 +3,10 @@ package client;
 import core.Interval;
 import core.Task;
 import core.TaskManager;
+import core.Tracker;
 import persistence.FileManager;
 import searcher.TagManager;
+import searcher.Tags;
 import visitor.FromJsonVisitor;
 import visitor.PrinterVisitor;
 import visitor.ToJsonVisitor;
@@ -13,6 +15,7 @@ import visitor.TotalTimeCalculator;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.List;
 
 import static java.lang.Thread.sleep;
 
@@ -97,7 +100,11 @@ public class Main {
 
     //Test.removeTracker("java",softwareDesign);
 
-    tagManager.searchTag("java");
+    List<Tracker> TrackersFound = tagManager.searchTag("java");
+
+    for (Tracker tracker : TrackersFound){
+      System.out.println(tracker);
+    }
 
   }
 
