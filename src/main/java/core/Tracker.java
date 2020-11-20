@@ -45,7 +45,7 @@ public abstract class Tracker implements Element {
   }
 
   @Override
-  public void calculateTotalTime(VisitorTotalTime visitorTotalTime) {
-    visitorTotalTime.visit(this);
+  public long calculateTotalTime(VisitorTotalTime visitorTotalTime) {
+    return visitorTotalTime.calculateTime(this);
   }
 }

@@ -58,8 +58,13 @@ public class FromJsonVisitor implements VisitorRead {
       trackers.add(task);
     } else if (jsonObject.has("trackers")) {
       TaskManager taskManager = new TaskManager(rootManager, jsonObject.getString("name"));
-      taskManager.setStartTime(stringToLocalDateTime(jsonObject.getString("startTime")));
-      taskManager.setEndTime(stringToLocalDateTime(jsonObject.getString("endTime")));
+      if (jsonObject.has("startTime")){
+        taskManager.setStartTime(stringToLocalDateTime(jsonObject.getString("startTime")));
+      }
+      if (jsonObject.has("endTime")){
+        taskManager.setEndTime(stringToLocalDateTime(jsonObject.getString("endTime")));
+      }
+
       JSONArray jsonTrackers = jsonObject.getJSONArray("trackers");
       List<Tracker> trackerList = new ArrayList<>();
       for (int i = 0; i < jsonTrackers.length(); i++) {

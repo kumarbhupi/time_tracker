@@ -10,5 +10,5 @@ public interface Element { //Accepts visitor. It can access the code executed by
 
   void print(VisitorPrint visitorPrint);
 
-  void calculateTotalTime(VisitorTotalTime visitorTotalTime);
+  long calculateTotalTime(VisitorTotalTime visitorTotalTime);
 }

@@ -1,10 +1,7 @@
 package core;
 
 import org.json.JSONObject;
-import visitor_utils.Element;
-import visitor_utils.Visitor;
-import visitor_utils.VisitorPrint;
-import visitor_utils.VisitorRead;
+import visitor_utils.*;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -233,6 +230,11 @@ public class Task extends Tracker implements Element {
 
     //PostCondition
     assert (invariant()) : "Invariant has detected wrong value.";
+  }
+
+  @Override
+  public long calculateTotalTime(VisitorTotalTime visitorTotalTime) {
+    return visitorTotalTime.calculateTime(this);
   }
 
   public void setActive(Boolean active) {
