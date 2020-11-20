@@ -2,10 +2,8 @@ package core;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.json.JSONObject;
-import visitor.Element;
-import visitor.Visitor;
-import visitor.VisitorPrint;
-import visitor.VisitorRead;
+import visitor.*;
+
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -21,7 +19,6 @@ public class Task extends Tracker implements Element {
 
   //Implementing Logger class to print messages and saving them in register mode.
   static Logger logger= LoggerFactory.getLogger(Task.class);
-
   public Task(TaskManager parent, String name) {
     super(name);
     //Precondition
@@ -135,14 +132,10 @@ public class Task extends Tracker implements Element {
   public void endInterval(Interval interval) {
     //Changed system out for a Logger type information.
     logger.info(name + " stops");
-
     //PreCondition
     assert (invariant()) : "Invariant has detected wrong value.";
     assert(interval!=null) : "Interval has wrong value.";
     assert(interval.isInProgress()) :"Interval is not in progress.";
-
-    //TODO LOGGER
-    System.out.println(name + " stops");
     Clock clock = Clock.getInstance();
     clock.deleteObserver(interval);
     active = false;
