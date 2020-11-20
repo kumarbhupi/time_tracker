@@ -48,6 +48,6 @@ public class FileManager implements Element {
   public void print(VisitorPrint visitorPrint) { }
 
   @Override
-  public void calculateTotalTime(VisitorTotalTime visitorTotalTime) {}
+  public long calculateTotalTime(VisitorTotalTime visitorTotalTime) {return 0;}
 
 }

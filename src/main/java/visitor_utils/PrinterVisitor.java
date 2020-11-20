@@ -2,6 +2,7 @@ package visitor_utils;
 
 import core.*;
 
+import java.util.ConcurrentModificationException;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -9,7 +10,6 @@ import java.util.Observer;
 public class PrinterVisitor implements VisitorPrint, Observer {
   private final TaskManager taskManager;
   private final String STRING_ACTIVITY = "Activity:";
-
 
   public PrinterVisitor(TaskManager taskManager) {
     Clock clock = Clock.getInstance();
@@ -26,9 +26,19 @@ public class PrinterVisitor implements VisitorPrint, Observer {
   public void print(TaskManager taskManager) {
     if (taskManager.isActive()) {
       for (Tracker tracker : taskManager.getTrackers()) {
-        print(tracker);
+        try {
+          print(tracker);
+        }catch (ConcurrentModificationException e){
+          System.out.println(e.getMessage());
+        }
+
       }
-      System.out.printf("%s %30s %30s %30s %30s\n", STRING_ACTIVITY, taskManager.getName(), taskManager.getStartTimeToString(), taskManager.getEndTimeToString(), taskManager.getDuration().getSeconds());
+      try {
+        System.out.printf("%s %30s %30s %30s %30s\n", STRING_ACTIVITY, taskManager.getName(), taskManager.getStartTimeToString(), taskManager.getEndTimeToString(), taskManager.getDuration().getSeconds());
+      }catch (NullPointerException e){
+        System.out.println(e.getMessage());
+      }
+
 
     }
   }
@@ -40,7 +50,12 @@ public class PrinterVisitor implements VisitorPrint, Observer {
       for (Interval interval : task.getListIntervals()) {
         print(interval);
       }
-      System.out.printf("%s %30s %30s %30s %30s\n", STRING_ACTIVITY, task.getName(), task.getStartTimeToString(), task.getEndTimeToString(), task.getDuration().getSeconds());
+      try {
+        System.out.printf("%s %30s %30s %30s %30s\n", STRING_ACTIVITY, task.getName(), task.getStartTimeToString(), task.getEndTimeToString(), task.getDuration().getSeconds());
+      }catch (Exception e){
+        System.out.println(e.getMessage());
+      }
+
     }
   }
 
@@ -48,7 +63,12 @@ public class PrinterVisitor implements VisitorPrint, Observer {
   public void print(Interval interval) {
     if (interval.isInProgress()) {
       String STRING_INTERVAL = "Interval:";
-      System.out.printf("%s  %60s %30s %30s\n", STRING_INTERVAL, interval.getStartTimeToString(), interval.getEndTimeToString(), interval.getDuration().getSeconds());
+      try {
+        System.out.printf("%s  %60s %30s %30s\n", STRING_INTERVAL, interval.getStartTimeToString(), interval.getEndTimeToString(), interval.getDuration().getSeconds());
+      }catch (NullPointerException e){
+        System.out.println(e.getMessage());
+      }
+
 
     }
   }
@@ -61,6 +81,11 @@ public class PrinterVisitor implements VisitorPrint, Observer {
   //As an observer, prints every time clock ticks.
   @Override
   public void update(Observable observable, Object o) {
-    print(taskManager);
+    try {
+      print(taskManager);
+    }catch (ConcurrentModificationException exception){
+      System.out.println(exception.getMessage());
+    }
+
   }
 }

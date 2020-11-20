@@ -1,10 +1,7 @@
 package core;
 
 import org.json.JSONObject;
-import visitor_utils.Element;
-import visitor_utils.Visitor;
-import visitor_utils.VisitorPrint;
-import visitor_utils.VisitorRead;
+import visitor_utils.*;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -136,5 +133,10 @@ public class TaskManager extends Tracker implements Element {
   @Override
   public void print(VisitorPrint visitorPrint) {
     visitorPrint.print(this);
+  }
+
+  @Override
+  public long calculateTotalTime(VisitorTotalTime visitorTotalTime) {
+    return visitorTotalTime.calculateTime(this);
   }
 }

@@ -1,51 +1,84 @@
 package visitor_utils;
 
+import core.Interval;
 import core.Task;
 import core.TaskManager;
 import core.Tracker;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 
-//TODO: Finish this class to calculate time spend between two periods.
-public class TotalTimeCalculator implements VisitorTotalTime{
-    LocalDateTime startInterval;
-    LocalDateTime endInterval;
+public class TotalTimeCalculator implements VisitorTotalTime {
+  LocalDateTime startInterval;
+  LocalDateTime endInterval;
 
-    public TotalTimeCalculator(LocalDateTime startInterval, LocalDateTime endInterval){
-        this.startInterval = startInterval;
-        this.endInterval = endInterval;
+  public TotalTimeCalculator(LocalDateTime startInterval, LocalDateTime endInterval) {
+    this.startInterval = startInterval;
+    this.endInterval = endInterval;
+  }
+  @Override
+  public long calculateTime(Tracker tracker) {
+    return tracker.calculateTotalTime(this);
+  }
+
+  @Override
+  public long calculateTime(TaskManager taskManager) {
+    assert startInterval != null && endInterval != null;
+    long spendTime = 0;
+    if (!checkIfIsOutArea(taskManager.getStartTime(), taskManager.getEndTime())) {
+      for (Tracker tracker : taskManager.getTrackers()) {
+        spendTime += calculateTime(tracker);
+      }
     }
+    return spendTime;
+  }
 
-
-    @Override
-    public void visit(Tracker tracker) {
-        assert startInterval != null && endInterval != null;
-        tracker.calculateTotalTime(this);
+  @Override
+  public long calculateTime(Task task) {
+    assert startInterval != null && endInterval != null;
+    long spendTime = 0;
+    for (Interval interval: task.getListIntervals()) {
+      spendTime += calculateTime(interval);
     }
+    return spendTime;
+  }
 
-    @Override
-    public void visit(TaskManager taskManager) {
-        assert startInterval != null && endInterval != null;
-        for (Tracker tracker:
-             taskManager.getTrackers()) {
-            visit(tracker);
-        }
+  @Override
+  public long calculateTime(Interval interval) {
+    assert startInterval != null && endInterval != null;
+    if (checkIfIsOutArea(interval.getStartTime(), interval.getEndTime())) return 0;
+    return getSpentTime(interval.getStartTime(), interval.getEndTime());
+  }
+
+
+
+  private boolean checkIfIsOutArea(LocalDateTime startInterval, LocalDateTime endInterval) {
+    if (this.startInterval.isAfter(endInterval)) {
+      return true;
     }
-
-    @Override
-    public void visit(Task task) {
-        assert startInterval != null && endInterval != null;
-        LocalDateTime taskStartTime = task.getStartTime();
-        LocalDateTime taskEndTime = task.getEndTime();
-
-        if (startInterval.isAfter(taskStartTime) || startInterval.isEqual(taskStartTime) ){
-            if (endInterval.isBefore(taskEndTime) || endInterval.isEqual(taskEndTime)){
-                //LocalDateTime timeSpent = taskEndTime.minus(/);
+    return this.endInterval.isBefore(startInterval);
+  }
 
 
-            }
-
-        }
-
+  private long getSpentTime(LocalDateTime startInterval, LocalDateTime endInterval) {
+    if (this.startInterval.isAfter(startInterval)) {
+      if (this.endInterval.isAfter(endInterval)) {
+        return Duration.between(this.startInterval, endInterval).getSeconds();
+      }
+      if (this.endInterval.isBefore(endInterval)) {
+        return Duration.between(this.endInterval, this.startInterval).getSeconds();
+      }
     }
+    if (this.startInterval.isBefore(startInterval)) {
+      if (this.endInterval.isBefore(endInterval)) {
+        return Duration.between(startInterval, this.endInterval).getSeconds();
+      }
+      if (this.endInterval.isAfter(endInterval)) {
+        return Duration.between(startInterval, endInterval).getSeconds();
+      }
+    }
+    return 0;
+  }
+
+
 }

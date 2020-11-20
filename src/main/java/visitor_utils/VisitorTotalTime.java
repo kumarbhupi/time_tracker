@@ -1,11 +1,16 @@
 package visitor_utils;
 
+import core.Interval;
 import core.Task;
 import core.TaskManager;
 import core.Tracker;
 
 public interface VisitorTotalTime {
-    void  visit(Tracker tracker);
-    void  visit(TaskManager taskManager);
-    void  visit(Task task);
+  long calculateTime(Tracker tracker);
+
+  long calculateTime(TaskManager taskManager);
+
+  long calculateTime(Task task);
+
+  long calculateTime(Interval interval);
 }

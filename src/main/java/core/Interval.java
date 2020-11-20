@@ -108,5 +108,5 @@ public class Interval implements Observer, Element {
   }
 
   @Override
-  public void calculateTotalTime(VisitorTotalTime visitorTotalTime) {}
+  public long calculateTotalTime(VisitorTotalTime visitorTotalTime) {return visitorTotalTime.calculateTime(this);}
 }
