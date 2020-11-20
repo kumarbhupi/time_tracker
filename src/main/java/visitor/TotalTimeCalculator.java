@@ -84,5 +84,4 @@ public class TotalTimeCalculator implements VisitorTotalTime {
     return 0;
   }
 
-
 }
