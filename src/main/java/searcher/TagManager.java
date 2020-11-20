@@ -38,14 +38,17 @@ public class TagManager {
 
 
   public List<Tracker> searchTag(String tag) {
-    List<Tracker> TrackersFound = null;
+    //List<Tracker> TrackersFound = null;
+    List<Tracker> trackersFound = new ArrayList<>();
     for (Tags value : tags) {
       Tags tagToSearch = value.getTag();
       String tagName = tagToSearch.getNameTag();
       if (tagName.equalsIgnoreCase(tag)) {
-        TrackersFound = tagToSearch.getTrackers();
+        for (Tracker tracker : tagToSearch.getTrackers()){
+          trackersFound.add(tracker);
+        }
       }
     }
-    return TrackersFound;
+    return trackersFound;
   }
 }

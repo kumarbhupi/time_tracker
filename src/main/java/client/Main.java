@@ -100,10 +100,10 @@ public class Main {
 
     //Test.removeTracker("java",softwareDesign);
 
-    List<Tracker> TrackersFound = tagManager.searchTag("java");
+    List<Tracker> trackersFound = tagManager.searchTag("java");
 
-    for (Tracker tracker : TrackersFound){
-      System.out.println(tracker);
+    for (Tracker tracker : trackersFound){
+      System.out.println(tracker.getName());
     }
 
   }
