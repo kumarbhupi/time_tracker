@@ -1,7 +1,7 @@
 package core;
 
 import org.json.JSONObject;
-import visitor_utils.*;
+import visitor.*;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -84,12 +84,12 @@ public class Interval implements Observer, Element {
   @Override
   public String toString() {
     return "{" +
-        "parentTask :" + parentTask.getName() +
-        ", startTime :" + startTime +
-        ", endTime :" + endTime +
-        ", duration :" + getDuration() +
-        ", inProgress :" + inProgress +
-        '}';
+            "parentTask :" + parentTask.getName() +
+            ", startTime :" + startTime +
+            ", endTime :" + endTime +
+            ", duration :" + getDuration() +
+            ", inProgress :" + inProgress +
+            '}';
   }
 
   @Override

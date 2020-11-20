@@ -1,10 +1,7 @@
 package core;
 
 import org.json.JSONObject;
-import visitor_utils.Element;
-import visitor_utils.Visitor;
-import visitor_utils.VisitorPrint;
-import visitor_utils.VisitorRead;
+import visitor.*;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -146,6 +143,8 @@ public class TaskManager extends Tracker implements Element {
     super.removeTag(tag);
   }
 
-
+  public void searchTag(VisitorTag visitorTag, String tag){
+    visitorTag.searchTag(this,tag);
+  }
 
 }

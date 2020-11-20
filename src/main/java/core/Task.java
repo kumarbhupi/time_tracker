@@ -1,10 +1,7 @@
 package core;
 
 import org.json.JSONObject;
-import visitor_utils.Element;
-import visitor_utils.Visitor;
-import visitor_utils.VisitorPrint;
-import visitor_utils.VisitorRead;
+import visitor.*;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -114,11 +111,11 @@ public class Task extends Tracker implements Element {
   @Override
   public String toString() {
     return "{" +
-        "parentProject=" + parentProject.getName() +
-        ", listIntervals=" + listIntervals.toString() +
-        ", name='" + name + '\'' +
-        ", duration=" + getDuration() +
-        '}';
+            "parentProject=" + parentProject.getName() +
+            ", listIntervals=" + listIntervals.toString() +
+            ", name='" + name + '\'' +
+            ", duration=" + getDuration() +
+            '}';
   }
 
   public LocalDateTime getEndTime() {
@@ -160,5 +157,5 @@ public class Task extends Tracker implements Element {
   public void removeTag(Tag tag){
     super.removeTag(tag);
   }
-}
 
+}

@@ -15,20 +15,20 @@ public class Tag {
 
     public String getTag(){return this.tag;}
 
-    public void searchTag(String tag, TaskManager taskManager){
+    public void searchTag(TaskManager taskManager){
         for (int i = 0; i < taskManager.getTrackers().size(); i++){
             Tracker currentTracker = taskManager.getTrackers().get(i);
             for (int j = 0; j < currentTracker.getTags().size(); j++){
                 Tag currentTag = currentTracker.getTags().get(j);
                 String currentStringTag = currentTag.getTag();
-                boolean find = currentStringTag.equalsIgnoreCase(tag);
+                boolean find = currentStringTag.equalsIgnoreCase(this.getTag());
                 if(find){
                     System.out.println(currentTracker.getName());
                 }
             }
             if(currentTracker instanceof TaskManager){
                 TaskManager nextTaskManager = ((TaskManager) currentTracker);
-                searchTag(tag, nextTaskManager);
+                searchTag(nextTaskManager);
             }
         }
     }

@@ -1,11 +1,11 @@
 package core;
 
 import org.json.JSONObject;
-import visitor_utils.*;
+import visitor.*;
 
-import java. util. ArrayList;
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import core.Tag;
 
 //This class is the component of the Composite pattern.
@@ -62,5 +62,10 @@ public abstract class Tracker implements Element {
 
   public ArrayList<Tag> getTags(){
     return this.tags;
+  }
+
+
+  public void searchTag(VisitorTag visitorTag, String tag){
+    visitorTag.searchTag(this,tag);
   }
 }
