@@ -22,13 +22,53 @@ public class TaskManager extends Tracker implements Element {
 
   public TaskManager(String name) {
     super(name);
+    //Precondition
+    assert (invariant()) : "Invariant has detected wrong value.";
     trackers = new ArrayList<>();
+    assert (invariant()) : "Invariant has detected wrong value.";
   }
 
   public TaskManager(TaskManager parentProject, String name) {
     super(name);
+    //Precondition
+    assert (invariant()) : "Invariant has detected wrong value.";
     trackers = new ArrayList<>();
     this.parentProject = parentProject;
+    assert (invariant()) : "Invariant has detected wrong value.";
+  }
+
+  private boolean invariant(){
+    boolean isInvariant = false;
+
+    if((this.name)!=null){
+      isInvariant=true;
+    }
+
+    if ((this.parentProject!=null)){
+      isInvariant=true;
+    }
+
+    if ((this.isActive())){
+      isInvariant=true;
+    }
+
+    if ((this.endTime!=null)){
+      isInvariant=true;
+    }
+
+    /*if ((this.endTime.isAfter(this.startTime))){
+      isInvariant=true;
+    }*/
+
+    if ((this.startTime!=null)){
+      isInvariant=true;
+    }
+
+    if(trackers.size()>0){
+      isInvariant=true;
+    }
+
+    return isInvariant;
   }
 
   public boolean isActive() {
@@ -37,10 +77,16 @@ public class TaskManager extends Tracker implements Element {
 
   //
   public void setActive(boolean active) {
+    //Precondition
+    assert (invariant()) : "Invariant has detected wrong value.";
+    assert (!active) : "TaskManager not active";
+
     if (parentProject != null) {
       parentProject.setActive(active);
     }
     this.active = active;
+    //Postcondition
+    assert (invariant()) : "Invariant has detected wrong value.";
   }
 
   public TaskManager getParentProject() {
@@ -49,22 +95,33 @@ public class TaskManager extends Tracker implements Element {
 
   @Override
   protected void updateParentEndTime(LocalDateTime endTime) {
+    //Precondition
+    assert (invariant()) : "Invariant has detected wrong value.";
+    assert(endTime!=null) : "Endtime has wrong value";
+
     if (parentProject == null) {
       this.endTime = endTime;
     } else {
       this.endTime = endTime;
       parentProject.updateParentEndTime(endTime);
     }
+    assert (invariant()) : "Invariant has detected wrong value.";
   }
 
 
   public void setStartTime(LocalDateTime startTime) {
+    //Precondition
+    assert (invariant()) : "Invariant has detected wrong value.";
+    assert(endTime!=null) : "Starttime has wrong value";
+
     this.startTime = startTime;
     if (parentProject != null) {
       if (parentProject.getStartTime() == null) {
         parentProject.setStartTime(startTime);
       }
     }
+    //Postcondition
+    assert (invariant()) : "Invariant has detected wrong value.";
   }
 
   public List<Tracker> getTrackers() {
@@ -72,12 +129,18 @@ public class TaskManager extends Tracker implements Element {
   }
 
   public void setTrackers(List<Tracker> trackers) {
+    //Precondition
+    assert (invariant()) : "Invariant has detected wrong value.";
+    assert(trackers.size()>0) : "List of trackers is empty";
     this.trackers = trackers;
+    //Postcondition
+    assert (invariant()) : "Invariant has detected wrong value.";
   }
 
 
   @Override
   public Duration getDuration() {
+
     Duration duration = Duration.ZERO;
     for (Tracker tracker : trackers) {
       duration = duration.plus(tracker.getDuration());
@@ -86,7 +149,12 @@ public class TaskManager extends Tracker implements Element {
   }
 
   public void addChild(Tracker child) {
+    //Precondition
+    assert (invariant()) : "Invariant has detected wrong value.";
+    assert(child!=null) : "Tracker is empty";
     trackers.add(child);
+    //Postcondition
+    assert (invariant()) : "Invariant has detected wrong value.";
   }
 
   public LocalDateTime getStartTime() {
@@ -112,10 +180,15 @@ public class TaskManager extends Tracker implements Element {
 
 
   public void setEndTime(LocalDateTime endTime) {
+    //Precondition
+    assert (invariant()) : "Invariant has detected wrong value.";
+    assert(endTime!=null) : "Endtime has wrong value";
     if (parentProject != null) {
       parentProject.setEndTime(endTime);
     }
     this.endTime = endTime;
+    //Postcondition
+    assert (invariant()) : "Invariant has detected wrong value.";
   }
 
   public LocalDateTime getEndTime() {
@@ -135,6 +208,13 @@ public class TaskManager extends Tracker implements Element {
 
   @Override
   public void print(VisitorPrint visitorPrint) {
+    //Precondition
+    assert (invariant()) : "Invariant has detected wrong value.";
+    assert(visitorPrint!=null): "visitorPrint is empty";
+
     visitorPrint.print(this);
+
+    assert (invariant()) : "Invariant has detected wrong value.";
   }
+
 }

@@ -21,22 +21,71 @@ public class Task extends Tracker implements Element {
 
   public Task(TaskManager parent, String name) {
     super(name);
+    //Precondition
+    assert (invariant()) : "Invariant has detected wrong value.";
     parentProject = parent;
     listIntervals = new ArrayList<>();
     active = false;
+    assert (invariant()) : "Invariant has detected wrong value.";
   }
 
+  private boolean invariant(){
+    boolean isInvariant = false;
+
+    if((this.name)!=null){
+      isInvariant=true;
+    }
+
+    if ((this.parentProject!=null)){
+      isInvariant=true;
+    }
+
+    if ((this.isActive())){
+      isInvariant=true;
+    }
+
+    if ((this.endTime!=null)){
+      isInvariant=true;
+    }
+
+    /*if ((this.endTime.isAfter(this.startTime))){
+      isInvariant=true;
+    }*/
+
+    if ((this.startTime!=null)){
+      isInvariant=true;
+    }
+
+    if(listIntervals.size()>0){
+      isInvariant=true;
+    }
+
+    return isInvariant;
+  }
 
   public void setActive(boolean active) {
+    //Precondition
+    assert (invariant()) : "Invariant has detected wrong value.";
+    assert (!active): "Is not active";
     this.active = active;
+
+    //Post condition
+    assert (invariant()) : "Invariant has detected wrong value.";
   }
 
   public List<Interval> getListIntervals() {
     return listIntervals;
   }
 
+
   public void setListIntervals(List<Interval> listIntervals) {
+    //Precondition
+    assert (invariant()) : "Invariant has detected wrong value.";
+
     this.listIntervals = listIntervals;
+
+    //post Condition
+    assert (invariant()) : "Invariant has detected wrong value.";
   }
 
   @Override
@@ -59,8 +108,15 @@ public class Task extends Tracker implements Element {
 
   @Override
   protected void updateParentEndTime(LocalDateTime endTime) {
+    //PreCondition
+    assert (invariant()) : "Invariant has detected wrong value.";
+
     parentProject.updateParentEndTime(endTime);
     parentProject.setActive(true);
+
+    //PostCondition
+    assert (invariant()) : "Invariant has detected wrong value.";
+    assert(parentProject.getDuration() != null);
   }
 
 
@@ -76,11 +132,20 @@ public class Task extends Tracker implements Element {
   }
 
   public void endInterval(Interval interval) {
+    //PreCondition
+    assert (invariant()) : "Invariant has detected wrong value.";
+    assert(interval!=null);
+    assert(interval.isInProgress());
+
     System.out.println(name + " stops");
     Clock clock = Clock.getInstance();
     clock.deleteObserver(interval);
     active = false;
     parentProject.setActive(false);
+
+    //PostCondition
+    assert (invariant()) : "Invariant has detected wrong value.";
+    assert(!interval.isInProgress());
   }
 
   public boolean isActive() {
@@ -107,8 +172,14 @@ public class Task extends Tracker implements Element {
 
 
   public void intervalUpdated(LocalDateTime endTime) {
+    //precondition
+    assert (invariant()) : "Invariant has detected wrong value.";
+
     this.endTime = endTime;
     updateParentEndTime(endTime);
+
+    //postCondition
+    assert (invariant()) : "Invariant has detected wrong value.";
   }
 
   @Override
@@ -126,12 +197,20 @@ public class Task extends Tracker implements Element {
   }
 
   public void setEndTime(LocalDateTime endTime) {
+    //Precondition
+    assert (invariant()) : "Invariant has detected wrong value.";
+
     parentProject.setEndTime(endTime);
     this.endTime = endTime;
+
+    //Postcondition
+    assert (invariant()) : "Invariant has detected wrong value.";
   }
 
   public void setStartTime(LocalDateTime startTime) {
+    assert (invariant()) : "Invariant has detected wrong value.";
     this.startTime = startTime;
+    assert (invariant()) : "Invariant has detected wrong value.";
   }
 
   @Override
@@ -146,7 +225,14 @@ public class Task extends Tracker implements Element {
 
   @Override
   public void print(VisitorPrint visitorPrint) {
+    //Precondition
+    assert (invariant()) : "Invariant has detected wrong value.";
+    assert(visitorPrint!=null);
+
     visitorPrint.print(this);
+
+    //PostCondition
+    assert (invariant()) : "Invariant has detected wrong value.";
   }
 
   public void setActive(Boolean active) {
