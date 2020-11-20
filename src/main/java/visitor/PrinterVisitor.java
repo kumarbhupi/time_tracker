@@ -44,7 +44,6 @@ public class PrinterVisitor implements VisitorPrint, Observer {
         data=String.format("%s %30s %30s %30s %30s",STRING_ACTIVITY, taskManager.getName(), taskManager.getStartTimeToString(), taskManager.getEndTimeToString(), taskManager.getDuration().getSeconds());
         logger.info("{}",data);
       }catch (NullPointerException e){
-        //TODO podem utilitzar log WARNING (log.warn(e.getMESSAGE)
         logger.warn(e.getMessage());
       }
     }

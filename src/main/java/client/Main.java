@@ -29,7 +29,7 @@ public class Main {
 
   }
 
-
+  //CalculationTotalTag
   private void testTags(){
     core.TaskManager root = new core.TaskManager(null, "root");
 
@@ -95,8 +95,7 @@ public class Main {
     tagManager.createTag("IntelliJ");
     tagManager.addTracker("IntelliJ",firstList);
 
-    //Test.removeTracker("java",softwareDesign);
-
+    //The search is made by simply changing the following tag, in this case, "java".
     List<Tracker> trackersFound = tagManager.searchTag("java");
 
     for (Tracker tracker : trackersFound){
@@ -105,12 +104,9 @@ public class Main {
 
   }
 
-
-
-
   private void testTotalTimeFunctionalities(){
 
-    core.TaskManager jsonRoot = readFromJsonToTaskManager(); //Para evitar ejecutar testGetTotalTime()
+    core.TaskManager jsonRoot = readFromJsonToTaskManager(); //Para evitar ejecutar testGetTotalTimeAndSaveItInJson()
 
     LocalDate today = LocalDate.of(2020, 11, 20);
     LocalDateTime periodStartTime = LocalDateTime.of(today, LocalTime.of(15, 43, 30,734228));//Temps correspondent a 60seg

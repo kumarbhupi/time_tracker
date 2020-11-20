@@ -8,6 +8,7 @@ import core.Tracker;
 import java.time.Duration;
 import java.time.LocalDateTime;
 
+//This class adds the total time worked between two time intervals.
 public class TotalTimeCalculator implements VisitorTotalTime {
   LocalDateTime startInterval;
   LocalDateTime endInterval;
@@ -54,7 +55,7 @@ public class TotalTimeCalculator implements VisitorTotalTime {
   }
 
 
-
+  //Checks if in interval range (time).
   private boolean checkIfIsOutArea(LocalDateTime startInterval, LocalDateTime endInterval) {
     if (this.startInterval.isAfter(endInterval)) {
       return true;
@@ -62,7 +63,7 @@ public class TotalTimeCalculator implements VisitorTotalTime {
     return this.endInterval.isBefore(startInterval);
   }
 
-
+  //Checks state of interval in time range. If entirely, como esta dentro del rango.
   private long getSpentTime(LocalDateTime startInterval, LocalDateTime endInterval) {
     if (this.startInterval.isAfter(startInterval)) {
       if (this.endInterval.isAfter(endInterval)) {

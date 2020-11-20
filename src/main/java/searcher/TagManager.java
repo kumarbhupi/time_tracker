@@ -4,6 +4,7 @@ import core.Tracker;
 import java.util.ArrayList;
 import java.util.List;
 
+//This class manages all tags in the project.
 public class TagManager {
   protected ArrayList<Tag> tags;
 
@@ -36,7 +37,7 @@ public class TagManager {
     }
   }
 
-
+  //Looks for tag passed through the parameter and returns all associated trackers.
   public List<Tracker> searchTag(String tag) {
     //List<Tracker> TrackersFound = null;
     List<Tracker> trackersFound = new ArrayList<>();
