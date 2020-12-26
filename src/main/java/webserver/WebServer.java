@@ -2,6 +2,7 @@ package webserver;
 
 import core.Interval;
 import core.Task;
+import core.TaskManager;
 import core.Tracker;
 import visitor.ToJsonVisitor;
 
@@ -148,6 +149,17 @@ public class WebServer {
         // TODO: add new task, project
         // TODO: edit task, project properties
         case "add": {
+          int id = Integer.parseInt(tokens[1]);
+          assert (tokens[2] != null && tokens[3] != null);
+          Tracker activity = findActivityById(id);
+          assert (activity != null);
+          if (tokens[2].equalsIgnoreCase("task")){
+            Task task = new Task((TaskManager) activity, tokens[3]);
+            ((TaskManager) activity).addChild(task);
+          }else if (tokens[2].equalsIgnoreCase("project")){
+            TaskManager taskManager = new TaskManager((TaskManager) activity, tokens[3]);
+            ((TaskManager) activity).addChild((taskManager));
+          }
           break;
         }
         case "edit": {
