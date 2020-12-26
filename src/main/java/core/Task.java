@@ -130,6 +130,16 @@ public class Task extends Tracker implements Element {
     return Duration.ofSeconds(rounded);
   }
 
+  public void endInterval(){
+    logger.info(name + " stops");
+    assert (invariant()) : "Invariant has detected wrong value.";
+    for (Interval interval: this.listIntervals) {
+      if (interval.isInProgress())
+        interval.stopInterval();
+    }
+
+  }
+
   public void endInterval(Interval interval) {
     //Changed system out for a Logger type information.
     logger.info(name + " stops");
@@ -171,6 +181,7 @@ public class Task extends Tracker implements Element {
   }
 
 
+
   public void intervalUpdated(LocalDateTime endTime) {
     //precondition
     assert (invariant()) : "Invariant has detected wrong value.";
@@ -194,6 +205,14 @@ public class Task extends Tracker implements Element {
 
   public LocalDateTime getEndTime() {
     return endTime;
+  }
+
+  @Override
+  public Tracker findActivityById(int id) {
+    if (this.id == id){
+      return this;
+    }
+    return null;
   }
 
   public void setEndTime(LocalDateTime endTime) {

@@ -8,12 +8,23 @@ import java.time.LocalDateTime;
 
 //This class is the component of the Composite pattern.
 public abstract class Tracker implements Element {
+  protected int id;
   protected String name;
   protected LocalDateTime startTime;
   protected LocalDateTime endTime;
 
   public Tracker(String name) {
+    IdentifierGenerator identifierGenerator = IdentifierGenerator.getIdentifier();
+    this.id = identifierGenerator.getId();
     this.name = name;
+  }
+
+  public void setId(int id) {
+    this.id = id;
+  }
+
+  public int getId() {
+    return id;
   }
 
   protected abstract void updateParentEndTime(LocalDateTime endTime);
@@ -33,6 +44,9 @@ public abstract class Tracker implements Element {
   public abstract LocalDateTime getStartTime();
 
   public abstract LocalDateTime getEndTime();
+
+  public abstract Tracker findActivityById(int id); //TODO: implement
+
 
   @Override
   public JSONObject accept(Visitor v) {

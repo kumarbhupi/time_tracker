@@ -20,6 +20,7 @@ public class ToJsonVisitor implements Visitor {
   @Override
   public JSONObject visit(TaskManager taskManager) {
     JSONObject jsonObject = new JSONObject();
+    jsonObject.put("id", taskManager.getId());
     jsonObject.put("name", taskManager.getName());
     jsonObject.put("startTime", taskManager.getStartTime());
     jsonObject.put("endTime", taskManager.getEndTime());
@@ -36,6 +37,7 @@ public class ToJsonVisitor implements Visitor {
   @Override
   public JSONObject visit(Task task) {
     JSONObject jsonObject = new JSONObject();
+    jsonObject.put("id", task.getId());
     jsonObject.put("name", task.getName());
     jsonObject.put("startTime", task.getStartTime());
     jsonObject.put("endTime", task.getEndTime());

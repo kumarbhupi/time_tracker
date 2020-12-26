@@ -35,31 +35,31 @@ public class TaskManager extends Tracker implements Element {
   }
 
   //Implementation of invariant method. Checking variables are valid before and after a method's execution.
-  private boolean invariant(){
+  private boolean invariant() {
     boolean isInvariant = false;
 
-    if((this.name)!=null){
-      isInvariant=true;
+    if ((this.name) != null) {
+      isInvariant = true;
     }
 
-    if ((this.parentProject!=null)){
-      isInvariant=true;
+    if ((this.parentProject != null)) {
+      isInvariant = true;
     }
 
-    if ((this.isActive())){
-      isInvariant=true;
+    if ((this.isActive())) {
+      isInvariant = true;
     }
 
-    if ((this.endTime!=null)){
-      isInvariant=true;
+    if ((this.endTime != null)) {
+      isInvariant = true;
     }
 
-    if ((this.startTime!=null)){
-      isInvariant=true;
+    if ((this.startTime != null)) {
+      isInvariant = true;
     }
 
-    if(trackers.size()>0){
-      isInvariant=true;
+    if (trackers.size() > 0) {
+      isInvariant = true;
     }
 
     return isInvariant;
@@ -91,7 +91,7 @@ public class TaskManager extends Tracker implements Element {
   protected void updateParentEndTime(LocalDateTime endTime) {
     //Precondition
     assert (invariant()) : "Invariant has detected wrong value.";
-    assert(endTime!=null) : "Endtime has wrong value";
+    assert (endTime != null) : "Endtime has wrong value";
 
     if (parentProject == null) {
       this.endTime = endTime;
@@ -106,7 +106,7 @@ public class TaskManager extends Tracker implements Element {
   public void setStartTime(LocalDateTime startTime) {
     //Precondition
     assert (invariant()) : "Invariant has detected wrong value.";
-    assert(endTime!=null) : "Starttime has wrong value";
+    assert (endTime != null) : "Starttime has wrong value";
 
     this.startTime = startTime;
     if (parentProject != null) {
@@ -125,7 +125,7 @@ public class TaskManager extends Tracker implements Element {
   public void setTrackers(List<Tracker> trackers) {
     //Precondition
     assert (invariant()) : "Invariant has detected wrong value.";
-    assert(trackers.size()>0) : "List of trackers is empty";
+    assert (trackers.size() > 0) : "List of trackers is empty";
     this.trackers = trackers;
     //Postcondition
     assert (invariant()) : "Invariant has detected wrong value.";
@@ -145,7 +145,7 @@ public class TaskManager extends Tracker implements Element {
   public void addChild(Tracker child) {
     //Precondition
     assert (invariant()) : "Invariant has detected wrong value.";
-    assert(child!=null) : "Tracker is empty";
+    assert (child != null) : "Tracker is empty";
     trackers.add(child);
     //Postcondition
     assert (invariant()) : "Invariant has detected wrong value.";
@@ -176,7 +176,7 @@ public class TaskManager extends Tracker implements Element {
   public void setEndTime(LocalDateTime endTime) {
     //Precondition
     assert (invariant()) : "Invariant has detected wrong value.";
-    assert(endTime!=null) : "Endtime has wrong value";
+    assert (endTime != null) : "Endtime has wrong value";
     if (parentProject != null) {
       parentProject.setEndTime(endTime);
     }
@@ -187,6 +187,22 @@ public class TaskManager extends Tracker implements Element {
 
   public LocalDateTime getEndTime() {
     return this.endTime;
+  }
+
+  @Override
+  public Tracker findActivityById(int id) {
+    if (this.id == id) {
+      return this;
+    }else {
+      Tracker toReturn;
+      for (Tracker tracker : this.trackers) {
+        toReturn =  tracker.findActivityById(id);
+        if (toReturn != null){
+          return toReturn;
+        }
+      }
+    }
+    return null;
   }
 
 
@@ -204,7 +220,7 @@ public class TaskManager extends Tracker implements Element {
   public void print(VisitorPrint visitorPrint) {
     //Precondition
     assert (invariant()) : "Invariant has detected wrong value.";
-    assert(visitorPrint!=null): "visitorPrint is empty";
+    assert (visitorPrint != null) : "visitorPrint is empty";
 
     visitorPrint.print(this);
 

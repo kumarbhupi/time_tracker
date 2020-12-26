@@ -22,6 +22,7 @@ public class FromJsonVisitor implements VisitorRead {
   public TaskManager visit(FileManager fileManager) {
     JSONObject object = fileManager.getJsonObjectRead();
     TaskManager rootManager = new TaskManager(object.getString("name"));
+    rootManager.setId(object.getInt("id"));
     rootManager.setStartTime(stringToLocalDateTime(object.getString("startTime")));
     rootManager.setEndTime(stringToLocalDateTime(object.getString("endTime")));
     JSONArray jsonTrackers = object.getJSONArray("trackers");
@@ -42,7 +43,7 @@ public class FromJsonVisitor implements VisitorRead {
       task.setActive(jsonObject.getBoolean("active"));
       task.setStartTime(stringToLocalDateTime(jsonObject.getString("startTime")));
       task.setEndTime(stringToLocalDateTime(jsonObject.getString("endTime")));
-
+      task.setId(jsonObject.getInt("id"));
       JSONArray jsonArrayInterval = jsonObject.getJSONArray("listIntervals");
       List<Interval> intervalList = new ArrayList<>();
 
@@ -64,6 +65,7 @@ public class FromJsonVisitor implements VisitorRead {
       if (jsonObject.has("endTime")){
         taskManager.setEndTime(stringToLocalDateTime(jsonObject.getString("endTime")));
       }
+      taskManager.setId(jsonObject.getInt("id"));
 
       JSONArray jsonTrackers = jsonObject.getJSONArray("trackers");
       List<Tracker> trackerList = new ArrayList<>();
