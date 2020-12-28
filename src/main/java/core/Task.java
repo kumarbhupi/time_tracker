@@ -89,7 +89,10 @@ public class Task extends Tracker implements Element {
 
   @Override
   public String getStartTimeToString() {
-    return listIntervals.get(0).getStartTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+    if (!listIntervals.isEmpty()){
+      return listIntervals.get(0).getStartTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+    }
+    return "null";
   }
 
   @Override

@@ -42,7 +42,7 @@ public class ToJsonVisitor implements Visitor {
     jsonObject.put("id", task.getId());
     jsonObject.put("name", task.getName());
     jsonObject.put("startTime", task.getStartTimeToString());
-    jsonObject.put("endTime", task.getEndTimeToString());
+    jsonObject.put("endTime", task.getStartTime());
     jsonObject.put("active", task.isActive());
     jsonObject.put("class", "task");
     jsonObject.put("duration", task.getDuration().getSeconds());
@@ -59,8 +59,8 @@ public class ToJsonVisitor implements Visitor {
   @Override
   public JSONObject visit(Interval interval) {
     JSONObject jsonObject = new JSONObject();
-    jsonObject.put("startTime", interval.getStartTimeToString());
-    jsonObject.put("endTime", interval.getEndTimeToString());
+    jsonObject.put("startTime", interval.getStartTime());
+    jsonObject.put("endTime", interval.getEndTime());
     jsonObject.put("inProgress", interval.isInProgress());
     jsonObject.put("duration", interval.getDuration().getSeconds());
     return jsonObject;

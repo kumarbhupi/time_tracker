@@ -12,6 +12,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Arrays;
 import java.util.StringTokenizer;
 
 // Based on
@@ -108,7 +109,7 @@ public class WebServer {
         out.close();
         insocked.close(); // we close socket connection
       } catch (Exception e) {
-        System.err.println("Exception : " + e);
+        System.err.println("Exception : " + e + " "+ Arrays.toString(e.getStackTrace()));
       }
     }
 
