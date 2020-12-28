@@ -22,8 +22,8 @@ public class ToJsonVisitor implements Visitor {
     JSONObject jsonObject = new JSONObject();
     jsonObject.put("id", taskManager.getId());
     jsonObject.put("name", taskManager.getName());
-    jsonObject.put("startTime", taskManager.getStartTime());
-    jsonObject.put("endTime", taskManager.getEndTime());
+    jsonObject.put("startTime", taskManager.getStartTimeToString());
+    jsonObject.put("endTime", taskManager.getEndTimeToString());
     jsonObject.put("class", "project");
     jsonObject.put("duration", taskManager.getDuration().getSeconds());
     List<Tracker> trackerList = taskManager.getTrackers();
@@ -41,8 +41,8 @@ public class ToJsonVisitor implements Visitor {
     JSONObject jsonObject = new JSONObject();
     jsonObject.put("id", task.getId());
     jsonObject.put("name", task.getName());
-    jsonObject.put("startTime", task.getStartTime());
-    jsonObject.put("endTime", task.getEndTime());
+    jsonObject.put("startTime", task.getStartTimeToString());
+    jsonObject.put("endTime", task.getEndTimeToString());
     jsonObject.put("active", task.isActive());
     jsonObject.put("class", "task");
     jsonObject.put("duration", task.getDuration().getSeconds());
@@ -59,8 +59,8 @@ public class ToJsonVisitor implements Visitor {
   @Override
   public JSONObject visit(Interval interval) {
     JSONObject jsonObject = new JSONObject();
-    jsonObject.put("startTime", interval.getStartTime());
-    jsonObject.put("endTime", interval.getEndTime());
+    jsonObject.put("startTime", interval.getStartTimeToString());
+    jsonObject.put("endTime", interval.getEndTimeToString());
     jsonObject.put("inProgress", interval.isInProgress());
     jsonObject.put("duration", interval.getDuration().getSeconds());
     return jsonObject;
