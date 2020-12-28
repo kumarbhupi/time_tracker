@@ -137,6 +137,7 @@ public class TaskManager extends Tracker implements Element {
 
     Duration duration = Duration.ZERO;
     for (Tracker tracker : trackers) {
+
       duration = duration.plus(tracker.getDuration());
     }
     return duration;

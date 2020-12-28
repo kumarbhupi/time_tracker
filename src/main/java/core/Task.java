@@ -123,7 +123,11 @@ public class Task extends Tracker implements Element {
   public Duration getDuration() {
     Duration duration = Duration.ZERO;
     for (Interval interval : listIntervals) {
-      duration = duration.plus(Duration.between(interval.getStartTime(), interval.getEndTime()));
+      if (interval.getStartTime() != null && interval.getEndTime() != null){
+        duration = duration.plus(Duration.between(interval.getStartTime(), interval.getEndTime()));
+      }else{
+        duration = duration.plus(Duration.ZERO);
+      }
     }
     float millis = duration.toMillis();
     int rounded = Math.round(millis / 1000);
