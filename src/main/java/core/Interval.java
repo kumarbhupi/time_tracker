@@ -53,11 +53,17 @@ public class Interval implements Observer, Element {
 
   //Provides the time in following format: YYYY-MM-DD HH:mm:ss
   public String getEndTimeToString() {
-    return endTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+    if (endTime != null){
+      return endTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+    }
+    return "null";
   }
 
   public String getStartTimeToString() {
-    return startTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+    if (startTime != null){
+      return startTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+    }
+    return "null";
   }
 
   public void setStartTime(LocalDateTime startTime) {
