@@ -32,8 +32,13 @@ public class Interval implements Observer, Element {
 
 
   //This duration is calculated by extracting endTime to startTime.
+  float millis;
   public Duration getDuration() {
-    float millis = Duration.between(startTime, endTime).toMillis();
+    if (startTime != null && endTime != null){
+      millis= Duration.between(startTime, endTime).toMillis();
+    }else {
+      millis = 0;
+    }
     int rounded = Math.round(millis / 1000);
     return Duration.ofSeconds(rounded);
   }
