@@ -25,6 +25,7 @@ public class ToJsonVisitor implements Visitor {
     jsonObject.put("startTime", taskManager.getStartTime());
     jsonObject.put("endTime", taskManager.getEndTime());
     jsonObject.put("class", "project");
+    jsonObject.put("duration", taskManager.getDuration());
     List<Tracker> trackerList = taskManager.getTrackers();
 
     JSONArray jsonArray = new JSONArray();
@@ -44,6 +45,7 @@ public class ToJsonVisitor implements Visitor {
     jsonObject.put("endTime", task.getEndTime());
     jsonObject.put("active", task.isActive());
     jsonObject.put("class", "task");
+    jsonObject.put("duration", task.getDuration());
     List<Interval> intervalList = task.getListIntervals();
     JSONArray jsonArray = new JSONArray();
 
@@ -60,6 +62,7 @@ public class ToJsonVisitor implements Visitor {
     jsonObject.put("startTime", interval.getStartTime());
     jsonObject.put("endTime", interval.getEndTime());
     jsonObject.put("inProgress", interval.isInProgress());
+    jsonObject.put("duration", interval.getDuration());
     return jsonObject;
   }
 
