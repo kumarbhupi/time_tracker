@@ -4,14 +4,19 @@ import core.Interval;
 import core.Task;
 import core.TaskManager;
 import core.Tracker;
-import visitor.PrinterVisitor;
+
+import static java.lang.Thread.sleep;
 
 public class MainWebServer {
   public static void main(String[] args) {
-    webServer();
+    try {
+      webServer();
+    } catch (InterruptedException e) {
+      e.printStackTrace();
+    }
   }
 
-  public static void webServer() {
+  public static void webServer() throws InterruptedException {
     final Tracker root = makeTreeCourses();
     // implement this method that returns the tree of
     // appendix A in the practicum handout
@@ -19,14 +24,15 @@ public class MainWebServer {
     new WebServer(root);
   }
 
-  private static Tracker makeTreeCourses(){
+  private static Tracker makeTreeCourses() throws InterruptedException {
     TaskManager root = new TaskManager(null, "root");
 
     Task transportations = new Task(root, "Transportation");
     root.addChild(transportations);
 
-    PrinterVisitor printerVisitor = new PrinterVisitor(root);
     Interval transportationsInterval = transportations.createInterval();
+    sleep(2000);
+
     transportationsInterval.stopInterval();
 
     TaskManager softwareDesign = new TaskManager(root, "Software Design");

@@ -42,7 +42,7 @@ public class ToJsonVisitor implements Visitor {
     jsonObject.put("id", task.getId());
     jsonObject.put("name", task.getName());
     jsonObject.put("startTime", task.getStartTimeToString());
-    jsonObject.put("endTime", task.getStartTimeToString());
+    jsonObject.put("endTime", task.getEndTimeToString());
     jsonObject.put("active", task.isActive());
     jsonObject.put("class", "task");
     jsonObject.put("duration", task.getDuration().getSeconds());
