@@ -26,4 +26,12 @@ public class Tag {
   public String getNameTag(){return this.tag;}
 
   public List<Tracker> getTrackers(){return this.trackersTag;}
+
+  @Override
+  public boolean equals(Object obj) {
+    if (obj instanceof Tag){
+      return this.tag.equals(((Tag) obj).tag);
+    }
+    return false;
+  }
 }

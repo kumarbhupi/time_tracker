@@ -6,6 +6,7 @@ import core.TaskManager;
 import core.Tracker;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import searcher.TagManager;
 
 import java.util.List;
 
@@ -19,6 +20,7 @@ public class ToJsonVisitor implements Visitor {
 
   @Override
   public JSONObject visit(TaskManager taskManager) {
+    TagManager tagManager = TagManager.getInstance();
     JSONObject jsonObject = new JSONObject();
     jsonObject.put("id", taskManager.getId());
     jsonObject.put("name", taskManager.getName());
@@ -26,8 +28,15 @@ public class ToJsonVisitor implements Visitor {
     jsonObject.put("endTime", taskManager.getEndTimeToString());
     jsonObject.put("class", "project");
     jsonObject.put("duration", taskManager.getDuration().getSeconds());
-    List<Tracker> trackerList = taskManager.getTrackers();
 
+    List<String> tags = tagManager.searchTag(taskManager);
+    JSONArray jsonTagArray = new JSONArray();
+    for (String tag: tags) {
+      jsonTagArray.put(tag);
+    }
+    jsonObject.put("tags", jsonTagArray);
+
+    List<Tracker> trackerList = taskManager.getTrackers();
     JSONArray jsonArray = new JSONArray();
     for (Tracker tracker : trackerList) {
       jsonArray.put(visit(tracker));
@@ -47,8 +56,16 @@ public class ToJsonVisitor implements Visitor {
     jsonObject.put("class", "task");
     jsonObject.put("duration", task.getDuration().getSeconds());
     List<Interval> intervalList = task.getListIntervals();
-    JSONArray jsonArray = new JSONArray();
 
+    TagManager tagManager = TagManager.getInstance();
+    List<String> tags = tagManager.searchTag(task);
+    JSONArray jsonTagArray = new JSONArray();
+    for (String tag: tags) {
+      jsonTagArray.put(tag);
+    }
+    jsonObject.put("tags", jsonTagArray);
+
+    JSONArray jsonArray = new JSONArray();
     for (Interval interval : intervalList) {
       jsonArray.put(visit(interval));
     }

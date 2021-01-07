@@ -45,8 +45,17 @@ public abstract class Tracker implements Element {
 
   public abstract LocalDateTime getEndTime();
 
-  public abstract Tracker findActivityById(int id); //TODO: implement
+  public abstract Tracker findActivityById(int id);
 
+
+  @Override
+  public boolean equals(Object obj) {
+    if (obj instanceof Tracker){
+      return this.id == ((Tracker) obj).id;
+    }else{
+      return false;
+    }
+  }
 
   @Override
   public JSONObject accept(Visitor v) {

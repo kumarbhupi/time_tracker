@@ -4,7 +4,12 @@ import core.Interval;
 import core.Task;
 import core.TaskManager;
 import core.Tracker;
+import org.json.JSONArray;
+import org.json.JSONObject;
+import searcher.Tag;
+import searcher.TagManager;
 import visitor.ToJsonVisitor;
+import visitor.TotalTimeCalculator;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -12,7 +17,11 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Arrays;
+import java.util.List;
 import java.util.StringTokenizer;
 
 // Based on
@@ -109,7 +118,7 @@ public class WebServer {
         out.close();
         insocked.close(); // we close socket connection
       } catch (Exception e) {
-        System.err.println("Exception : " + e + " "+ Arrays.toString(e.getStackTrace()));
+        System.err.println("Exception : " + e + " " + Arrays.toString(e.getStackTrace()));
       }
     }
 
@@ -120,8 +129,11 @@ public class WebServer {
       Interval interval;
       switch (tokens[0]) {
         case "get_tree": {
+          TagManager tagManager = TagManager.getInstance();
+
           int id = Integer.parseInt(tokens[1]);
           Tracker activity = findActivityById(id);
+
           assert (activity != null);
           body = jsonVisitor.visit(activity).toString();
           //body = activity.toJson(1).toString();
@@ -149,23 +161,98 @@ public class WebServer {
         }
         // TODO: add new task, project
         // TODO: edit task, project properties
-        case "add": {
+        case "add": {//add?0&task&new_test
+          TagManager tagManager = TagManager.getInstance();
           int id = Integer.parseInt(tokens[1]);
           assert (tokens[2] != null && tokens[3] != null);
           Tracker activity = findActivityById(id);
           assert (activity != null);
-          if (tokens[2].equalsIgnoreCase("task")){
-            Task task = new Task((TaskManager) activity, tokens[3]);
+          if (tokens[2].equalsIgnoreCase("task")) {
+            Task task = new Task((TaskManager) activity, tokens[3].replace("%20", " "));
             ((TaskManager) activity).addChild(task);
-          }else if (tokens[2].equalsIgnoreCase("project")){
-            TaskManager taskManager = new TaskManager((TaskManager) activity, tokens[3]);
+
+            for (int i = 4; i < tokens.length; i++) {
+              if (tokens[i] != null) {
+                tagManager.createTag(tokens[i]);
+                tagManager.addTracker(tokens[i], task);
+              }
+            }
+          } else if (tokens[2].equalsIgnoreCase("project")) {
+            TaskManager taskManager = new TaskManager((TaskManager) activity, tokens[3].replace("%20", " "));
             ((TaskManager) activity).addChild((taskManager));
+
+            for (int i = 4; i < tokens.length; i++) {
+              if (tokens[i] != null) {
+                tagManager.createTag(tokens[i]);
+                tagManager.addTracker(tokens[i], taskManager);
+              }
+            }
+          }
+          break;
+        }
+        case "find_by_tags": {//localhost/find_by_tags?tag_name
+          TagManager tagManager = TagManager.getInstance();
+          System.out.println(tokens[1]);
+          List<Tracker> trackersFound = tagManager.searchTag(tokens[1]);
+          JSONArray jsonArray = new JSONArray();
+          for (Tracker tracker : trackersFound) {
+            System.out.println(tracker.getName());
+            jsonArray.put(jsonVisitor.visit(tracker));
+          }
+
+          body = jsonArray.toString();
+          break;
+        }
+
+        case "get_duration": {
+          int id = Integer.parseInt(tokens[1]);
+          Tracker activity = findActivityById(id);
+          LocalDateTime periodStartTime = LocalDateTime.of(
+              LocalDate.of(
+                  Integer.parseInt(tokens[2]),
+                  Integer.parseInt(tokens[3]),
+                  Integer.parseInt(tokens[4])),
+              LocalTime.of(
+                  Integer.parseInt(tokens[5]),
+                  Integer.parseInt(tokens[6])));
+
+          LocalDateTime periodEndTime = LocalDateTime.of(
+              LocalDate.of(
+                  Integer.parseInt(tokens[7]),
+                  Integer.parseInt(tokens[8]),
+                  Integer.parseInt(tokens[9])),
+              LocalTime.of(
+                  Integer.parseInt(tokens[10]),
+                  Integer.parseInt(tokens[11])));
+
+          TotalTimeCalculator totalTimeCalculator = new TotalTimeCalculator(periodStartTime, periodEndTime);
+          long totalTime = totalTimeCalculator.calculateTime(activity);
+
+          JSONObject bodyJson = new JSONObject();
+          bodyJson.put("duration", totalTime);
+          body = bodyJson.toString();
+
+          break;
+        }
+        case "add_tags": {//Not used
+          TagManager tagManager = TagManager.getInstance();
+          int id = Integer.parseInt(tokens[1]);
+          Tracker activity = findActivityById(id);
+          for (int i = 2; i < tokens.length; i++) {
+            if (tokens[i] != null) {
+              tagManager.createTag(tokens[i]);
+              tagManager.addTracker(tokens[i], activity);
+            }
+          }
+          for (Tag tag : tagManager.tags) {
+            System.out.println(tag.getNameTag());
           }
           break;
         }
         case "edit": {
-          break;
+
         }
+        break;
         default:
           assert false;
       }

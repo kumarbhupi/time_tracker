@@ -5,6 +5,7 @@ import core.Task;
 import core.TaskManager;
 import core.Tracker;
 import persistence.FileManager;
+import searcher.Tag;
 import searcher.TagManager;
 import visitor.FromJsonVisitor;
 import visitor.PrinterVisitor;
@@ -23,14 +24,14 @@ public class Main {
   public static void main(String[] args) throws InterruptedException {
     Main client = new Main();
 
-    client.testGetTotalTimeAndSaveItInJson();
+    //client.testGetTotalTimeAndSaveItInJson();
 
     client.testTags();
 
   }
 
   //CalculationTotalTag
-  private void testTags(){
+  private void testTags() {
     core.TaskManager root = new core.TaskManager(null, "root");
 
     core.TaskManager softwareDesign = new core.TaskManager(root, "Software Design");
@@ -63,74 +64,83 @@ public class Main {
     core.Task firstMilestone = new core.Task(projectTime, "First Milestone");
     projectTime.addChild(firstMilestone);
 
-    TagManager tagManager = new TagManager();
+    TagManager tagManager = TagManager.getInstance();
 
     tagManager.createTag("java");
-    tagManager.addTracker("java",softwareDesign);
-    tagManager.addTracker("java",firstList);
+    tagManager.createTag("java");
+    tagManager.addTracker("java", softwareDesign);
+    /*tagManager.addTracker("java", firstList);
 
     tagManager.createTag("flutter");
-    tagManager.addTracker("flutter",softwareDesign);
+    tagManager.addTracker("flutter", softwareDesign);
 
     tagManager.createTag("c++");
-    tagManager.addTracker("c++",softwareTesting);
+    tagManager.addTracker("c++", softwareTesting);
 
     tagManager.createTag("Java");
-    tagManager.addTracker("Java",softwareTesting);
-    tagManager.addTracker("Java",firstMilestone);
+    tagManager.addTracker("Java", softwareTesting);
+    tagManager.addTracker("Java", firstMilestone);
 
     tagManager.createTag("python");
-    tagManager.addTracker("python",softwareTesting);
-    tagManager.addTracker("python",database);
+    tagManager.addTracker("python", softwareTesting);
+    tagManager.addTracker("python", database);
 
     tagManager.createTag("C++");
-    tagManager.addTracker("C++",database);
+    tagManager.addTracker("C++", database);
 
     tagManager.createTag("SQL");
-    tagManager.addTracker("SQL",database);
+    tagManager.addTracker("SQL", database);
 
     tagManager.createTag("Dart");
-    tagManager.addTracker("Dart",secondList);
+    tagManager.addTracker("Dart", secondList);
 
     tagManager.createTag("IntelliJ");
-    tagManager.addTracker("IntelliJ",firstList);
+    tagManager.addTracker("IntelliJ", firstList);*/
 
     //The search is made by simply changing the following tag, in this case, "java".
     List<Tracker> trackersFound = tagManager.searchTag("java");
+    for (Tag tag: tagManager.tags) {
+      System.out.println(tag.getNameTag());
 
-    for (Tracker tracker : trackersFound){
+    }
+    List<String> tagsFound = tagManager.searchTag(firstList);
+    for (String tag : tagsFound) {
+      System.out.println(tag);
+    }
+
+    for (Tracker tracker : trackersFound) {
       System.out.println(tracker.getName());
     }
 
   }
 
-  private void testTotalTimeFunctionalities(){
+  private void testTotalTimeFunctionalities() {
 
     core.TaskManager jsonRoot = readFromJsonToTaskManager(); //Para evitar ejecutar testGetTotalTimeAndSaveItInJson()
 
     LocalDate today = LocalDate.of(2020, 11, 20);
-    LocalDateTime periodStartTime = LocalDateTime.of(today, LocalTime.of(15, 43, 30,734228));//Temps correspondent a 60seg
-    LocalDateTime periodEndTime = LocalDateTime.of(today, LocalTime.of(15, 44, 30,739900));////Temps correspondent a 120seg
+    LocalDateTime periodStartTime = LocalDateTime.of(today, LocalTime.of(15, 43, 30, 734228));//Temps correspondent a 60seg
+    LocalDateTime periodEndTime = LocalDateTime.of(today, LocalTime.of(15, 44, 30, 739900));////Temps correspondent a 120seg
     visitor.TotalTimeCalculator totalTimeCalculator = new TotalTimeCalculator(periodStartTime, periodEndTime);
     long totalTime = totalTimeCalculator.calculateTime(jsonRoot);
     System.out.println(totalTime);
   }
 
 
-  private core.TaskManager readFromJsonToTaskManager(){
+  private core.TaskManager readFromJsonToTaskManager() {
     persistence.FileManager fileManager = new persistence.FileManager();
     visitor.FromJsonVisitor fromJsonVisitor = new visitor.FromJsonVisitor();
     fileManager.readFromJsonFile();
-     return fileManager.accept(fromJsonVisitor);
+    return fileManager.accept(fromJsonVisitor);
   }
 
-  private void testGetTotalTimeAndSaveItInJson() throws InterruptedException{
+  private void testGetTotalTimeAndSaveItInJson() throws InterruptedException {
     core.TaskManager root = new core.TaskManager(null, "root");
     visitor.PrinterVisitor printerVisitor = new visitor.PrinterVisitor(root);
     //0
     core.TaskManager p0 = new core.TaskManager(root, "P0");
     root.addChild(p0);
-    core.Task t0 = new core.Task(p0,"T0");
+    core.Task t0 = new core.Task(p0, "T0");
     p0.addChild(t0);
     core.Task t1 = new core.Task(p0, "T1");
     p0.addChild(t1);
@@ -151,7 +161,6 @@ public class Main {
     root.addChild(p3);
 
 
-
     Thread.sleep(10000); //10
     core.Interval t0_i = t0.createInterval();
 
@@ -168,7 +177,7 @@ public class Main {
     core.Interval t2_i = t2.createInterval();
 
     sleep(10000);//40
-    t0_i =t0.createInterval();
+    t0_i = t0.createInterval();
 
 
     core.Interval t5_i = t5.createInterval();
@@ -239,19 +248,19 @@ public class Main {
     printerVisitor.stopPrinting();
 
     visitor.TotalTimeCalculator totalTimeCalculator = new TotalTimeCalculator(START_TIME, END_TIME);
-    System.out.println("Root :"+totalTimeCalculator.calculateTime(root));
-    System.out.println("P0 :"+totalTimeCalculator.calculateTime(p0));
-    System.out.println("T1 :"+totalTimeCalculator.calculateTime(t1));
-    System.out.println("T2 :"+totalTimeCalculator.calculateTime(t2));
+    System.out.println("Root :" + totalTimeCalculator.calculateTime(root));
+    System.out.println("P0 :" + totalTimeCalculator.calculateTime(p0));
+    System.out.println("T1 :" + totalTimeCalculator.calculateTime(t1));
+    System.out.println("T2 :" + totalTimeCalculator.calculateTime(t2));
 
-    System.out.println("P1 :"+totalTimeCalculator.calculateTime(p1));
+    System.out.println("P1 :" + totalTimeCalculator.calculateTime(p1));
 
-    System.out.println("T4 :"+totalTimeCalculator.calculateTime(t4));
+    System.out.println("T4 :" + totalTimeCalculator.calculateTime(t4));
 
-    System.out.println("T5 :"+totalTimeCalculator.calculateTime(t5));
+    System.out.println("T5 :" + totalTimeCalculator.calculateTime(t5));
 
 
-    System.out.println("P3 :"+totalTimeCalculator.calculateTime(p3));
+    System.out.println("P3 :" + totalTimeCalculator.calculateTime(p3));
 
 
     /*visitor.ToJsonVisitor toJsonVisitor = new visitor.ToJsonVisitor();
@@ -261,7 +270,7 @@ public class Main {
 
   }
 
-  private void testMiletone1() throws InterruptedException{
+  private void testMiletone1() throws InterruptedException {
     core.TaskManager root = new core.TaskManager(null, "root");
 
     core.Task transportations = new core.Task(root, "Transportation");
@@ -310,8 +319,8 @@ public class Main {
     fileManager.readFromJsonFile();
     TaskManager rootFromJson = fileManager.accept(fromJsonVisitor);
     LocalDate today = LocalDate.of(2020, 11, 20);
-    LocalDateTime periodeStartTime = LocalDateTime.of(today, LocalTime.of(10, 29, 50,613710));
-    LocalDateTime periodeEndTime = LocalDateTime.of(today, LocalTime.of(10, 30, 30,620238));
+    LocalDateTime periodeStartTime = LocalDateTime.of(today, LocalTime.of(10, 29, 50, 613710));
+    LocalDateTime periodeEndTime = LocalDateTime.of(today, LocalTime.of(10, 30, 30, 620238));
     printerVisitor = new PrinterVisitor(rootFromJson);
     Task afterReadingTask = new Task(rootFromJson, "Task After Reading");
     rootFromJson.addChild(afterReadingTask);

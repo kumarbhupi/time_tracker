@@ -6,16 +6,26 @@ import java.util.List;
 
 //This class manages all tags in the project.
 public class TagManager {
-  protected ArrayList<Tag> tags;
+  private static TagManager tagManager;
+  public ArrayList<Tag> tags;
 
-  public TagManager(){
+  public static TagManager getInstance(){
+    if (tagManager == null){
+      tagManager = new TagManager();
+    }
+    return tagManager;
+  }
+  private TagManager(){
     this.tags = new ArrayList<>();
   }
 
   public void createTag(String tag){
     Tag newTag = new Tag(tag);
-    tags.add(newTag);
+    if (!this.tags.contains(newTag)){
+      tags.add(newTag);
+    }
   }
+
 
   public void addTracker(String tag, Tracker tracker){
     for (Tag value : tags) {
@@ -37,9 +47,18 @@ public class TagManager {
     }
   }
 
+  public List<String> searchTag(Tracker tracker){
+    List<String> tagsList = new ArrayList<>();
+    for(Tag tag : tags){
+      if (tag.getTrackers().contains(tracker)){
+        tagsList.add(tag.getTag().getNameTag());
+      }
+    }
+    return tagsList;
+  }
+
   //Looks for tag passed through the parameter and returns all associated trackers.
   public List<Tracker> searchTag(String tag) {
-    //List<Tracker> TrackersFound = null;
     List<Tracker> trackersFound = new ArrayList<>();
     for (Tag value : tags) {
       Tag tagToSearch = value.getTag();
