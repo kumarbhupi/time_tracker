@@ -11,7 +11,7 @@ import java.util.List;
 
 
 //This class is the composite in the Composite pattern.
-public class TaskManager extends Tracker implements Element {
+public class TaskManager extends Tracker {
 
   private TaskManager parentProject;
   private List<Tracker> trackers;

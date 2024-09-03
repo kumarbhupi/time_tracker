@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 //This class is the leaf in the Composite pattern.
-public class Task extends Tracker implements Element {
+public class Task extends Tracker {
 
   private final TaskManager parentProject;
   private List<Interval> listIntervals;
